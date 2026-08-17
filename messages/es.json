@@ -283,6 +283,8 @@
     "pendingBannerText": "Tu cuenta está siendo revisada por nuestro equipo, pero tu perfil ya es visible en línea. Recibirás un correo de confirmación una vez que tu cuenta sea validada permanentemente.",
     "fieldVehicleTypes": "Tipos de vehículos ofrecidos",
     "fieldPropertyTypes": "Tipos de propiedades ofrecidas",
+    "fieldActivityTypes": "Tipos de actividades ofrecidas",
+    "fieldOnsiteServices": "Servicios y actividades en el lugar (restaurante, bar, discoteca, tienda...)",
     "fieldAvgDailyPrice": "Precio medio diario (MAD)",
     "avgDailyPriceHint": "Da a los clientes una idea de tu presupuesto, mostrado en tu perfil"
   },

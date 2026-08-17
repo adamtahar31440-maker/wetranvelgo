@@ -10,6 +10,7 @@ import { HoursEditor } from "@/components/hours-editor";
 import { ProductsEditor } from "@/components/products-editor";
 import { ActivityTagsPicker } from "@/components/activity-tags-picker";
 import { flattenSubcategories } from "@/lib/labels";
+import { hasMultiSubcategory } from "@/lib/multi-subcategory";
 
 type Category = { id: number; type: string; name: Record<string, string> };
 type Subcategory = { slug: string; name: Record<string, string> };
@@ -78,7 +79,15 @@ export function EstablishmentForm({
   const categoryType = categories.find((c) => c.id === categoryId)?.type;
   const isCarRental = categoryType === "location-vehicules";
   const isRealEstate = categoryType === "agences-immobilieres";
-  const hasMultiSubcategory = isCarRental || isRealEstate;
+  const isActivity = categoryType === "activite";
+  const showMultiSubcategory = hasMultiSubcategory(categoryType);
+  const multiSubcategoryLabel = isCarRental
+    ? "Types de véhicules proposés"
+    : isRealEstate
+      ? "Types de biens proposés"
+      : isActivity
+        ? "Types d'activités proposées"
+        : "Services et activités sur place (restaurant, bar, boîte de nuit, boutique...)";
   return (
     <form action={upsertEstablishment} className="space-y-8">
       <input type="hidden" name="locale" value={locale} />
@@ -102,16 +111,16 @@ export function EstablishmentForm({
         defaultCategoryId={establishment?.categoryId}
         defaultSubcategory={establishment?.subcategory}
         onCategoryChange={setCategoryId}
-        hideSubcategory={hasMultiSubcategory}
+        hideSubcategory={showMultiSubcategory}
       />
 
-      {hasMultiSubcategory && (
+      {showMultiSubcategory && (
         <section className="space-y-4 rounded-xl border border-ocean-dark/20 bg-ocean-dark/5 p-4">
           <SubcategoryMultiSelect
             options={subcategoriesByCategory[categoryId ?? -1] ?? []}
             locale="fr"
             defaultValues={establishment?.subcategories ?? []}
-            label={isCarRental ? "Types de véhicules proposés" : "Types de biens proposés"}
+            label={multiSubcategoryLabel}
           />
           {isCarRental && (
             <div>

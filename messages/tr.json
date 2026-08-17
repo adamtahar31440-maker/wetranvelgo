@@ -283,6 +283,8 @@
     "pendingBannerText": "Hesabınız ekibimiz tarafından incelenmektedir, ancak profiliniz zaten çevrimiçi olarak görünürdür. Hesabınız kalıcı olarak doğrulandıktan sonra bir onay e-postası alacaksınız.",
     "fieldVehicleTypes": "Sunulan araç türleri",
     "fieldPropertyTypes": "Sunulan emlak türleri",
+    "fieldActivityTypes": "Sunulan aktivite türleri",
+    "fieldOnsiteServices": "Yerinde hizmetler ve aktiviteler (restoran, bar, gece kulübü, mağaza...)",
     "fieldAvgDailyPrice": "Ortalama günlük fiyat (MAD)",
     "avgDailyPriceHint": "Müşterilere bütçeniz hakkında bir fikir verir ve profilinizde görüntülenir"
   },

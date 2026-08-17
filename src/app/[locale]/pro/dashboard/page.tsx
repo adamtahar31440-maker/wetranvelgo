@@ -21,6 +21,7 @@ import { ImageUploader } from "@/components/image-uploader";
 import { HoursEditor } from "@/components/hours-editor";
 import { SubcategoryMultiSelect } from "@/components/subcategory-multi-select";
 import { qrFeatureLabel } from "@/lib/qr-feature-label";
+import { hasMultiSubcategory } from "@/lib/multi-subcategory";
 import { ActivityTagsPicker } from "@/components/activity-tags-picker";
 import { UpdateSuccessBanner } from "@/components/update-success-banner";
 import { PRICE_LEVELS, priceLevelLabel, buildSubcategoryMap, subcategoryLabel, flattenSubcategories } from "@/lib/labels";
@@ -95,7 +96,15 @@ export default async function ProDashboardPage({
     : undefined;
   const isCarRental = myEstablishmentCategoryType === "location-vehicules";
   const isRealEstate = myEstablishmentCategoryType === "agences-immobilieres";
-  const hasMultiSubcategory = isCarRental || isRealEstate;
+  const isActivity = myEstablishmentCategoryType === "activite";
+  const showMultiSubcategory = hasMultiSubcategory(myEstablishmentCategoryType);
+  const multiSubcategoryLabel = isCarRental
+    ? t("fieldVehicleTypes")
+    : isRealEstate
+      ? t("fieldPropertyTypes")
+      : isActivity
+        ? t("fieldActivityTypes")
+        : t("fieldOnsiteServices");
   const currentPlanKey = subscription?.status === "active" ? subscription.planKey : "starter";
   const maxPhotos = plans.find((p) => p.key === currentPlanKey)?.maxPhotos ?? null;
   const subcategoriesByCategory = Object.fromEntries(
@@ -282,13 +291,13 @@ export default async function ProDashboardPage({
                 ))}
               </select>
             </div>
-            {hasMultiSubcategory && (
+            {showMultiSubcategory && (
               <div className="space-y-4 rounded-xl border border-ocean-dark/20 bg-ocean-dark/5 p-4">
                 <SubcategoryMultiSelect
                   options={myEstablishmentSubcategories}
                   locale={locale}
                   defaultValues={myEstablishment.subcategories ?? []}
-                  label={isCarRental ? t("fieldVehicleTypes") : t("fieldPropertyTypes")}
+                  label={multiSubcategoryLabel}
                 />
                 {isCarRental && (
                   <div>

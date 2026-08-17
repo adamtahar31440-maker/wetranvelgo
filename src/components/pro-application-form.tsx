@@ -9,6 +9,7 @@ import { AddressLocationPicker } from "@/components/address-location-picker";
 import { CategorySubcategoryPicker } from "@/components/category-subcategory-picker";
 import { SubcategoryMultiSelect } from "@/components/subcategory-multi-select";
 import { qrFeatureLabel } from "@/lib/qr-feature-label";
+import { hasMultiSubcategory } from "@/lib/multi-subcategory";
 import { HoursEditor } from "@/components/hours-editor";
 import { MenuEditor } from "@/components/menu-editor";
 import { SingleImageField } from "@/components/single-image-field";
@@ -61,9 +62,15 @@ export function ProApplicationForm({
   const categoryType = categories.find((c) => c.id === categoryId)?.type;
   const isCarRental = categoryType === "location-vehicules";
   const isRealEstate = categoryType === "agences-immobilieres";
-  // Both categories let the pro pick several subcategories at once (vehicle
-  // types / property types) instead of a single primary one.
-  const hasMultiSubcategory = isCarRental || isRealEstate;
+  const isActivity = categoryType === "activite";
+  const showMultiSubcategory = hasMultiSubcategory(categoryType);
+  const multiSubcategoryLabel = isCarRental
+    ? t.fieldVehicleTypes
+    : isRealEstate
+      ? t.fieldPropertyTypes
+      : isActivity
+        ? t.fieldActivityTypes
+        : t.fieldOnsiteServices;
 
   const [cityId, setCityId] = useState<number | null>(cities[0]?.id ?? null);
   const handleLocationChange = (lat: number, lng: number) => {
@@ -148,15 +155,15 @@ export function ProApplicationForm({
           otherLabel={t.otherOptionLabel}
           otherPlaceholder={t.otherActivitySpecifyPlaceholder}
           onCategoryChange={setCategoryId}
-          hideSubcategory={hasMultiSubcategory}
+          hideSubcategory={showMultiSubcategory}
         />
 
-        {hasMultiSubcategory && (
+        {showMultiSubcategory && (
           <div className="space-y-4 rounded-xl border border-ocean-dark/20 bg-ocean-dark/5 p-4">
             <SubcategoryMultiSelect
               options={subcategoriesByCategory[categoryId ?? -1] ?? []}
               locale={lang}
-              label={isCarRental ? t.fieldVehicleTypes : t.fieldPropertyTypes}
+              label={multiSubcategoryLabel}
             />
             {isCarRental && (
               <div>

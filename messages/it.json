@@ -283,6 +283,8 @@
     "pendingBannerText": "Il tuo account è in fase di revisione dal nostro team, ma il tuo profilo è già visibile online. Riceverai un'email di conferma una volta che il tuo account sarà definitivamente convalidato.",
     "fieldVehicleTypes": "Tipi di veicoli offerti",
     "fieldPropertyTypes": "Tipi di immobili offerti",
+    "fieldActivityTypes": "Tipi di attività offerte",
+    "fieldOnsiteServices": "Servizi e attività in loco (ristorante, bar, discoteca, negozio...)",
     "fieldAvgDailyPrice": "Prezzo medio giornaliero (MAD)",
     "avgDailyPriceHint": "Dà ai clienti un'idea del tuo budget, visualizzato nel tuo profilo"
   },
