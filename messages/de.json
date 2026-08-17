@@ -282,6 +282,7 @@
     "menuBannerLabel": "Banner",
     "pendingBannerText": "Ihr Konto wird von unserem Team überprüft, aber Ihr Profil ist bereits online sichtbar. Sie erhalten eine Bestätigungse-Mail, sobald Ihr Konto endgültig validiert ist.",
     "fieldVehicleTypes": "Angebotene Fahrzeugtypen",
+    "fieldPropertyTypes": "Angebotene Immobilientypen",
     "fieldAvgDailyPrice": "Durchschnittlicher Tagespreis (MAD)",
     "avgDailyPriceHint": "Gibt Kunden eine Vorstellung von deinem Budget, angezeigt in deinem Profil"
   },

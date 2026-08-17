@@ -282,6 +282,7 @@
     "menuBannerLabel": "Bannière",
     "pendingBannerText": "Votre compte est en cours d'examen par notre équipe, mais votre fiche est déjà visible en ligne. Vous recevrez un e-mail de confirmation une fois votre compte définitivement validé.",
     "fieldVehicleTypes": "Types de véhicules proposés",
+    "fieldPropertyTypes": "Types de biens proposés",
     "fieldAvgDailyPrice": "Prix moyen par jour (MAD)",
     "avgDailyPriceHint": "Donne une idée du budget aux clients, affiché sur votre fiche"
   },

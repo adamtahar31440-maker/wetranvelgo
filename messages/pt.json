@@ -282,6 +282,7 @@
     "menuBannerLabel": "Banner",
     "pendingBannerText": "Sua conta está sob revisão do nosso time, mas seu perfil já está visível online. Você receberá um email de confirmação assim que sua conta for validada permanentemente.",
     "fieldVehicleTypes": "Tipos de veículos oferecidos",
+    "fieldPropertyTypes": "Tipos de imóveis oferecidos",
     "fieldAvgDailyPrice": "Preço médio diário (MAD)",
     "avgDailyPriceHint": "Dá aos clientes uma ideia do seu orçamento, exibido em seu perfil"
   },

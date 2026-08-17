@@ -157,7 +157,10 @@ export async function applyAsProfessional(formData: FormData) {
   const [establishment] = await db.insert(establishments).values({
     cityId,
     categoryId,
-    subcategory: truncate(String(formData.get("subcategory") ?? ""), 64),
+    // Categories that hide the single-select (car rental, real estate) never
+    // submit a "subcategory" field — fall back to the first checked box so
+    // the required column still gets a sensible primary value.
+    subcategory: truncate(String(formData.get("subcategory") ?? "") || subcategories[0] || "", 64),
     subcategories,
     avgDailyPriceMad,
     slug: truncate(`${slugify(name)}-${professional.id}`, 160),

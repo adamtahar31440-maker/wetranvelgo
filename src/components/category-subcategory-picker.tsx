@@ -23,6 +23,7 @@ export function CategorySubcategoryPicker({
   otherLabel = "Autre",
   otherPlaceholder = "Précisez votre activité",
   onCategoryChange,
+  hideSubcategory = false,
 }: {
   categories: Category[];
   subcategoriesByCategory: Record<number, Subcategory[]>;
@@ -40,6 +41,11 @@ export function CategorySubcategoryPicker({
   // label) has no other way to know it — notified on every change and once
   // on mount so the parent can initialize.
   onCategoryChange?: (id: number) => void;
+  // Categories that let the pro pick several subcategories at once (via
+  // SubcategoryMultiSelect elsewhere in the form, e.g. car rental) don't need
+  // this single-select at all — the multi-select fully replaces it, and the
+  // "primary" subcategory is derived server-side from the first checked value.
+  hideSubcategory?: boolean;
 }) {
   const [categoryId, setCategoryId] = useState<number>(defaultCategoryId ?? categories[0]?.id);
   const subs = subcategoriesByCategory[categoryId] ?? [];
@@ -68,7 +74,7 @@ export function CategorySubcategoryPicker({
   const submittedSubcategory = subcategory === OTHER_VALUE ? otherText : subcategory;
 
   return (
-    <section className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <section className={hideSubcategory ? "" : "grid grid-cols-1 gap-4 sm:grid-cols-2"}>
       <div>
         <label className={labelClass}>{categoryLabel}</label>
         <select
@@ -86,32 +92,34 @@ export function CategorySubcategoryPicker({
           ))}
         </select>
       </div>
-      <div>
-        <label className={labelClass}>{subcategoryLabel}</label>
-        <select
-          value={subcategory}
-          onChange={(e) => setSubcategory(e.target.value)}
-          className={inputClass}
-          required
-        >
-          {subs.map((s) => (
-            <option key={s.slug} value={s.slug}>
-              {s.name[locale] ?? s.name.fr}
-            </option>
-          ))}
-          <option value={OTHER_VALUE}>{otherLabel}</option>
-        </select>
-        {subcategory === OTHER_VALUE && (
-          <input
-            value={otherText}
-            onChange={(e) => setOtherText(e.target.value)}
-            placeholder={otherPlaceholder}
+      {!hideSubcategory && (
+        <div>
+          <label className={labelClass}>{subcategoryLabel}</label>
+          <select
+            value={subcategory}
+            onChange={(e) => setSubcategory(e.target.value)}
+            className={inputClass}
             required
-            className={`${inputClass} mt-2`}
-          />
-        )}
-        <input type="hidden" name="subcategory" value={submittedSubcategory} />
-      </div>
+          >
+            {subs.map((s) => (
+              <option key={s.slug} value={s.slug}>
+                {s.name[locale] ?? s.name.fr}
+              </option>
+            ))}
+            <option value={OTHER_VALUE}>{otherLabel}</option>
+          </select>
+          {subcategory === OTHER_VALUE && (
+            <input
+              value={otherText}
+              onChange={(e) => setOtherText(e.target.value)}
+              placeholder={otherPlaceholder}
+              required
+              className={`${inputClass} mt-2`}
+            />
+          )}
+          <input type="hidden" name="subcategory" value={submittedSubcategory} />
+        </div>
+      )}
     </section>
   );
 }

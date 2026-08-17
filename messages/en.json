@@ -282,6 +282,7 @@
     "menuBannerLabel": "Banner",
     "pendingBannerText": "Your account is under review by our team, but your profile is already visible online. You will receive a confirmation email once your account is permanently validated.",
     "fieldVehicleTypes": "Vehicle types offered",
+    "fieldPropertyTypes": "Property types offered",
     "fieldAvgDailyPrice": "Average daily price (MAD)",
     "avgDailyPriceHint": "Gives customers an idea of your budget, displayed on your profile"
   },

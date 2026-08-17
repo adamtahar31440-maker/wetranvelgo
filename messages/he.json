@@ -282,6 +282,7 @@
     "menuBannerLabel": "בנר",
     "pendingBannerText": "חשבונך נמצא בבדיקה של הצוות שלנו, אך הפרופיל שלך כבר גלוי באינטרנט. תקבל דוא״ל אישור ברגע שחשבונך יאומת לצמיתות.",
     "fieldVehicleTypes": "סוגי כלים שמוצעים",
+    "fieldPropertyTypes": "סוגי הנכסים המוצעים",
     "fieldAvgDailyPrice": "מחיר יומי ממוצע (MAD)",
     "avgDailyPriceHint": "נותן ללקוחות מושג של התקציב שלך, המוצג בפרופיל שלך"
   },

@@ -7,6 +7,7 @@ export type ProFormStrings = {
   category: string;
   subcategory: string;
   fieldVehicleTypes: string;
+  fieldPropertyTypes: string;
   fieldAvgDailyPrice: string;
   avgDailyPriceHint: string;
   name: string;
@@ -118,6 +119,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     category: "Catégorie",
     subcategory: "Sous-catégorie",
     fieldVehicleTypes: "Types de véhicules proposés",
+    fieldPropertyTypes: "Types de biens proposés",
     fieldAvgDailyPrice: "Prix moyen par jour (MAD)",
     avgDailyPriceHint: "Donne une idée du budget aux clients, affiché sur votre fiche",
     name: "Nom de l'établissement",
@@ -231,6 +233,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     category: "Category",
     subcategory: "Subcategory",
     fieldVehicleTypes: "Vehicle types offered",
+    fieldPropertyTypes: "Property types offered",
     fieldAvgDailyPrice: "Average daily price (MAD)",
     avgDailyPriceHint: "Gives customers an idea of your budget, displayed on your profile",
     name: "Business name",
@@ -344,6 +347,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     category: "الفئة",
     subcategory: "الفئة الفرعية",
     fieldVehicleTypes: "أنواع المركبات المقدمة",
+    fieldPropertyTypes: "أنواع العقارات المقدمة",
     fieldAvgDailyPrice: "السعر المتوسط لكل يوم (درهم)",
     avgDailyPriceHint: "يعطي العملاء فكرة عن ميزانيتك، معروضة على ملفك الشخصي",
     name: "اسم المنشأة",
@@ -456,6 +460,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     category: "Categoría",
     subcategory: "Subcategoría",
     fieldVehicleTypes: "Tipos de vehículos ofrecidos",
+    fieldPropertyTypes: "Tipos de propiedades ofrecidas",
     fieldAvgDailyPrice: "Precio medio diario (MAD)",
     avgDailyPriceHint: "Da a los clientes una idea de tu presupuesto, mostrado en tu perfil",
     name: "Nombre del establecimiento",
@@ -569,6 +574,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     category: "Kategorie",
     subcategory: "Unterkategorie",
     fieldVehicleTypes: "Angebotene Fahrzeugtypen",
+    fieldPropertyTypes: "Angebotene Immobilientypen",
     fieldAvgDailyPrice: "Durchschnittlicher Tagespreis (MAD)",
     avgDailyPriceHint: "Gibt Kunden eine Vorstellung von deinem Budget, angezeigt in deinem Profil",
     name: "Name des Betriebs",
@@ -682,6 +688,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     category: "Categoria",
     subcategory: "Sottocategoria",
     fieldVehicleTypes: "Tipi di veicoli offerti",
+    fieldPropertyTypes: "Tipi di immobili offerti",
     fieldAvgDailyPrice: "Prezzo medio giornaliero (MAD)",
     avgDailyPriceHint: "Dà ai clienti un'idea del tuo budget, visualizzato nel tuo profilo",
     name: "Nome dell'attività",
@@ -795,6 +802,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     category: "Categoria",
     subcategory: "Subcategoria",
     fieldVehicleTypes: "Tipos de veículos oferecidos",
+    fieldPropertyTypes: "Tipos de imóveis oferecidos",
     fieldAvgDailyPrice: "Preço médio diário (MAD)",
     avgDailyPriceHint: "Dá aos clientes uma ideia do seu orçamento, exibido em seu perfil",
     name: "Nome do estabelecimento",
@@ -908,6 +916,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     category: "Категория",
     subcategory: "Подкатегория",
     fieldVehicleTypes: "Предлагаемые типы транспортных средств",
+    fieldPropertyTypes: "Предлагаемые типы недвижимости",
     fieldAvgDailyPrice: "Средняя дневная цена (MAD)",
     avgDailyPriceHint: "Дает клиентам представление о вашем бюджете, отображаемое в вашем профиле",
     name: "Название заведения",
@@ -1021,6 +1030,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     category: "类别",
     subcategory: "子类别",
     fieldVehicleTypes: "提供的车型",
+    fieldPropertyTypes: "提供的房产类型",
     fieldAvgDailyPrice: "平均日价格 (MAD)",
     avgDailyPriceHint: "让客户了解您的预算，显示在您的个人资料上",
     name: "商户名称",
@@ -1133,6 +1143,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     category: "카테고리",
     subcategory: "하위 카테고리",
     fieldVehicleTypes: "제공되는 차량 유형",
+    fieldPropertyTypes: "제공되는 부동산 유형",
     fieldAvgDailyPrice: "평균 일일 요금 (MAD)",
     avgDailyPriceHint: "고객에게 예산에 대한 개념을 제공하며 프로필에 표시됩니다",
     name: "업체명",
@@ -1246,6 +1257,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     category: "Kategori",
     subcategory: "Alt kategori",
     fieldVehicleTypes: "Sunulan araç türleri",
+    fieldPropertyTypes: "Sunulan emlak türleri",
     fieldAvgDailyPrice: "Ortalama günlük fiyat (MAD)",
     avgDailyPriceHint: "Müşterilere bütçeniz hakkında bir fikir verir ve profilinizde görüntülenir",
     name: "İşletme adı",
@@ -1359,6 +1371,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     category: "קטגוריה",
     subcategory: "תת-קטגוריה",
     fieldVehicleTypes: "סוגי כלים שמוצעים",
+    fieldPropertyTypes: "סוגי הנכסים המוצעים",
     fieldAvgDailyPrice: "מחיר יומי ממוצע (MAD)",
     avgDailyPriceHint: "נותן ללקוחות מושג של התקציב שלך, המוצג בפרופיל שלך",
     name: "שם העסק",

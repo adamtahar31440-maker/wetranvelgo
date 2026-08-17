@@ -282,6 +282,7 @@
     "menuBannerLabel": "Pancarta",
     "pendingBannerText": "Tu cuenta está siendo revisada por nuestro equipo, pero tu perfil ya es visible en línea. Recibirás un correo de confirmación una vez que tu cuenta sea validada permanentemente.",
     "fieldVehicleTypes": "Tipos de vehículos ofrecidos",
+    "fieldPropertyTypes": "Tipos de propiedades ofrecidas",
     "fieldAvgDailyPrice": "Precio medio diario (MAD)",
     "avgDailyPriceHint": "Da a los clientes una idea de tu presupuesto, mostrado en tu perfil"
   },

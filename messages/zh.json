@@ -282,6 +282,7 @@
     "menuBannerLabel": "横幅",
     "pendingBannerText": "您的账户正在我们的团队审核中，但您的个人资料已在线可见。一旦您的账户永久通过验证，您将收到一封确认电子邮件。",
     "fieldVehicleTypes": "提供的车型",
+    "fieldPropertyTypes": "提供的房产类型",
     "fieldAvgDailyPrice": "平均日价格 (MAD)",
     "avgDailyPriceHint": "让客户了解您的预算，显示在您的个人资料上"
   },

@@ -75,7 +75,10 @@ export function EstablishmentForm({
 }) {
   const activityOptions = flattenSubcategories(categories, subcategoriesByCategory);
   const [categoryId, setCategoryId] = useState<number | undefined>(establishment?.categoryId);
-  const isCarRental = categories.find((c) => c.id === categoryId)?.type === "location-vehicules";
+  const categoryType = categories.find((c) => c.id === categoryId)?.type;
+  const isCarRental = categoryType === "location-vehicules";
+  const isRealEstate = categoryType === "agences-immobilieres";
+  const hasMultiSubcategory = isCarRental || isRealEstate;
   return (
     <form action={upsertEstablishment} className="space-y-8">
       <input type="hidden" name="locale" value={locale} />
@@ -99,28 +102,31 @@ export function EstablishmentForm({
         defaultCategoryId={establishment?.categoryId}
         defaultSubcategory={establishment?.subcategory}
         onCategoryChange={setCategoryId}
+        hideSubcategory={hasMultiSubcategory}
       />
 
-      {isCarRental && (
+      {hasMultiSubcategory && (
         <section className="space-y-4 rounded-xl border border-ocean-dark/20 bg-ocean-dark/5 p-4">
           <SubcategoryMultiSelect
             options={subcategoriesByCategory[categoryId ?? -1] ?? []}
             locale="fr"
             defaultValues={establishment?.subcategories ?? []}
-            label="Types de véhicules proposés"
+            label={isCarRental ? "Types de véhicules proposés" : "Types de biens proposés"}
           />
-          <div>
-            <label className={labelClass}>Prix moyen par jour (MAD)</label>
-            <input
-              type="number"
-              name="avgDailyPriceMad"
-              min={0}
-              step={1}
-              defaultValue={establishment?.avgDailyPriceMad ?? ""}
-              className={inputClass}
-            />
-            <p className="mt-1 text-xs text-foreground/50">Donne une idée du budget aux clients, affiché sur la fiche.</p>
-          </div>
+          {isCarRental && (
+            <div>
+              <label className={labelClass}>Prix moyen par jour (MAD)</label>
+              <input
+                type="number"
+                name="avgDailyPriceMad"
+                min={0}
+                step={1}
+                defaultValue={establishment?.avgDailyPriceMad ?? ""}
+                className={inputClass}
+              />
+              <p className="mt-1 text-xs text-foreground/50">Donne une idée du budget aux clients, affiché sur la fiche.</p>
+            </div>
+          )}
         </section>
       )}
 

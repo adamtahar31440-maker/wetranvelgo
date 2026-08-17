@@ -63,6 +63,10 @@ export function ProApplicationForm({
   const [categoryId, setCategoryId] = useState<number | null>(null);
   const categoryType = categories.find((c) => c.id === categoryId)?.type;
   const isCarRental = categoryType === "location-vehicules";
+  const isRealEstate = categoryType === "agences-immobilieres";
+  // Both categories let the pro pick several subcategories at once (vehicle
+  // types / property types) instead of a single primary one.
+  const hasMultiSubcategory = isCarRental || isRealEstate;
 
   const [cityId, setCityId] = useState<number | null>(cities[0]?.id ?? null);
   const handleLocationChange = (lat: number, lng: number) => {
@@ -147,7 +151,25 @@ export function ProApplicationForm({
           otherLabel={t.otherOptionLabel}
           otherPlaceholder={t.otherActivitySpecifyPlaceholder}
           onCategoryChange={setCategoryId}
+          hideSubcategory={hasMultiSubcategory}
         />
+
+        {hasMultiSubcategory && (
+          <div className="space-y-4 rounded-xl border border-ocean-dark/20 bg-ocean-dark/5 p-4">
+            <SubcategoryMultiSelect
+              options={subcategoriesByCategory[categoryId ?? -1] ?? []}
+              locale={lang}
+              label={isCarRental ? t.fieldVehicleTypes : t.fieldPropertyTypes}
+            />
+            {isCarRental && (
+              <div>
+                <label className={labelClass}>{t.fieldAvgDailyPrice}</label>
+                <input type="number" name="avgDailyPriceMad" min={0} step={1} className={inputClass} />
+                <p className="mt-1 text-xs text-foreground/50">{t.avgDailyPriceHint}</p>
+              </div>
+            )}
+          </div>
+        )}
 
         <div>
           <label className={labelClass}>{t.name}</label>

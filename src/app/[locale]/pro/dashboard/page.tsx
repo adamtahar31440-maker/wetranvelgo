@@ -94,6 +94,8 @@ export default async function ProDashboardPage({
     ? categories.find((c) => c.id === myEstablishment.categoryId)?.type
     : undefined;
   const isCarRental = myEstablishmentCategoryType === "location-vehicules";
+  const isRealEstate = myEstablishmentCategoryType === "agences-immobilieres";
+  const hasMultiSubcategory = isCarRental || isRealEstate;
   const currentPlanKey = subscription?.status === "active" ? subscription.planKey : "starter";
   const maxPhotos = plans.find((p) => p.key === currentPlanKey)?.maxPhotos ?? null;
   const subcategoriesByCategory = Object.fromEntries(
@@ -280,26 +282,28 @@ export default async function ProDashboardPage({
                 ))}
               </select>
             </div>
-            {isCarRental && (
+            {hasMultiSubcategory && (
               <div className="space-y-4 rounded-xl border border-ocean-dark/20 bg-ocean-dark/5 p-4">
                 <SubcategoryMultiSelect
                   options={myEstablishmentSubcategories}
                   locale={locale}
                   defaultValues={myEstablishment.subcategories ?? []}
-                  label={t("fieldVehicleTypes")}
+                  label={isCarRental ? t("fieldVehicleTypes") : t("fieldPropertyTypes")}
                 />
-                <div>
-                  <label className={labelClass}>{t("fieldAvgDailyPrice")}</label>
-                  <input
-                    type="number"
-                    name="avgDailyPriceMad"
-                    min={0}
-                    step={1}
-                    defaultValue={myEstablishment.avgDailyPriceMad ?? ""}
-                    className={inputClass}
-                  />
-                  <p className="mt-1 text-xs text-foreground/50">{t("avgDailyPriceHint")}</p>
-                </div>
+                {isCarRental && (
+                  <div>
+                    <label className={labelClass}>{t("fieldAvgDailyPrice")}</label>
+                    <input
+                      type="number"
+                      name="avgDailyPriceMad"
+                      min={0}
+                      step={1}
+                      defaultValue={myEstablishment.avgDailyPriceMad ?? ""}
+                      className={inputClass}
+                    />
+                    <p className="mt-1 text-xs text-foreground/50">{t("avgDailyPriceHint")}</p>
+                  </div>
+                )}
               </div>
             )}
             {/* Every business now uses the dedicated digital catalog/QR section

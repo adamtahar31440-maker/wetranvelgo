@@ -127,11 +127,15 @@ export async function upsertEstablishment(formData: FormData) {
   }));
   const services = activitiesInput.length > 0 ? { fr: activitiesInput } : null;
 
+  const subcategoriesList = formData.getAll("subcategories").map(String).filter(Boolean);
   const data = {
     cityId: Number(formData.get("cityId")),
     categoryId: Number(formData.get("categoryId")),
-    subcategory: String(formData.get("subcategory") ?? ""),
-    subcategories: formData.getAll("subcategories").map(String).filter(Boolean),
+    // Categories that hide the single-select (car rental, real estate) never
+    // submit a "subcategory" field — fall back to the first checked box so
+    // the required column still gets a sensible primary value.
+    subcategory: String(formData.get("subcategory") ?? "") || subcategoriesList[0] || "",
+    subcategories: subcategoriesList,
     avgDailyPriceMad: formData.get("avgDailyPriceMad") ? Number(formData.get("avgDailyPriceMad")) : null,
     slug: id ? String(formData.get("slug")) : slugify(name),
     name: localizedName,

@@ -282,6 +282,7 @@
     "menuBannerLabel": "배너",
     "pendingBannerText": "귀하의 계정은 당사 팀이 검토 중이지만 귀하의 프로필은 이미 온라인에 표시되어 있습니다. 계정이 영구적으로 확인되면 확인 이메일을 받게 됩니다.",
     "fieldVehicleTypes": "제공되는 차량 유형",
+    "fieldPropertyTypes": "제공되는 부동산 유형",
     "fieldAvgDailyPrice": "평균 일일 요금 (MAD)",
     "avgDailyPriceHint": "고객에게 예산에 대한 개념을 제공하며 프로필에 표시됩니다"
   },
