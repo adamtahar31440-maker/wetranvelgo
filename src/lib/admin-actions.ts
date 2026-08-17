@@ -29,7 +29,7 @@ import {
   labelApplications,
   siteSections,
 } from "@/db/schema";
-import { can, type Role } from "@/lib/roles";
+import { can, ADMIN_ROLES, type Role } from "@/lib/roles";
 import { LABEL_CRITERIA } from "@/lib/label-criteria";
 import { slugify } from "@/lib/slug";
 import { readLocalized, ALL_LOCALES } from "@/lib/localized-form";
@@ -693,9 +693,16 @@ export async function setProfessionalStatus(
 
     if (pro) {
       const client = await clerkClient();
-      await client.users.updateUserMetadata(pro.clerkUserId, {
-        publicMetadata: { role: "professional" satisfies Role },
-      });
+      const existing = await client.users.getUser(pro.clerkUserId);
+      const currentRole = existing.publicMetadata?.role as Role | undefined;
+      // Never demote a staff/admin account that happens to also hold a pro
+      // application (e.g. testing) — only grant "professional" to accounts
+      // that don't already have an elevated role.
+      if (!currentRole || !ADMIN_ROLES.includes(currentRole)) {
+        await client.users.updateUserMetadata(pro.clerkUserId, {
+          publicMetadata: { ...existing.publicMetadata, role: "professional" satisfies Role },
+        });
+      }
     }
 
     if (pro?.email) {
