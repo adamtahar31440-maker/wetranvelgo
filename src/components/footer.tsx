@@ -60,7 +60,7 @@ export function Footer({
             </p>
             <ul className="mt-3 space-y-2">
               <li><Link href={`/${locale}/${ville}/contact`} className="text-sm text-white/80 hover:text-white">{t("contact")}</Link></li>
-              <li><Link href={`/${locale}/${ville}/mentions-legales`} className="text-sm text-white/80 hover:text-white">{t("legal")}</Link></li>
+              <li><Link href={`/${locale}/pro/mentions-legales`} className="text-sm text-white/80 hover:text-white">{t("legal")}</Link></li>
               <li><Link href={`/${locale}/pro/confidentialite`} className="text-sm text-white/80 hover:text-white">{t("privacy")}</Link></li>
             </ul>
           </div>
