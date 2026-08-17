@@ -14,16 +14,18 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.join(__dirname),
   },
-  // www.wetravelgo.com is the canonical domain — matches how the domain is set
-  // up on Vercel (apex wetravelgo.com already redirects to www at the DNS/domain
-  // level), so the app-level redirect below just mirrors that instead of fighting
-  // it. Keeps metadata/alternates/canonical URLs pointed at a single live origin.
+  // wetravelgo.com (bare apex) is the canonical domain — it's Clerk's
+  // configured Primary Domain for this instance (Frontend API, account
+  // portal, and auth cookies all live there). Serving the app anywhere else
+  // makes Clerk treat the request as cross-domain and triggers a handshake
+  // redirect that breaks routing, so www must redirect to the apex, not the
+  // other way around.
   async redirects() {
     return [
       {
         source: "/:path*",
-        has: [{ type: "host", value: "wetravelgo.com" }],
-        destination: "https://www.wetravelgo.com/:path*",
+        has: [{ type: "host", value: "www.wetravelgo.com" }],
+        destination: "https://wetravelgo.com/:path*",
         permanent: true,
       },
       // essaouirainside.com is the old single-city domain — Essaouira is now
@@ -33,7 +35,7 @@ const nextConfig: NextConfig = {
       {
         source: "/",
         has: [{ type: "host", value: "essaouirainside.com" }],
-        destination: "https://www.wetravelgo.com/fr/essaouira",
+        destination: "https://wetravelgo.com/fr/essaouira",
         permanent: true,
       },
       // The digital-menu QR route is locale-agnostic on both domains (see
@@ -41,20 +43,20 @@ const nextConfig: NextConfig = {
       {
         source: "/menu/:path*",
         has: [{ type: "host", value: "essaouirainside.com" }],
-        destination: "https://www.wetravelgo.com/menu/:path*",
+        destination: "https://wetravelgo.com/menu/:path*",
         permanent: true,
       },
       {
         source: "/:locale(fr|en|ar|es|de|it|pt|ru|zh|ko|tr|he)/:path*",
         has: [{ type: "host", value: "essaouirainside.com" }],
-        destination: "https://www.wetravelgo.com/:locale/essaouira/:path*",
+        destination: "https://wetravelgo.com/:locale/essaouira/:path*",
         permanent: true,
       },
       // Anything else unmatched still lands on the live site rather than 404ing.
       {
         source: "/:path*",
         has: [{ type: "host", value: "essaouirainside.com" }],
-        destination: "https://www.wetravelgo.com/fr/essaouira",
+        destination: "https://wetravelgo.com/fr/essaouira",
         permanent: true,
       },
       // Same fix, but for old essaouirainside.com-style links (no city segment)

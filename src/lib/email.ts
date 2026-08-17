@@ -22,7 +22,7 @@ export async function sendWelcomeEmail(to: string, contactName: string, companyN
       react: WelcomeEmail({
         contactName,
         companyName,
-        dashboardUrl: "https://www.wetravelgo.com/fr/pro/dashboard",
+        dashboardUrl: "https://wetravelgo.com/fr/pro/dashboard",
       }),
     });
   } catch (err) {
@@ -45,7 +45,7 @@ export async function sendActivationEmail(
       react: ActivationEmail({
         contactName,
         companyName,
-        dashboardUrl: "https://www.wetravelgo.com/fr/pro/dashboard",
+        dashboardUrl: "https://wetravelgo.com/fr/pro/dashboard",
         listingUrl,
         catalogLabel,
       }),

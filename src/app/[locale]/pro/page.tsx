@@ -13,7 +13,7 @@ export async function generateMetadata({
     title: "Espace Professionnel",
     description:
       "Rejoignez WeTravelGo en tant que professionnel : restaurants, hôtels, riads, activités, agences immobilières. Inscription gratuite.",
-    alternates: { canonical: `https://www.wetravelgo.com/${locale}/pro` },
+    alternates: { canonical: `https://wetravelgo.com/${locale}/pro` },
   };
 }
 

@@ -228,7 +228,7 @@ export function DigitalMenuView({
       </main>
 
       <footer className="border-t border-black/5 px-5 py-4 text-center">
-        <a href={`https://www.wetravelgo.com/${locale}`} className="text-xs font-medium text-foreground/40 hover:text-terracotta">
+        <a href={`https://wetravelgo.com/${locale}`} className="text-xs font-medium text-foreground/40 hover:text-terracotta">
           {chrome.poweredBy}
         </a>
       </footer>

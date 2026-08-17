@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const origin = req.headers.get("origin") ?? "https://www.wetravelgo.com";
+  const origin = req.headers.get("origin") ?? "https://wetravelgo.com";
 
   const session = await stripe.checkout.sessions.create({
     mode: "subscription",

@@ -707,7 +707,7 @@ export async function setProfessionalStatus(
           db.select().from(cities).where(eq(cities.id, establishment.cityId)),
         ]);
         if (category && city) {
-          listingUrl = `https://www.wetravelgo.com/fr/${city.slug}/${category.slug}/${establishment.slug}`;
+          listingUrl = `https://wetravelgo.com/fr/${city.slug}/${category.slug}/${establishment.slug}`;
           catalogLabel = qrFeatureLabel(category.type, "fr");
         }
       }
