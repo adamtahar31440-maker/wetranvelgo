@@ -13,10 +13,12 @@ type NavLink = { href: string; label: string; pages?: { href: string; label: str
 export function Header({
   ville,
   siteName = "WeTravelGo",
+  cityLabel,
   navLinks = [],
 }: {
   ville: string;
   siteName?: string;
+  cityLabel?: string;
   navLinks?: NavLink[];
 }) {
   const t = useTranslations("nav");
@@ -40,9 +42,16 @@ export function Header({
   return (
     <header className="relative z-50 border-b border-black/5 bg-background">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-        <Link href={`/${locale}/${ville}`} className="shrink-0 text-lg font-semibold tracking-tight text-ocean-dark">
-          {siteNameFirst}
-          {siteNameRest.length > 0 && <> <span className="text-terracotta">{siteNameRest.join(" ")}</span></>}
+        <Link href={`/${locale}/${ville}`} className="shrink-0 leading-tight">
+          <span className="block text-lg font-semibold tracking-tight text-ocean-dark">
+            {siteNameFirst}
+            {siteNameRest.length > 0 && <> <span className="text-terracotta">{siteNameRest.join(" ")}</span></>}
+          </span>
+          {cityLabel && (
+            <span className="block text-xs font-medium uppercase tracking-wide text-foreground/50">
+              {cityLabel}
+            </span>
+          )}
         </Link>
 
         <nav className="hidden items-center gap-6 lg:flex">

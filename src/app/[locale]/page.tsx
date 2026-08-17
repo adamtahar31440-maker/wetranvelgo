@@ -41,7 +41,7 @@ export default async function CityPickerPage({
   return (
     <div className="flex min-h-full flex-col bg-ocean-dark text-white">
       <header className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6">
-        <Image src="/logo-wetravelgo-on-dark.png" alt="WeTravelGo" width={200} height={66} className="h-8 w-auto sm:h-9" priority />
+        <span className="text-lg font-semibold tracking-tight text-white">WeTravelGo</span>
       </header>
 
       <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-10 px-4 py-10 sm:px-6">

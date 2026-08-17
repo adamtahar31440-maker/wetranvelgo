@@ -75,7 +75,7 @@ export default async function SiteLayout({
 
   return (
     <>
-      <Header ville={ville} siteName={siteName} navLinks={headerNavLinks} />
+      <Header ville={ville} siteName={siteName} cityLabel={cityLabel} navLinks={headerNavLinks} />
       <main className="flex-1">{children}</main>
       <Footer ville={ville} siteName={siteName} cityLabel={cityLabel} activeModules={Array.from(activeModules)} navLinks={footerNavLinks} />
       {activeModules.has("assistance") && sosContacts.length > 0 && <SosButton contacts={sosContacts} />}
