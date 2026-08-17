@@ -4,9 +4,9 @@ import { cities, emergencyContacts, contentPages, modules } from "../src/db/sche
 
 const db = getDb();
 
-const VERIFY_FR = "⚠️ Numéro à vérifier/compléter par l'équipe Essaouira Inside.";
-const VERIFY_EN = "⚠️ Number to be verified/completed by the Essaouira Inside team.";
-const VERIFY_AR = "⚠️ يجب التحقق من هذا الرقم وإكماله من طرف فريق Essaouira Inside.";
+const VERIFY_FR = "⚠️ Numéro à vérifier/compléter par l'équipe WeTravelGo.";
+const VERIFY_EN = "⚠️ Number to be verified/completed by the WeTravelGo team.";
+const VERIFY_AR = "⚠️ يجب التحقق من هذا الرقم وإكماله من طرف فريق WeTravelGo.";
 
 async function main() {
   const [essaouira] = await db.select().from(cities).where(eq(cities.slug, "essaouira"));
@@ -173,9 +173,9 @@ const ASSISTANCE_GUIDES_SEED = [
         order: 6,
         title: { fr: "J'ai besoin d'un avocat ou d'un traducteur", en: "I need a lawyer or a translator", ar: "أحتاج محامياً أو مترجماً" },
         body: {
-          fr: "1. Votre ambassade ou consulat peut vous fournir une liste d'avocats et de traducteurs assermentés locaux.\n2. Le barreau d'Essaouira/Marrakech peut orienter vers un avocat disponible.\n3. En cas d'urgence, l'équipe Essaouira Inside peut vous aider à trouver un contact — utilisez le bouton SOS.",
-          en: "1. Your embassy or consulate can provide a list of local sworn lawyers and translators.\n2. The Essaouira/Marrakech bar association can direct you to an available lawyer.\n3. In an emergency, the Essaouira Inside team can help you find a contact — use the SOS button.",
-          ar: "1. يمكن لسفارتك أو قنصليتك تزويدك بقائمة من المحامين والمترجمين المحلفين المحليين.\n2. يمكن لنقابة المحامين بالصويرة/مراكش توجيهك إلى محامٍ متاح.\n3. في حالة الطوارئ، يمكن لفريق Essaouira Inside مساعدتك في إيجاد جهة اتصال — استخدم زر SOS.",
+          fr: "1. Votre ambassade ou consulat peut vous fournir une liste d'avocats et de traducteurs assermentés locaux.\n2. Le barreau d'Essaouira/Marrakech peut orienter vers un avocat disponible.\n3. En cas d'urgence, l'équipe WeTravelGo peut vous aider à trouver un contact — utilisez le bouton SOS.",
+          en: "1. Your embassy or consulate can provide a list of local sworn lawyers and translators.\n2. The Essaouira/Marrakech bar association can direct you to an available lawyer.\n3. In an emergency, the WeTravelGo team can help you find a contact — use the SOS button.",
+          ar: "1. يمكن لسفارتك أو قنصليتك تزويدك بقائمة من المحامين والمترجمين المحلفين المحليين.\n2. يمكن لنقابة المحامين بالصويرة/مراكش توجيهك إلى محامٍ متاح.\n3. في حالة الطوارئ، يمكن لفريق WeTravelGo مساعدتك في إيجاد جهة اتصال — استخدم زر SOS.",
         },
       },
 ];

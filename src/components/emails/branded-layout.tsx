@@ -27,14 +27,14 @@ export function BrandedEmailLayout({
         <Container style={{ maxWidth: 480, margin: "0 auto", backgroundColor: "#ffffff", borderRadius: 16, overflow: "hidden", border: `1px solid #eee` }}>
           <Section style={{ backgroundColor: COLORS.oceanDark, padding: "24px 32px" }}>
             <Text style={{ margin: 0, color: COLORS.terracotta, fontSize: 13, fontWeight: 700, letterSpacing: 2 }}>
-              ESSAOUIRA INSIDE
+              WETRAVELGO
             </Text>
           </Section>
           <Section style={{ padding: "32px 32px 8px" }}>{children}</Section>
           <Hr style={{ borderColor: "#eee", margin: "24px 32px 0" }} />
           <Section style={{ padding: "16px 32px 28px" }}>
             <Text style={{ margin: 0, fontSize: 12, color: "#999" }}>
-              Essaouira Inside — La plateforme de référence pour découvrir, préparer et vivre Essaouira.
+              WeTravelGo — La plateforme de référence pour découvrir, préparer et vivre chaque ville.
             </Text>
           </Section>
         </Container>

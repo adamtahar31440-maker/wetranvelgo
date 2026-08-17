@@ -31,7 +31,7 @@ export function SubscriptionPlans({ plans, currentPlanKey }: { plans: Plan[]; cu
       if (!res.ok || !data.url) {
         setError(
           data.error === "stripe_not_configured"
-            ? "Le paiement en ligne n'est pas encore activé — contacte l'équipe Essaouira Inside."
+            ? "Le paiement en ligne n'est pas encore activé — contacte l'équipe WeTravelGo."
             : "Une erreur est survenue, réessaie plus tard."
         );
         setLoadingKey(null);

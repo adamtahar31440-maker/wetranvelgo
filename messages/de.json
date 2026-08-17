@@ -14,7 +14,7 @@
     "professionals": "Profis"
   },
   "home": {
-    "heroTitle": "Essaouira Inside",
+    "heroTitle": "WeTravelGo",
     "heroSubtitle": "Die Referenzplattform, um Essaouira zu entdecken, zu planen und zu erleben",
     "searchPlaceholder": "Hotel, Restaurant oder Aktivität suchen...",
     "categories": "Nach Kategorie entdecken",
@@ -136,7 +136,7 @@
   },
   "dashboard": {
     "greeting": "Hallo {name}",
-    "tagline": "Ihr Essaouira-Inside-Profibereich.",
+    "tagline": "Ihr WeTravelGo-Profibereich.",
     "language": "Sprache des Dashboards",
     "pendingTitle": "Antrag wird geprüft",
     "pendingBody": "Danke {name}! Ihr Antrag wird derzeit geprüft.",
@@ -214,7 +214,7 @@
     "updateSuccess": "Ihr Profibereich wurde aktualisiert.",
     "scanSuccess": "{count} Eintrag/Einträge erkannt und zur Liste hinzugefügt.",
     "noEstablishment": "Ihrem Konto ist noch kein Profil zugeordnet. Unser Team wird Ihr Betriebsprofil erstellen.",
-    "labelTitle": "Essaouira Inside Approved-Siegel",
+    "labelTitle": "WeTravelGo Approved-Siegel",
     "downloadCertificate": "Zertifikat herunterladen",
     "downloadBadge": "Abzeichen herunterladen",
     "viewOfficialPage": "Offizielle Seite ansehen",
@@ -222,15 +222,15 @@
     "labelStatusInfoRequested": "Unser Team hat zusätzliche Informationen angefordert",
     "labelStatusVisitScheduled": "Ein Besuch wurde geplant",
     "labelStatusOnHold": "Antrag zurückgestellt",
-    "labelApplicationDate": "Ihr Antrag vom {date} wird derzeit vom Essaouira-Inside-Team bearbeitet.",
-    "requestLabel": "Essaouira Inside Approved-Siegel beantragen",
+    "labelApplicationDate": "Ihr Antrag vom {date} wird derzeit vom WeTravelGo-Team bearbeitet.",
+    "requestLabel": "WeTravelGo Approved-Siegel beantragen",
     "labelContactName": "Name des Ansprechpartners",
     "labelEmail": "E-Mail",
     "labelSocialLinks": "Soziale Netzwerke",
     "labelActivityDescription": "Beschreibung der Tätigkeit",
     "labelGallery": "Fotogalerie (eine URL pro Zeile)",
     "labelMotivation": "Warum möchten Sie das Siegel erhalten?",
-    "labelCharter": "Ich habe die Charta des Essaouira Inside Approved-Siegels gelesen und akzeptiere sie.",
+    "labelCharter": "Ich habe die Charta des WeTravelGo Approved-Siegels gelesen und akzeptiere sie.",
     "submitLabelApplication": "Antrag senden",
     "invoicesTitle": "Rechnungen",
     "noInvoices": "Noch keine Rechnungen.",
@@ -315,7 +315,7 @@
   "menuPage": {
     "allCategories": "Alle",
     "noItems": "Inhalte derzeit nicht verfügbar.",
-    "poweredBy": "Unterstützt von Essaouira Inside",
+    "poweredBy": "Unterstützt von WeTravelGo",
     "viewEstablishment": "Profil anzeigen"
   }
 }

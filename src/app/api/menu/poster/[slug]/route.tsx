@@ -31,7 +31,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ slug: st
         }}
       >
         <div style={{ fontSize: 22, fontWeight: 700, letterSpacing: 3, color: "#bf6a45", display: "flex" }}>
-          ESSAOUIRA INSIDE
+          WETRAVELGO
         </div>
 
         {establishment.menuPhoto && (
@@ -80,7 +80,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ slug: st
         </div>
 
         <div style={{ marginTop: 70, fontSize: 18, color: "#8a8a8a", display: "flex" }}>
-          essaouirainside.com
+          wetravelgo.com
         </div>
       </div>
     ),

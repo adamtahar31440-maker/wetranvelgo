@@ -8,7 +8,7 @@ export function LabelBadgeHistory({ badges, compact }: { badges: Badge[]; compac
     <div className={compact ? "space-y-1" : "rounded-2xl border border-terracotta/20 bg-terracotta/5 p-5"}>
       {!compact && (
         <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-terracotta">
-          Essaouira Inside Approved
+          WeTravelGo Approved
         </p>
       )}
       <div className="flex flex-wrap gap-2">

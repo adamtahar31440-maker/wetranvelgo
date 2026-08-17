@@ -95,7 +95,7 @@ export function SiteSectionForm({ locale, section }: { locale: string; section?:
           className={inputClass}
         />
         <p className="mt-1 text-xs text-foreground/50">
-          Détermine l&apos;adresse publique, ex : essaouirainside.com/transport
+          Détermine l&apos;adresse publique, ex : wetravelgo.com/essaouira/transport
         </p>
       </div>
 

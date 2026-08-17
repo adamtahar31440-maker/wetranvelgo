@@ -30,7 +30,7 @@ export default async function AdminSettingsPage({
       .filter(Boolean);
     await updateSiteSettings(
       {
-        siteName: String(formData.get("siteName") ?? "Essaouira Inside"),
+        siteName: String(formData.get("siteName") ?? "WeTravelGo"),
         logoUrl: String(formData.get("logoUrl") ?? ""),
         primaryColor: String(formData.get("primaryColor") ?? ""),
         secondaryColor: String(formData.get("secondaryColor") ?? ""),
@@ -63,7 +63,7 @@ export default async function AdminSettingsPage({
       <form action={save} className="max-w-2xl space-y-6 rounded-2xl border border-black/5 bg-white p-6">
         <div>
           <label className={labelClass}>Nom du site</label>
-          <input name="siteName" defaultValue={settings?.siteName ?? "Essaouira Inside"} className={inputClass} />
+          <input name="siteName" defaultValue={settings?.siteName ?? "WeTravelGo"} className={inputClass} />
         </div>
         <div>
           <label className={labelClass}>URL du logo</label>

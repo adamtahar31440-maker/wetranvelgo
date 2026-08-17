@@ -105,7 +105,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
   fr: {
     heading: "Devenir partenaire",
     intro:
-      "Remplis la fiche complète de ton établissement — elle sera publiée immédiatement. Un membre de l'équipe Essaouira Inside l'examinera ensuite pour valider définitivement ton compte.",
+      "Remplis la fiche complète de ton établissement — elle sera publiée immédiatement. Un membre de l'équipe WeTravelGo l'examinera ensuite pour valider définitivement ton compte.",
     langLabel: "Langue de rédaction",
     langHint:
       "Choisissez la langue dans laquelle vous allez rédiger votre fiche. Dès l'envoi de votre demande, elle sera automatiquement traduite dans toutes les autres langues du site avant d'être examinée par notre équipe.",
@@ -213,7 +213,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
   en: {
     heading: "Become a partner",
     intro:
-      "Complete your establishment's profile — it will be published immediately. A member of the Essaouira Inside team will then review it to permanently validate your account.",
+      "Complete your establishment's profile — it will be published immediately. A member of the WeTravelGo team will then review it to permanently validate your account.",
     langLabel: "Writing language",
     langHint:
       "Choose the language you'll write your listing in. As soon as you submit your application, it will be automatically translated into every other language on the site before being reviewed by our team.",
@@ -321,7 +321,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
   ar: {
     heading: "كن شريكًا",
     intro:
-      "أكمل ملف مؤسستك — سيتم نشره فوراً. سيقوم أحد أعضاء فريق Essaouira Inside بفحصه بعد ذلك للتحقق النهائي من حسابك.",
+      "أكمل ملف مؤسستك — سيتم نشره فوراً. سيقوم أحد أعضاء فريق WeTravelGo بفحصه بعد ذلك للتحقق النهائي من حسابك.",
     langLabel: "لغة الكتابة",
     langHint:
       "اختر اللغة التي ستكتب بها ملفك. بمجرد إرسال طلبك، سيُترجم تلقائيًا إلى جميع اللغات الأخرى في الموقع قبل مراجعته من قبل فريقنا.",
@@ -428,7 +428,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
   es: {
     heading: "Conviértete en socio",
     intro:
-      "Completa el perfil de tu establecimiento — se publicará inmediatamente. Un miembro del equipo de Essaouira Inside lo revisará para validar definitivamente tu cuenta.",
+      "Completa el perfil de tu establecimiento — se publicará inmediatamente. Un miembro del equipo de WeTravelGo lo revisará para validar definitivamente tu cuenta.",
     langLabel: "Idioma de redacción",
     langHint:
       "Elige el idioma en el que vas a redactar tu ficha. En cuanto envíes tu solicitud, se traducirá automáticamente a todos los demás idiomas del sitio antes de ser revisada por nuestro equipo.",
@@ -536,7 +536,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
   de: {
     heading: "Partner werden",
     intro:
-      "Füllen Sie Ihr Etablissementsprofil aus — es wird sofort veröffentlicht. Ein Mitglied des Essaouira Inside-Teams wird es dann überprüfen, um Ihren Account endgültig zu validieren.",
+      "Füllen Sie Ihr Etablissementsprofil aus — es wird sofort veröffentlicht. Ein Mitglied des WeTravelGo-Teams wird es dann überprüfen, um Ihren Account endgültig zu validieren.",
     langLabel: "Sprache der Eingabe",
     langHint:
       "Wählen Sie die Sprache, in der Sie Ihr Profil verfassen möchten. Sobald Sie Ihren Antrag senden, wird er automatisch in alle anderen Sprachen der Website übersetzt, bevor unser Team ihn prüft.",
@@ -644,7 +644,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
   it: {
     heading: "Diventa partner",
     intro:
-      "Completa il profilo del tuo stabilimento — sarà pubblicato immediatamente. Un membro del team di Essaouira Inside lo esaminerà per convalidare definitivamente il tuo account.",
+      "Completa il profilo del tuo stabilimento — sarà pubblicato immediatamente. Un membro del team di WeTravelGo lo esaminerà per convalidare definitivamente il tuo account.",
     langLabel: "Lingua di redazione",
     langHint:
       "Scegli la lingua in cui scriverai la tua scheda. Non appena invii la richiesta, verrà tradotta automaticamente in tutte le altre lingue del sito prima di essere esaminata dal nostro team.",
@@ -752,7 +752,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
   pt: {
     heading: "Torne-se parceiro",
     intro:
-      "Complete o perfil do seu estabelecimento — será publicado imediatamente. Um membro da equipe Essaouira Inside o revisará para validar permanentemente sua conta.",
+      "Complete o perfil do seu estabelecimento — será publicado imediatamente. Um membro da equipe WeTravelGo o revisará para validar permanentemente sua conta.",
     langLabel: "Idioma de redação",
     langHint:
       "Escolha o idioma em que você vai redigir sua ficha. Assim que enviar sua solicitação, ela será traduzida automaticamente para todos os outros idiomas do site antes de ser analisada pela nossa equipe.",
@@ -860,7 +860,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
   ru: {
     heading: "Стать партнёром",
     intro:
-      "Заполните профиль вашего заведения — он будет опубликован сразу же. Затем сотрудник команды Essaouira Inside проверит его, чтобы окончательно подтвердить ваш аккаунт.",
+      "Заполните профиль вашего заведения — он будет опубликован сразу же. Затем сотрудник команды WeTravelGo проверит его, чтобы окончательно подтвердить ваш аккаунт.",
     langLabel: "Язык заполнения",
     langHint:
       "Выберите язык, на котором вы заполните анкету. Как только вы отправите заявку, она будет автоматически переведена на все остальные языки сайта перед рассмотрением нашей командой.",
@@ -968,7 +968,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
   zh: {
     heading: "成为合作伙伴",
     intro:
-      "填写您的设施完整档案——它将立即发布。Essaouira Inside团队的成员随后将对其进行审核，以最终验证您的账户。",
+      "填写您的设施完整档案——它将立即发布。WeTravelGo团队的成员随后将对其进行审核，以最终验证您的账户。",
     langLabel: "填写语言",
     langHint:
       "请选择您将用来填写资料的语言。提交申请后，系统会在我们团队审核之前自动将其翻译成网站的所有其他语言。",
@@ -1075,7 +1075,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
   ko: {
     heading: "파트너 되기",
     intro:
-      "귀사의 시설 프로필을 완성하세요 — 즉시 게시됩니다. Essaouira Inside 팀의 한 멤버가 이를 검토하여 귀사의 계정을 최종적으로 확인할 것입니다.",
+      "귀사의 시설 프로필을 완성하세요 — 즉시 게시됩니다. WeTravelGo 팀의 한 멤버가 이를 검토하여 귀사의 계정을 최종적으로 확인할 것입니다.",
     langLabel: "작성 언어",
     langHint:
       "정보를 작성할 언어를 선택하세요. 신청서를 제출하면 저희 팀이 검토하기 전에 사이트의 다른 모든 언어로 자동 번역됩니다.",
@@ -1183,7 +1183,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
   tr: {
     heading: "Partner olun",
     intro:
-      "İşletmenizin profilini tamamlayın — hemen yayınlanacaktır. Essaouira Inside ekibinin bir üyesi daha sonra hesabınızı kalıcı olarak doğrulamak için inceleyecektir.",
+      "İşletmenizin profilini tamamlayın — hemen yayınlanacaktır. WeTravelGo ekibinin bir üyesi daha sonra hesabınızı kalıcı olarak doğrulamak için inceleyecektir.",
     langLabel: "Yazım dili",
     langHint:
       "Bilgilerinizi hangi dilde yazacağınızı seçin. Başvurunuzu gönderdiğiniz anda, ekibimiz incelemeden önce sitedeki diğer tüm dillere otomatik olarak çevrilecektir.",
@@ -1291,7 +1291,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
   he: {
     heading: "הצטרפו כשותפים",
     intro:
-      "השלם את פרופיל המתקן שלך — הוא יפורסם מיד. חבר בצוות Essaouira Inside יבדוק אותו כדי לאשר סופית את חשבונך.",
+      "השלם את פרופיל המתקן שלך — הוא יפורסם מיד. חבר בצוות WeTravelGo יבדוק אותו כדי לאשר סופית את חשבונך.",
     langLabel: "שפת המילוי",
     langHint:
       "בחרו את השפה שבה תמלאו את הפרופיל שלכם. ברגע שתשלחו את הבקשה, היא תתורגם אוטומטית לכל שאר שפות האתר לפני שהצוות שלנו יבדוק אותה.",

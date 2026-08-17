@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const origin = req.headers.get("origin") ?? "https://essaouirainside.com";
+  const origin = req.headers.get("origin") ?? "https://www.wetravelgo.com";
 
   const session = await stripe.checkout.sessions.create({
     mode: "subscription",
@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
       {
         price_data: {
           currency: STRIPE_CURRENCY,
-          product_data: { name: `Essaouira Inside — Plan ${plan.key}` },
+          product_data: { name: `WeTravelGo — Plan ${plan.key}` },
           unit_amount: amountMad * 100,
           recurring: { interval: billingCycle === "yearly" ? "year" : "month" },
         },

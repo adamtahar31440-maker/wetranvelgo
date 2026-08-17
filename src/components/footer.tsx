@@ -3,7 +3,7 @@ import { useTranslations, useLocale } from "next-intl";
 
 export function Footer({
   ville,
-  siteName = "Essaouira Inside",
+  siteName = "WeTravelGo",
   cityLabel,
   activeModules = [],
   navLinks = [],

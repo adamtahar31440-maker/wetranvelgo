@@ -2,7 +2,7 @@ import { Resend } from "resend";
 import { WelcomeEmail } from "@/components/emails/welcome-email";
 import { ActivationEmail } from "@/components/emails/activation-email";
 
-const FROM = "Essaouira Inside <contact@essaouirainside.com>";
+const FROM = "WeTravelGo <contact@wetravelgo.com>";
 
 let _client: Resend | null = null;
 function getClient() {
@@ -18,11 +18,11 @@ export async function sendWelcomeEmail(to: string, contactName: string, companyN
     await getClient().emails.send({
       from: FROM,
       to,
-      subject: "Bienvenue sur Essaouira Inside 🎉",
+      subject: "Bienvenue sur WeTravelGo 🎉",
       react: WelcomeEmail({
         contactName,
         companyName,
-        dashboardUrl: "https://essaouirainside.com/fr/pro/dashboard",
+        dashboardUrl: "https://www.wetravelgo.com/fr/pro/dashboard",
       }),
     });
   } catch (err) {
@@ -41,11 +41,11 @@ export async function sendActivationEmail(
     await getClient().emails.send({
       from: FROM,
       to,
-      subject: "Votre compte Essaouira Inside a été validé ✅",
+      subject: "Votre compte WeTravelGo a été validé ✅",
       react: ActivationEmail({
         contactName,
         companyName,
-        dashboardUrl: "https://essaouirainside.com/fr/pro/dashboard",
+        dashboardUrl: "https://www.wetravelgo.com/fr/pro/dashboard",
         listingUrl,
         catalogLabel,
       }),

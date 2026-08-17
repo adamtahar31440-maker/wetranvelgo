@@ -39,7 +39,7 @@ export function CategoryForm({ locale, category }: { locale: string; category?: 
           className={inputClass}
         />
         <p className="mt-1 text-xs text-foreground/50">
-          Détermine l&apos;adresse publique, ex : essaouirainside.com/boutiques
+          Détermine l&apos;adresse publique, ex : wetravelgo.com/essaouira/boutiques
         </p>
       </div>
 

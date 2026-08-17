@@ -16,7 +16,7 @@ export default async function ProLayout({
     <div className="min-h-screen bg-sand/20">
       <header className="flex items-center justify-between border-b border-black/5 bg-white px-6 py-4">
         <Link href={`/${locale}/pro`} className="text-sm font-semibold text-ocean-dark">
-          Essaouira Inside — <span className="text-terracotta">Espace Pro</span>
+          WeTravelGo — <span className="text-terracotta">Espace Pro</span>
         </Link>
         {user ? (
           <UserButton />

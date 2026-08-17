@@ -69,7 +69,7 @@ export default async function AdminSectionsPage({
                   </div>
                 </td>
                 <td className="px-4 py-3 font-medium text-ocean-dark">{s.name.fr}</td>
-                <td className="px-4 py-3 text-foreground/70">essaouirainside.com/{s.slug}</td>
+                <td className="px-4 py-3 text-foreground/70">wetravelgo.com/{s.slug}</td>
                 <td className="px-4 py-3 text-foreground/70">{counts[i]}</td>
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-3">

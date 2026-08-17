@@ -117,7 +117,7 @@ export default async function EditEstablishmentPage({
 
       <section className="space-y-6 border-t border-black/10 pt-8">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-xl font-semibold text-ocean-dark">Label Essaouira Inside Approved</h2>
+          <h2 className="text-xl font-semibold text-ocean-dark">Label WeTravelGo Approved</h2>
           <span
             className={`rounded-full px-3 py-1 text-xs font-semibold ${LABEL_STATUS_CLASSES[establishment.labelStatus] ?? LABEL_STATUS_CLASSES.none}`}
           >

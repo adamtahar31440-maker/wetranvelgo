@@ -35,7 +35,7 @@ export default async function SiteLayout({
     getTranslations({ locale, namespace: "nav" }),
     getSiteSettings(city.id),
   ]);
-  const siteName = siteSettings?.siteName ?? "Essaouira Inside";
+  const siteName = siteSettings?.siteName ?? "WeTravelGo";
   const cityLabel = city.name[locale] ?? city.name.fr;
 
   const activeItems = navItems.filter((item) => item.active);

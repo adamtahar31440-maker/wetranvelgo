@@ -31,8 +31,8 @@ export async function generateMetadata({
   const e = await getEstablishmentBySlug(slug, city.id);
   if (!e) return {};
   return {
-    title: `${e.name.fr} — Essaouira Inside Approved`,
-    description: `Certificat officiel du label Essaouira Inside Approved pour ${e.name.fr}.`,
+    title: `${e.name.fr} — WeTravelGo Approved`,
+    description: `Certificat officiel du label WeTravelGo Approved pour ${e.name.fr}.`,
   };
 }
 
@@ -66,7 +66,7 @@ export default async function ApprovedPage({
       <div className="text-center">
         <div className="text-6xl">🏆</div>
         <p className="mt-2 text-sm font-semibold uppercase tracking-wide text-terracotta">
-          Essaouira Inside Approved
+          WeTravelGo Approved
         </p>
         <h1 className="mt-1 text-3xl font-semibold text-ocean-dark sm:text-4xl">{name}</h1>
 
@@ -128,7 +128,7 @@ export default async function ApprovedPage({
 
       <p className="mt-10 text-center text-xs text-foreground/50">
         N° {latest.certificateNumber ?? `EIA-${latest.year}-${String(e.id).padStart(4, "0")}`} — Label indépendant,
-        non achetable, attribué selon la charte officielle Essaouira Inside Approved.
+        non achetable, attribué selon la charte officielle WeTravelGo Approved.
       </p>
     </div>
   );

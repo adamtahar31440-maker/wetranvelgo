@@ -14,7 +14,7 @@
     "professionals": "בעלי עסקים"
   },
   "home": {
-    "heroTitle": "Essaouira Inside",
+    "heroTitle": "WeTravelGo",
     "heroSubtitle": "הפלטפורמה המובילה לגילוי, תכנון וחיים באסווירה",
     "searchPlaceholder": "חפשו מלון, מסעדה, פעילות...",
     "categories": "גלו לפי קטגוריה",
@@ -136,7 +136,7 @@
   },
   "dashboard": {
     "greeting": "שלום {name}",
-    "tagline": "האזור המקצועי שלך ב-Essaouira Inside.",
+    "tagline": "האזור המקצועי שלך ב-WeTravelGo.",
     "language": "שפת לוח הבקרה",
     "pendingTitle": "הבקשה ממתינה לאישור",
     "pendingBody": "תודה {name}! הבקשה שלך נמצאת כעת בבדיקה.",
@@ -214,7 +214,7 @@
     "updateSuccess": "כרטיס העסק שלכם עודכן.",
     "scanSuccess": "זוהו ונוספו {count} פריטים לרשימה.",
     "noEstablishment": "עדיין לא משויך כרטיס עסק לחשבון שלך. הצוות שלנו ייצור עבורך את כרטיס העסק.",
-    "labelTitle": "תו Essaouira Inside Approved",
+    "labelTitle": "תו WeTravelGo Approved",
     "downloadCertificate": "הורדת תעודה",
     "downloadBadge": "הורדת תג",
     "viewOfficialPage": "צפייה בעמוד הרשמי",
@@ -222,15 +222,15 @@
     "labelStatusInfoRequested": "הצוות שלנו ביקש מידע נוסף",
     "labelStatusVisitScheduled": "נקבע ביקור",
     "labelStatusOnHold": "התיק ממתין",
-    "labelApplicationDate": "הבקשה שלך מתאריך {date} נמצאת בטיפול צוות Essaouira Inside.",
-    "requestLabel": "בקשה לתו Essaouira Inside Approved",
+    "labelApplicationDate": "הבקשה שלך מתאריך {date} נמצאת בטיפול צוות WeTravelGo.",
+    "requestLabel": "בקשה לתו WeTravelGo Approved",
     "labelContactName": "שם איש הקשר",
     "labelEmail": "אימייל",
     "labelSocialLinks": "רשתות חברתיות",
     "labelActivityDescription": "תיאור הפעילות",
     "labelGallery": "גלריית תמונות (כתובת URL אחת בכל שורה)",
     "labelMotivation": "מדוע ברצונכם לקבל את התו?",
-    "labelCharter": "קראתי ואני מקבל/ת את האמנה של תו Essaouira Inside Approved.",
+    "labelCharter": "קראתי ואני מקבל/ת את האמנה של תו WeTravelGo Approved.",
     "submitLabelApplication": "שליחת הבקשה",
     "invoicesTitle": "חשבוניות",
     "noInvoices": "אין עדיין חשבוניות.",
@@ -315,7 +315,7 @@
   "menuPage": {
     "allCategories": "הכל",
     "noItems": "תוכן אינו זמין כרגע.",
-    "poweredBy": "מופעל על ידי Essaouira Inside",
+    "poweredBy": "מופעל על ידי WeTravelGo",
     "viewEstablishment": "צפה בפרופיל"
   }
 }

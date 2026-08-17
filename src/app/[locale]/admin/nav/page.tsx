@@ -100,7 +100,7 @@ export default async function AdminNavPage({
                     )}
                   </td>
                   <td className="px-4 py-3 text-foreground/70">{TYPE_LABELS[item.type]}</td>
-                  <td className="px-4 py-3 text-foreground/70">essaouirainside.com{item.href}</td>
+                  <td className="px-4 py-3 text-foreground/70">wetravelgo.com{item.href}</td>
                   <td className="px-4 py-3">
                     {item.type === "builtin" ? (
                       <form action={setModuleStatus.bind(null, item.key, item.active ? "inactive" : "active")}>

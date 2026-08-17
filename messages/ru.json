@@ -14,7 +14,7 @@
     "professionals": "Профессионалы"
   },
   "home": {
-    "heroTitle": "Essaouira Inside",
+    "heroTitle": "WeTravelGo",
     "heroSubtitle": "Главная платформа для знакомства, планирования поездки и жизни в Эс-Сувейре",
     "searchPlaceholder": "Поиск отеля, ресторана, развлечения...",
     "categories": "Изучить по категориям",
@@ -136,7 +136,7 @@
   },
   "dashboard": {
     "greeting": "Здравствуйте, {name}",
-    "tagline": "Ваш профессиональный кабинет Essaouira Inside.",
+    "tagline": "Ваш профессиональный кабинет WeTravelGo.",
     "language": "Язык личного кабинета",
     "pendingTitle": "Заявка на рассмотрении",
     "pendingBody": "Спасибо, {name}! Ваша заявка рассматривается.",
@@ -214,7 +214,7 @@
     "updateSuccess": "Ваша анкета обновлена.",
     "scanSuccess": "Обнаружено и добавлено в список: {count} позиций(я).",
     "noEstablishment": "К вашему аккаунту пока не привязана анкета. Наша команда создаст анкету вашего заведения.",
-    "labelTitle": "Знак Essaouira Inside Approved",
+    "labelTitle": "Знак WeTravelGo Approved",
     "downloadCertificate": "Скачать сертификат",
     "downloadBadge": "Скачать значок",
     "viewOfficialPage": "Посмотреть официальную страницу",
@@ -222,15 +222,15 @@
     "labelStatusInfoRequested": "Наша команда запросила дополнительную информацию",
     "labelStatusVisitScheduled": "Назначен визит",
     "labelStatusOnHold": "Заявка приостановлена",
-    "labelApplicationDate": "Ваша заявка от {date} обрабатывается командой Essaouira Inside.",
-    "requestLabel": "Подать заявку на знак Essaouira Inside Approved",
+    "labelApplicationDate": "Ваша заявка от {date} обрабатывается командой WeTravelGo.",
+    "requestLabel": "Подать заявку на знак WeTravelGo Approved",
     "labelContactName": "Имя ответственного лица",
     "labelEmail": "Электронная почта",
     "labelSocialLinks": "Социальные сети",
     "labelActivityDescription": "Описание деятельности",
     "labelGallery": "Фотогалерея (один URL на строку)",
     "labelMotivation": "Почему вы хотите получить этот знак?",
-    "labelCharter": "Я прочитал(а) и принимаю Хартию знака Essaouira Inside Approved.",
+    "labelCharter": "Я прочитал(а) и принимаю Хартию знака WeTravelGo Approved.",
     "submitLabelApplication": "Отправить заявку",
     "invoicesTitle": "Счета",
     "noInvoices": "Пока нет счетов.",
@@ -315,7 +315,7 @@
   "menuPage": {
     "allCategories": "Все",
     "noItems": "Содержание недоступно в настоящий момент.",
-    "poweredBy": "При поддержке Essaouira Inside",
+    "poweredBy": "При поддержке WeTravelGo",
     "viewEstablishment": "Просмотреть профиль"
   }
 }

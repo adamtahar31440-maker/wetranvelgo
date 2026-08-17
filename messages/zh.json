@@ -14,7 +14,7 @@
     "professionals": "商家"
   },
   "home": {
-    "heroTitle": "Essaouira Inside",
+    "heroTitle": "WeTravelGo",
     "heroSubtitle": "探索、规划并体验索维拉的权威平台",
     "searchPlaceholder": "搜索酒店、餐厅或活动...",
     "categories": "按类别探索",
@@ -136,7 +136,7 @@
   },
   "dashboard": {
     "greeting": "您好，{name}",
-    "tagline": "您的 Essaouira Inside 商户专属空间。",
+    "tagline": "您的 WeTravelGo 商户专属空间。",
     "language": "控制台语言",
     "pendingTitle": "申请审核中",
     "pendingBody": "谢谢您，{name}！您的申请正在审核中。",
@@ -214,7 +214,7 @@
     "updateSuccess": "您的商户资料已更新。",
     "scanSuccess": "已检测到 {count} 项并添加到列表。",
     "noEstablishment": "您的账户尚未关联任何商户资料。我们的团队将为您创建商户资料。",
-    "labelTitle": "Essaouira Inside Approved 认证标章",
+    "labelTitle": "WeTravelGo Approved 认证标章",
     "downloadCertificate": "下载证书",
     "downloadBadge": "下载徽章",
     "viewOfficialPage": "查看官方页面",
@@ -222,15 +222,15 @@
     "labelStatusInfoRequested": "我们的团队已要求补充信息",
     "labelStatusVisitScheduled": "已安排实地考察",
     "labelStatusOnHold": "申请暂缓处理",
-    "labelApplicationDate": "您于 {date} 提交的申请正在由 Essaouira Inside 团队处理中。",
-    "requestLabel": "申请 Essaouira Inside Approved 认证标章",
+    "labelApplicationDate": "您于 {date} 提交的申请正在由 WeTravelGo 团队处理中。",
+    "requestLabel": "申请 WeTravelGo Approved 认证标章",
     "labelContactName": "负责人姓名",
     "labelEmail": "电子邮箱",
     "labelSocialLinks": "社交媒体",
     "labelActivityDescription": "业务描述",
     "labelGallery": "图片库（每行一个网址）",
     "labelMotivation": "您为什么想获得此认证标章？",
-    "labelCharter": "我已阅读并接受 Essaouira Inside Approved 认证宪章。",
+    "labelCharter": "我已阅读并接受 WeTravelGo Approved 认证宪章。",
     "submitLabelApplication": "提交申请",
     "invoicesTitle": "发票",
     "noInvoices": "暂无发票。",
@@ -315,7 +315,7 @@
   "menuPage": {
     "allCategories": "全部",
     "noItems": "内容暂时不可用。",
-    "poweredBy": "由 Essaouira Inside 提供支持",
+    "poweredBy": "由 WeTravelGo 提供支持",
     "viewEstablishment": "查看个人资料"
   }
 }

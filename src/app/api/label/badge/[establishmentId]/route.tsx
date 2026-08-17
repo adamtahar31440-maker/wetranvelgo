@@ -53,7 +53,7 @@ export async function GET(
             display: "flex",
           }}
         >
-          ESSAOUIRA INSIDE
+          WETRAVELGO
         </div>
         <div
           style={{

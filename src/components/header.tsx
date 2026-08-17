@@ -12,7 +12,7 @@ type NavLink = { href: string; label: string; pages?: { href: string; label: str
 
 export function Header({
   ville,
-  siteName = "Essaouira Inside",
+  siteName = "WeTravelGo",
   navLinks = [],
 }: {
   ville: string;

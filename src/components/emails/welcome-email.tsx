@@ -11,10 +11,10 @@ export function WelcomeEmail({
   dashboardUrl: string;
 }) {
   return (
-    <BrandedEmailLayout previewText={`Bienvenue sur Essaouira Inside, ${companyName} !`}>
+    <BrandedEmailLayout previewText={`Bienvenue sur WeTravelGo, ${companyName} !`}>
       <Text style={emailStyles.heading}>Bienvenue, {contactName} 👋</Text>
       <Text style={emailStyles.paragraph}>
-        Merci d&apos;avoir créé le compte professionnel de <strong>{companyName}</strong> sur Essaouira Inside !
+        Merci d&apos;avoir créé le compte professionnel de <strong>{companyName}</strong> sur WeTravelGo !
       </Text>
       <Text style={emailStyles.paragraph}>
         Votre fiche est déjà en ligne sur le site ! Configurez-la dès maintenant (description, photos, horaires,

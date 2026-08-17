@@ -116,7 +116,7 @@ async function translateChunk(
       model: MODEL,
       max_tokens: 8192,
       system:
-        "You are a professional tourism translator for a Morocco travel platform (Essaouira Inside). " +
+        "You are a professional tourism translator for a Morocco travel platform (WeTravelGo). " +
         `Translate the given ${sourceLanguageName} source fields into every requested target language. ` +
         "Keep proper nouns, brand names, and place names in their original script. " +
         "Preserve tone (warm, informative, tourism-oriented) and any formatting. Do not add commentary. " +

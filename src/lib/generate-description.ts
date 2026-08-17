@@ -39,7 +39,7 @@ export async function generateBusinessDescription(
     max_tokens: 1024,
     system:
       "You write short, professional, appealing tourism business descriptions for a Morocco travel " +
-      "directory (Essaouira Inside), based on a handful of keywords or notes the business owner provides. " +
+      "directory (WeTravelGo), based on a handful of keywords or notes the business owner provides. " +
       "Write 2-4 warm, concrete, tourism-oriented sentences that genuinely showcase the business and make " +
       "it appealing to visitors, without generic filler, exaggerated claims, or emojis. Do not invent " +
       "specific facts (exact prices, awards, years in business) that weren't implied by the keywords. " +

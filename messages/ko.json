@@ -14,7 +14,7 @@
     "professionals": "사업자"
   },
   "home": {
-    "heroTitle": "Essaouira Inside",
+    "heroTitle": "WeTravelGo",
     "heroSubtitle": "에사우이라를 탐색하고 준비하고 살아가기 위한 대표 플랫폼",
     "searchPlaceholder": "호텔, 레스토랑, 액티비티 검색...",
     "categories": "카테고리별로 둘러보기",
@@ -136,7 +136,7 @@
   },
   "dashboard": {
     "greeting": "안녕하세요, {name}님",
-    "tagline": "Essaouira Inside 사업자 전용 공간입니다.",
+    "tagline": "WeTravelGo 사업자 전용 공간입니다.",
     "language": "대시보드 언어",
     "pendingTitle": "신청 검토 중",
     "pendingBody": "감사합니다, {name}님! 신청이 검토 중입니다.",
@@ -214,7 +214,7 @@
     "updateSuccess": "사업자 정보가 업데이트되었습니다.",
     "scanSuccess": "{count}개 항목이 감지되어 목록에 추가되었습니다.",
     "noEstablishment": "아직 계정에 연결된 업체 정보가 없습니다. 저희 팀이 업체 정보를 생성해 드릴 예정입니다.",
-    "labelTitle": "Essaouira Inside Approved 라벨",
+    "labelTitle": "WeTravelGo Approved 라벨",
     "downloadCertificate": "인증서 다운로드",
     "downloadBadge": "배지 다운로드",
     "viewOfficialPage": "공식 페이지 보기",
@@ -222,15 +222,15 @@
     "labelStatusInfoRequested": "저희 팀이 추가 정보를 요청했습니다",
     "labelStatusVisitScheduled": "방문 일정이 예약되었습니다",
     "labelStatusOnHold": "심사가 보류되었습니다",
-    "labelApplicationDate": "{date}에 제출하신 신청서를 Essaouira Inside 팀이 처리하고 있습니다.",
-    "requestLabel": "Essaouira Inside Approved 라벨 신청하기",
+    "labelApplicationDate": "{date}에 제출하신 신청서를 WeTravelGo 팀이 처리하고 있습니다.",
+    "requestLabel": "WeTravelGo Approved 라벨 신청하기",
     "labelContactName": "담당자 이름",
     "labelEmail": "이메일",
     "labelSocialLinks": "소셜 미디어",
     "labelActivityDescription": "사업 설명",
     "labelGallery": "사진 갤러리 (한 줄에 하나의 URL)",
     "labelMotivation": "라벨을 취득하고 싶은 이유는 무엇인가요?",
-    "labelCharter": "Essaouira Inside Approved 라벨 헌장을 읽었으며 이에 동의합니다.",
+    "labelCharter": "WeTravelGo Approved 라벨 헌장을 읽었으며 이에 동의합니다.",
     "submitLabelApplication": "신청서 제출",
     "invoicesTitle": "청구서",
     "noInvoices": "아직 청구서가 없습니다.",
@@ -315,7 +315,7 @@
   "menuPage": {
     "allCategories": "모든 카테고리",
     "noItems": "현재 콘텐츠를 사용할 수 없습니다.",
-    "poweredBy": "Essaouira Inside에서 제공",
+    "poweredBy": "WeTravelGo에서 제공",
     "viewEstablishment": "프로필 보기"
   }
 }

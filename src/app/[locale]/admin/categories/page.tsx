@@ -78,7 +78,7 @@ export default async function AdminCategoriesPage({
                       {c.name.fr}
                     </div>
                   </td>
-                  <td className="px-4 py-3 text-foreground/70">essaouirainside.com/{c.slug}</td>
+                  <td className="px-4 py-3 text-foreground/70">wetravelgo.com/{c.slug}</td>
                   <td className="px-4 py-3 text-foreground/70">{counts[i]}</td>
                   <td className="px-4 py-3">
                     <form action={setCategoryStatus.bind(null, c.id, c.status === "active" ? "inactive" : "active")}>

@@ -75,7 +75,7 @@ export async function generateMetadata({
   const label = qrFeatureLabel(category?.type, "fr");
   return {
     title: `${establishment.name.fr} — ${label}`,
-    description: `${label} de ${establishment.name.fr}, disponible en plusieurs langues — Essaouira Inside.`,
+    description: `${label} de ${establishment.name.fr}, disponible en plusieurs langues — WeTravelGo.`,
   };
 }
 

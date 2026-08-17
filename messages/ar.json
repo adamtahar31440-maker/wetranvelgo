@@ -136,7 +136,7 @@
   },
   "dashboard": {
     "greeting": "مرحبًا {name}",
-    "tagline": "مساحتك المهنية في Essaouira Inside.",
+    "tagline": "مساحتك المهنية في WeTravelGo.",
     "language": "لغة لوحة التحكم",
     "pendingTitle": "الطلب قيد المراجعة",
     "pendingBody": "شكرًا {name}! طلبك قيد المراجعة حاليًا.",
@@ -214,7 +214,7 @@
     "updateSuccess": "تم تحديث ملفك المهني.",
     "scanSuccess": "تم اكتشاف {count} عنصر/عناصر وإضافتها إلى القائمة.",
     "noEstablishment": "لا يوجد ملف مرتبط بحسابك بعد. سيقوم فريقنا بإنشاء ملف منشأتك.",
-    "labelTitle": "علامة Essaouira Inside Approved",
+    "labelTitle": "علامة WeTravelGo Approved",
     "downloadCertificate": "تحميل الشهادة",
     "downloadBadge": "تحميل الشارة",
     "viewOfficialPage": "عرض الصفحة الرسمية",
@@ -222,15 +222,15 @@
     "labelStatusInfoRequested": "طلب فريقنا معلومات إضافية",
     "labelStatusVisitScheduled": "تم تحديد موعد للزيارة",
     "labelStatusOnHold": "الملف قيد الانتظار",
-    "labelApplicationDate": "طلبك المقدم بتاريخ {date} قيد المعالجة من قبل فريق Essaouira Inside.",
-    "requestLabel": "التقدم للحصول على علامة Essaouira Inside Approved",
+    "labelApplicationDate": "طلبك المقدم بتاريخ {date} قيد المعالجة من قبل فريق WeTravelGo.",
+    "requestLabel": "التقدم للحصول على علامة WeTravelGo Approved",
     "labelContactName": "اسم المسؤول",
     "labelEmail": "البريد الإلكتروني",
     "labelSocialLinks": "وسائل التواصل الاجتماعي",
     "labelActivityDescription": "وصف النشاط",
     "labelGallery": "معرض الصور (رابط واحد في كل سطر)",
     "labelMotivation": "لماذا تريد الحصول على العلامة؟",
-    "labelCharter": "لقد قرأت وأوافق على ميثاق Essaouira Inside Approved.",
+    "labelCharter": "لقد قرأت وأوافق على ميثاق WeTravelGo Approved.",
     "submitLabelApplication": "إرسال طلبي",
     "invoicesTitle": "الفواتير",
     "noInvoices": "لا توجد فواتير حتى الآن.",
@@ -315,7 +315,7 @@
   "menuPage": {
     "allCategories": "الكل",
     "noItems": "المحتوى غير متاح في الوقت الحالي.",
-    "poweredBy": "مدعوم من Essaouira Inside",
+    "poweredBy": "مدعوم من WeTravelGo",
     "viewEstablishment": "عرض الملف الشخصي"
   }
 }

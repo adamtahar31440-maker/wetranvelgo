@@ -66,7 +66,7 @@ export async function adminGetEstablishmentById(id: number) {
   return rows[0] ?? null;
 }
 
-// ---- Label evaluations ("Essaouira Inside Approved") ----
+// ---- Label evaluations ("WeTravelGo Approved") ----
 export async function adminGetLabelEvaluations(establishmentId: number) {
   const db = getDb();
   return db

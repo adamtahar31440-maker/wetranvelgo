@@ -16,10 +16,10 @@ export function ActivationEmail({
   catalogLabel: string;
 }) {
   return (
-    <BrandedEmailLayout previewText={`Votre compte Essaouira Inside a été validé, ${companyName} !`}>
+    <BrandedEmailLayout previewText={`Votre compte WeTravelGo a été validé, ${companyName} !`}>
       <Text style={emailStyles.heading}>Bonne nouvelle, {contactName} ✅</Text>
       <Text style={emailStyles.paragraph}>
-        Votre compte Essaouira Inside a bien été validé par nos équipes — merci de votre confiance ! La fiche de{" "}
+        Votre compte WeTravelGo a bien été validé par nos équipes — merci de votre confiance ! La fiche de{" "}
         <strong>{companyName}</strong> reste bien sûr en ligne.
       </Text>
       <Text style={emailStyles.paragraph}>

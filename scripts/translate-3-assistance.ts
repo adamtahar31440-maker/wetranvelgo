@@ -5,15 +5,15 @@ import { eq } from "drizzle-orm";
 const db = getDb();
 
 const VERIFY: Record<string, string> = {
-  es: "⚠️ Número por verificar/completar por el equipo de Essaouira Inside.",
-  de: "⚠️ Nummer vom Essaouira-Inside-Team zu überprüfen/vervollständigen.",
-  it: "⚠️ Numero da verificare/completare da parte del team di Essaouira Inside.",
-  pt: "⚠️ Número a verificar/completar pela equipa da Essaouira Inside.",
-  ru: "⚠️ Номер требует проверки/уточнения командой Essaouira Inside.",
-  zh: "⚠️ 该号码有待Essaouira Inside团队核实/补充。",
-  ko: "⚠️ Essaouira Inside 팀이 확인/보완해야 할 번호입니다.",
-  tr: "⚠️ Essaouira Inside ekibi tarafından doğrulanacak/tamamlanacak numara.",
-  he: "⚠️ מספר שיש לאמת/להשלים על ידי צוות Essaouira Inside.",
+  es: "⚠️ Número por verificar/completar por el equipo de WeTravelGo.",
+  de: "⚠️ Nummer vom WeTravelGo-Team zu überprüfen/vervollständigen.",
+  it: "⚠️ Numero da verificare/completare da parte del team di WeTravelGo.",
+  pt: "⚠️ Número a verificar/completar pela equipa da WeTravelGo.",
+  ru: "⚠️ Номер требует проверки/уточнения командой WeTravelGo.",
+  zh: "⚠️ 该号码有待WeTravelGo团队核实/补充。",
+  ko: "⚠️ WeTravelGo 팀이 확인/보완해야 할 번호입니다.",
+  tr: "⚠️ WeTravelGo ekibi tarafından doğrulanacak/tamamlanacak numara.",
+  he: "⚠️ מספר שיש לאמת/להשלים על ידי צוות WeTravelGo.",
 };
 
 const HOURS_24: Record<string, string> = {
@@ -240,15 +240,15 @@ async function main() {
         ko: "변호사나 통역사가 필요해요", tr: "Bir avukata veya tercümana ihtiyacım var", he: "אני זקוק לעורך דין או למתרגם",
       },
       body: {
-        es: "1. Su embajada o consulado puede proporcionarle una lista de abogados y traductores jurados locales.\n2. El colegio de abogados de Essaouira/Marrakech puede orientarle hacia un abogado disponible.\n3. En caso de emergencia, el equipo de Essaouira Inside puede ayudarle a encontrar un contacto: utilice el botón SOS.",
-        de: "1. Ihre Botschaft oder Ihr Konsulat kann Ihnen eine Liste lokaler vereidigter Anwälte und Übersetzer zur Verfügung stellen.\n2. Die Anwaltskammer von Essaouira/Marrakesch kann Sie an einen verfügbaren Anwalt verweisen.\n3. Im Notfall kann Ihnen das Essaouira-Inside-Team helfen, einen Kontakt zu finden – nutzen Sie den SOS-Button.",
-        it: "1. La vostra ambasciata o consolato può fornirvi un elenco di avvocati e traduttori giurati locali.\n2. L'ordine degli avvocati di Essaouira/Marrakech può indirizzarvi verso un avvocato disponibile.\n3. In caso di emergenza, il team di Essaouira Inside può aiutarvi a trovare un contatto: usate il pulsante SOS.",
-        pt: "1. A sua embaixada ou consulado pode fornecer-lhe uma lista de advogados e tradutores juramentados locais.\n2. A ordem dos advogados de Essaouira/Marraquexe pode encaminhá-lo para um advogado disponível.\n3. Em caso de emergência, a equipa da Essaouira Inside pode ajudá-lo a encontrar um contacto — utilize o botão SOS.",
-        ru: "1. Ваше посольство или консульство может предоставить вам список местных присяжных адвокатов и переводчиков.\n2. Коллегия адвокатов Эс-Сувейры/Марракеша может направить вас к доступному адвокату.\n3. В экстренной ситуации команда Essaouira Inside поможет вам найти контакт — воспользуйтесь кнопкой SOS.",
-        zh: "1. 您的大使馆或领事馆可以为您提供当地宣誓律师和翻译人员的名单。\n2. 埃萨维拉/马拉喀什律师协会可以为您推荐一位可提供服务的律师。\n3. 紧急情况下，Essaouira Inside团队可以帮助您找到联系人——请使用SOS按钮。",
-        ko: "1. 대사관이나 영사관에서 현지 공인 변호사 및 통역사 목록을 제공받을 수 있습니다.\n2. 에사우이라/마라케시 변호사협회에서 이용 가능한 변호사를 안내받을 수 있습니다.\n3. 긴급 상황 시, Essaouira Inside 팀이 연락처를 찾는 데 도움을 드릴 수 있습니다 — SOS 버튼을 이용하세요.",
-        tr: "1. Büyükelçiliğiniz veya konsolosluğunuz size yerel yeminli avukat ve tercüman listesi sağlayabilir.\n2. Essaouira/Marakeş Barosu sizi müsait bir avukata yönlendirebilir.\n3. Acil bir durumda, Essaouira Inside ekibi bir kişiyle iletişime geçmenize yardımcı olabilir — SOS düğmesini kullanın.",
-        he: "1. השגרירות או הקונסוליה שלכם יכולה לספק לכם רשימה של עורכי דין ומתרגמים מושבעים מקומיים.\n2. לשכת עורכי הדין של אסווירה/מרקש יכולה להפנות אתכם לעורך דין זמין.\n3. במקרה חירום, צוות Essaouira Inside יכול לעזור לכם למצוא איש קשר — השתמשו בכפתור ה-SOS.",
+        es: "1. Su embajada o consulado puede proporcionarle una lista de abogados y traductores jurados locales.\n2. El colegio de abogados de Essaouira/Marrakech puede orientarle hacia un abogado disponible.\n3. En caso de emergencia, el equipo de WeTravelGo puede ayudarle a encontrar un contacto: utilice el botón SOS.",
+        de: "1. Ihre Botschaft oder Ihr Konsulat kann Ihnen eine Liste lokaler vereidigter Anwälte und Übersetzer zur Verfügung stellen.\n2. Die Anwaltskammer von Essaouira/Marrakesch kann Sie an einen verfügbaren Anwalt verweisen.\n3. Im Notfall kann Ihnen das WeTravelGo-Team helfen, einen Kontakt zu finden – nutzen Sie den SOS-Button.",
+        it: "1. La vostra ambasciata o consolato può fornirvi un elenco di avvocati e traduttori giurati locali.\n2. L'ordine degli avvocati di Essaouira/Marrakech può indirizzarvi verso un avvocato disponibile.\n3. In caso di emergenza, il team di WeTravelGo può aiutarvi a trovare un contatto: usate il pulsante SOS.",
+        pt: "1. A sua embaixada ou consulado pode fornecer-lhe uma lista de advogados e tradutores juramentados locais.\n2. A ordem dos advogados de Essaouira/Marraquexe pode encaminhá-lo para um advogado disponível.\n3. Em caso de emergência, a equipa da WeTravelGo pode ajudá-lo a encontrar um contacto — utilize o botão SOS.",
+        ru: "1. Ваше посольство или консульство может предоставить вам список местных присяжных адвокатов и переводчиков.\n2. Коллегия адвокатов Эс-Сувейры/Марракеша может направить вас к доступному адвокату.\n3. В экстренной ситуации команда WeTravelGo поможет вам найти контакт — воспользуйтесь кнопкой SOS.",
+        zh: "1. 您的大使馆或领事馆可以为您提供当地宣誓律师和翻译人员的名单。\n2. 埃萨维拉/马拉喀什律师协会可以为您推荐一位可提供服务的律师。\n3. 紧急情况下，WeTravelGo团队可以帮助您找到联系人——请使用SOS按钮。",
+        ko: "1. 대사관이나 영사관에서 현지 공인 변호사 및 통역사 목록을 제공받을 수 있습니다.\n2. 에사우이라/마라케시 변호사협회에서 이용 가능한 변호사를 안내받을 수 있습니다.\n3. 긴급 상황 시, WeTravelGo 팀이 연락처를 찾는 데 도움을 드릴 수 있습니다 — SOS 버튼을 이용하세요.",
+        tr: "1. Büyükelçiliğiniz veya konsolosluğunuz size yerel yeminli avukat ve tercüman listesi sağlayabilir.\n2. Essaouira/Marakeş Barosu sizi müsait bir avukata yönlendirebilir.\n3. Acil bir durumda, WeTravelGo ekibi bir kişiyle iletişime geçmenize yardımcı olabilir — SOS düğmesini kullanın.",
+        he: "1. השגרירות או הקונסוליה שלכם יכולה לספק לכם רשימה של עורכי דין ומתרגמים מושבעים מקומיים.\n2. לשכת עורכי הדין של אסווירה/מרקש יכולה להפנות אתכם לעורך דין זמין.\n3. במקרה חירום, צוות WeTravelGo יכול לעזור לכם למצוא איש קשר — השתמשו בכפתור ה-SOS.",
       },
     },
   };

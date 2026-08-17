@@ -279,7 +279,7 @@ export const siteSettings = pgTable("site_settings", {
   // Null = the global wetravelgo.com landing page's branding. Otherwise the
   // settings for that one city (one row per city, enforced by the unique index).
   cityId: integer("city_id"),
-  siteName: varchar("site_name", { length: 160 }).notNull().default("Essaouira Inside"),
+  siteName: varchar("site_name", { length: 160 }).notNull().default("WeTravelGo"),
   logoUrl: varchar("logo_url", { length: 255 }),
   primaryColor: varchar("primary_color", { length: 16 }).default("#17495e"),
   secondaryColor: varchar("secondary_color", { length: 16 }).default("#bf6a45"),
@@ -345,7 +345,7 @@ export const emergencyContacts = pgTable("emergency_contacts", {
   order: integer("order").default(0),
 });
 
-// ---- "Essaouira Inside Approved" label ----
+// ---- "WeTravelGo Approved" label ----
 export const labelEvaluations = pgTable("label_evaluations", {
   id: serial("id").primaryKey(),
   establishmentId: integer("establishment_id").notNull(),

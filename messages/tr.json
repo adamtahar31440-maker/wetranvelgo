@@ -14,7 +14,7 @@
     "professionals": "Profesyoneller"
   },
   "home": {
-    "heroTitle": "Essaouira Inside",
+    "heroTitle": "WeTravelGo",
     "heroSubtitle": "Essaouira'yı keşfetmek, planlamak ve yaşamak için referans platform",
     "searchPlaceholder": "Otel, restoran veya aktivite ara...",
     "categories": "Kategoriye göre keşfet",
@@ -136,7 +136,7 @@
   },
   "dashboard": {
     "greeting": "Merhaba {name}",
-    "tagline": "Essaouira Inside profesyonel alanınız.",
+    "tagline": "WeTravelGo profesyonel alanınız.",
     "language": "Panel dili",
     "pendingTitle": "Başvuru onay bekliyor",
     "pendingBody": "Teşekkürler {name}! Başvurunuz inceleniyor.",
@@ -214,7 +214,7 @@
     "updateSuccess": "Profesyonel profiliniz güncellendi.",
     "scanSuccess": "{count} öğe tespit edildi ve listeye eklendi.",
     "noEstablishment": "Hesabınıza henüz bir profil bağlı değil. Ekibimiz işletme profilinizi oluşturacak.",
-    "labelTitle": "Essaouira Inside Approved etiketi",
+    "labelTitle": "WeTravelGo Approved etiketi",
     "downloadCertificate": "Sertifikayı indir",
     "downloadBadge": "Rozeti indir",
     "viewOfficialPage": "Resmi sayfayı görüntüle",
@@ -222,15 +222,15 @@
     "labelStatusInfoRequested": "Ekibimiz ek bilgi talep etti",
     "labelStatusVisitScheduled": "Bir ziyaret planlandı",
     "labelStatusOnHold": "Başvuru beklemede",
-    "labelApplicationDate": "{date} tarihli başvurunuz Essaouira Inside ekibi tarafından işleme alınıyor.",
-    "requestLabel": "Essaouira Inside Approved etiketine başvurun",
+    "labelApplicationDate": "{date} tarihli başvurunuz WeTravelGo ekibi tarafından işleme alınıyor.",
+    "requestLabel": "WeTravelGo Approved etiketine başvurun",
     "labelContactName": "Yetkili kişi adı",
     "labelEmail": "E-posta",
     "labelSocialLinks": "Sosyal medya",
     "labelActivityDescription": "Faaliyet açıklaması",
     "labelGallery": "Fotoğraf galerisi (satır başına bir URL)",
     "labelMotivation": "Bu etiketi neden almak istiyorsunuz?",
-    "labelCharter": "Essaouira Inside Approved etiketi Şartını okudum ve kabul ediyorum.",
+    "labelCharter": "WeTravelGo Approved etiketi Şartını okudum ve kabul ediyorum.",
     "submitLabelApplication": "Başvurumu gönder",
     "invoicesTitle": "Faturalar",
     "noInvoices": "Henüz fatura yok.",
@@ -315,7 +315,7 @@
   "menuPage": {
     "allCategories": "Tümü",
     "noItems": "İçerik şu anda kullanılamıyor.",
-    "poweredBy": "Essaouira Inside tarafından desteklenmektedir",
+    "poweredBy": "WeTravelGo tarafından desteklenmektedir",
     "viewEstablishment": "Profili görüntüle"
   }
 }

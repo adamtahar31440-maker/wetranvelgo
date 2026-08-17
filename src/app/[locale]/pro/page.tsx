@@ -12,8 +12,8 @@ export async function generateMetadata({
   return {
     title: "Espace Professionnel",
     description:
-      "Rejoignez Essaouira Inside en tant que professionnel : restaurants, hôtels, riads, activités, agences immobilières. Inscription gratuite.",
-    alternates: { canonical: `https://essaouirainside.com/${locale}/pro` },
+      "Rejoignez WeTravelGo en tant que professionnel : restaurants, hôtels, riads, activités, agences immobilières. Inscription gratuite.",
+    alternates: { canonical: `https://www.wetravelgo.com/${locale}/pro` },
   };
 }
 
@@ -33,7 +33,7 @@ export default async function ProLandingPage({
     <div>
       <div className="bg-ocean-dark py-16 text-white">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
-          <h1 className="text-3xl font-semibold sm:text-4xl">Rejoignez Essaouira Inside</h1>
+          <h1 className="text-3xl font-semibold sm:text-4xl">Rejoignez WeTravelGo</h1>
           <p className="mt-4 text-white/80">
             Restaurants, hôtels, riads, activités, boutiques, agences immobilières — mettez votre établissement en
             avant auprès des voyageurs et habitants d&apos;Essaouira.

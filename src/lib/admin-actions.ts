@@ -702,9 +702,12 @@ export async function setProfessionalStatus(
       let listingUrl: string | null = null;
       let catalogLabel = qrFeatureLabel(undefined, "fr");
       if (establishment) {
-        const [category] = await db.select().from(categories).where(eq(categories.id, establishment.categoryId));
-        if (category) {
-          listingUrl = `https://essaouirainside.com/fr/${category.slug}/${establishment.slug}`;
+        const [[category], [city]] = await Promise.all([
+          db.select().from(categories).where(eq(categories.id, establishment.categoryId)),
+          db.select().from(cities).where(eq(cities.id, establishment.cityId)),
+        ]);
+        if (category && city) {
+          listingUrl = `https://www.wetravelgo.com/fr/${city.slug}/${category.slug}/${establishment.slug}`;
           catalogLabel = qrFeatureLabel(category.type, "fr");
         }
       }
@@ -946,7 +949,7 @@ export async function toggleEmergencyContactFeatured(id: number, featured: boole
   revalidatePath("/", "layout");
 }
 
-// ---- Label "Essaouira Inside Approved" ----
+// ---- Label "WeTravelGo Approved" ----
 export async function createLabelEvaluation(formData: FormData) {
   const { user } = await requireRole("label");
   const db = getDb();

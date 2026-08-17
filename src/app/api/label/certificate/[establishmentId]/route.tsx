@@ -56,7 +56,7 @@ export async function GET(
               CERTIFICAT OFFICIEL
             </div>
             <div style={{ fontSize: 44, fontWeight: 700, color: "#17495e", marginTop: 8, display: "flex" }}>
-              Essaouira Inside Approved {badge.year}
+              WeTravelGo Approved {badge.year}
             </div>
           </div>
           <div style={{ fontSize: 90, display: "flex" }}>🏆</div>
@@ -90,7 +90,7 @@ export async function GET(
               N° {badge.certificateNumber ?? `EIA-${badge.year}-${String(establishment.id).padStart(4, "0")}`}
             </div>
             <div style={{ marginTop: 20, fontSize: 26, fontStyle: "italic", color: "#17495e", display: "flex" }}>
-              Signature officielle — Essaouira Inside
+              Signature officielle — WeTravelGo
             </div>
           </div>
           {/* eslint-disable-next-line @next/next/no-img-element */}

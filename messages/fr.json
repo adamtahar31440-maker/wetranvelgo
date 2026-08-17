@@ -14,7 +14,7 @@
     "professionals": "Professionnels"
   },
   "home": {
-    "heroTitle": "Essaouira Inside",
+    "heroTitle": "WeTravelGo",
     "heroSubtitle": "La plateforme de référence pour découvrir, préparer et vivre Essaouira",
     "searchPlaceholder": "Rechercher un hôtel, un restaurant, une activité...",
     "categories": "Explorer par catégorie",
@@ -136,7 +136,7 @@
   },
   "dashboard": {
     "greeting": "Bonjour {name}",
-    "tagline": "Votre espace professionnel Essaouira Inside.",
+    "tagline": "Votre espace professionnel WeTravelGo.",
     "language": "Langue du tableau de bord",
     "pendingTitle": "Demande en attente de validation",
     "pendingBody": "Merci {name} ! Votre demande est en cours d'examen.",
@@ -214,7 +214,7 @@
     "updateSuccess": "Votre fiche pro est mise à jour.",
     "scanSuccess": "{count} élément(s) détecté(s) et ajouté(s) à la liste.",
     "noEstablishment": "Aucune fiche n'est encore reliée à votre compte. Notre équipe va créer votre fiche établissement.",
-    "labelTitle": "Label Essaouira Inside Approved",
+    "labelTitle": "Label WeTravelGo Approved",
     "downloadCertificate": "Télécharger le certificat",
     "downloadBadge": "Télécharger le badge",
     "viewOfficialPage": "Voir la page officielle",
@@ -222,15 +222,15 @@
     "labelStatusInfoRequested": "L'équipe vous a demandé des informations complémentaires",
     "labelStatusVisitScheduled": "Une visite a été programmée",
     "labelStatusOnHold": "Dossier en attente",
-    "labelApplicationDate": "Votre candidature du {date} est en cours de traitement par l'équipe Essaouira Inside.",
-    "requestLabel": "Demander le Label Essaouira Inside Approved",
+    "labelApplicationDate": "Votre candidature du {date} est en cours de traitement par l'équipe WeTravelGo.",
+    "requestLabel": "Demander le Label WeTravelGo Approved",
     "labelContactName": "Nom du responsable",
     "labelEmail": "Email",
     "labelSocialLinks": "Réseaux sociaux",
     "labelActivityDescription": "Description de l'activité",
     "labelGallery": "Galerie photos (une URL par ligne)",
     "labelMotivation": "Pourquoi souhaitez-vous obtenir le label ?",
-    "labelCharter": "J'ai lu et j'accepte la Charte du Label Essaouira Inside Approved.",
+    "labelCharter": "J'ai lu et j'accepte la Charte du Label WeTravelGo Approved.",
     "submitLabelApplication": "Envoyer ma candidature",
     "invoicesTitle": "Factures",
     "noInvoices": "Aucune facture pour le moment.",
@@ -315,7 +315,7 @@
   "menuPage": {
     "allCategories": "Tout",
     "noItems": "Contenu indisponible pour le moment.",
-    "poweredBy": "Propulsé par Essaouira Inside",
+    "poweredBy": "Propulsé par WeTravelGo",
     "viewEstablishment": "Voir le profil"
   }
 }
