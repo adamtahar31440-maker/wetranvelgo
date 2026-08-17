@@ -381,6 +381,31 @@ export function ProApplicationForm({
 
         <ImageUploader label={t.images} hint={t.imagesHint} unsupportedFormatText={t.imagesUnsupportedFormat} />
 
+        <label className="flex items-start gap-2 text-sm text-foreground/80">
+          <input type="checkbox" name="acceptTerms" required className="mt-0.5 shrink-0" />
+          <span>
+            {t.acceptTermsPrefix}
+            <a
+              href={`/${lang}/pro/conditions-generales`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-ocean-dark underline hover:text-terracotta"
+            >
+              {t.acceptTermsLink}
+            </a>
+            {t.acceptTermsMiddle}
+            <a
+              href={`/${lang}/pro/confidentialite`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-ocean-dark underline hover:text-terracotta"
+            >
+              {t.acceptTermsPrivacyLink}
+            </a>
+            {t.acceptTermsSuffix}
+          </span>
+        </label>
+
         <SubmitButton label={t.submit} pendingLabel={t.submitPending} />
       </form>
     </div>

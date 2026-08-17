@@ -185,6 +185,11 @@ export const professionals = pgTable("professionals", {
   website: varchar("website", { length: 255 }),
   status: varchar("status", { length: 16 }).notNull().default("pending"), // pending|validated|refused|suspended
   createdAt: timestamp("created_at").defaultNow(),
+  // Audit trail for the CGU Pro / Politique de Confidentialité acceptance
+  // checkbox on the application form — kept separate from createdAt so it
+  // stays meaningful if the signup flow ever adds steps between account
+  // creation and the actual terms acceptance.
+  termsAcceptedAt: timestamp("terms_accepted_at"),
 });
 
 export const subscriptionPlans = pgTable("subscription_plans", {

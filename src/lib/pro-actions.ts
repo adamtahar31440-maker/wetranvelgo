@@ -35,6 +35,13 @@ export async function applyAsProfessional(formData: FormData) {
   const user = await currentUser();
   if (!user) throw new Error("Unauthorized");
 
+  // The checkbox is `required` client-side, but that's trivially bypassable
+  // (disabled JS, direct POST), so re-check server-side before creating an
+  // account — acceptance of the CGU/privacy policy must actually be recorded.
+  if (formData.get("acceptTerms") !== "on") {
+    throw new Error("Vous devez accepter les Conditions Générales d'Utilisation et la Politique de Confidentialité.");
+  }
+
   const db = getDb();
   const existingProfessional = await getProfessionalByClerkId(user.id);
   if (existingProfessional) {
@@ -138,6 +145,7 @@ export async function applyAsProfessional(formData: FormData) {
           email: truncate(user.emailAddresses[0]?.emailAddress ?? String(formData.get("email") ?? ""), 255),
           website: truncate(String(formData.get("website") ?? ""), 255),
           status: "pending",
+          termsAcceptedAt: new Date(),
         })
         .returning()
     )[0];
