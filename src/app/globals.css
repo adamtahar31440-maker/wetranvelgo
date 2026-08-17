@@ -1,0 +1,75 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+:root {
+  --background: #fbfaf7;
+  --foreground: #1c2b33;
+  --ocean: #17495e;
+  --ocean-dark: #0f333f;
+  --azur: #2f7c96;
+  --sand: #e9dfc9;
+  --terracotta: #bf6a45;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-ocean: var(--ocean);
+  --color-ocean-dark: var(--ocean-dark);
+  --color-azur: var(--azur);
+  --color-sand: var(--sand);
+  --color-terracotta: var(--terracotta);
+  --font-sans: var(--font-body);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  -webkit-tap-highlight-color: transparent;
+}
+
+html[dir="rtl"] {
+  text-align: right;
+}
+
+@keyframes progress-slide {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(30%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+.animate-progress-slide {
+  animation: progress-slide 1.1s ease-in-out infinite;
+}
+
+@keyframes kenburns-a {
+  0% {
+    transform: scale(1) translate(0, 0);
+  }
+  100% {
+    transform: scale(1.22) translate(-4%, -4%);
+  }
+}
+
+@keyframes kenburns-b {
+  0% {
+    transform: scale(1.22) translate(4%, 4%);
+  }
+  100% {
+    transform: scale(1) translate(0, 0);
+  }
+}
+
+.animate-kenburns-a {
+  animation: kenburns-a 7s ease-in-out infinite alternate;
+}
+
+.animate-kenburns-b {
+  animation: kenburns-b 7s ease-in-out infinite alternate;
+}
