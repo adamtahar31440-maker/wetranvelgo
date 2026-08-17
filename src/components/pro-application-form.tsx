@@ -12,11 +12,9 @@ import { qrFeatureLabel } from "@/lib/qr-feature-label";
 import { HoursEditor } from "@/components/hours-editor";
 import { MenuEditor } from "@/components/menu-editor";
 import { SingleImageField } from "@/components/single-image-field";
-import { ActivityTagsPicker } from "@/components/activity-tags-picker";
 import { ImageUploader } from "@/components/image-uploader";
 import { PhoneField } from "@/components/phone-field";
 import { SubmitButton } from "@/components/submit-button";
-import { flattenSubcategories } from "@/lib/labels";
 
 const RTL_LOCALES = ["ar", "he"];
 
@@ -59,7 +57,6 @@ export function ProApplicationForm({
   const [lang, setLang] = useState(ALL_LOCALES.includes(defaultLocale) ? defaultLocale : "fr");
   const t = PRO_FORM_STRINGS[lang] ?? PRO_FORM_STRINGS.fr;
   const dir = RTL_LOCALES.includes(lang) ? "rtl" : "ltr";
-  const activityOptions = flattenSubcategories(categories, subcategoriesByCategory);
   const [categoryId, setCategoryId] = useState<number | null>(null);
   const categoryType = categories.find((c) => c.id === categoryId)?.type;
   const isCarRental = categoryType === "location-vehicules";
@@ -363,17 +360,6 @@ export function ProApplicationForm({
             scanErrorText={t.menuScanError}
             scanUnsupportedFormatText={t.imagesUnsupportedFormat}
             scanSuccessTemplate={t.menuScanSuccess}
-          />
-        </div>
-
-        <div>
-          <label className={labelClass}>{t.fieldOtherActivities}</label>
-          <p className="mb-2 text-xs text-foreground/50">{t.otherActivitiesHint}</p>
-          <ActivityTagsPicker
-            options={activityOptions}
-            locale={lang}
-            otherLabel={t.otherOptionLabel}
-            otherPlaceholder={t.otherActivitySpecifyPlaceholder}
           />
         </div>
 
