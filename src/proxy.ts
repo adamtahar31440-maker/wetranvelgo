@@ -26,7 +26,19 @@ export default clerkMiddleware(async (auth, req) => {
     return NextResponse.next();
   }
   if (isProtectedRoute(req)) {
-    await auth.protect();
+    const { userId } = await auth();
+    if (!userId) {
+      // auth.protect() defaults to Clerk's hosted Account Portal sign-in
+      // (accounts.wetravelgo.com) via an internal rewrite/handshake, which on
+      // this instance ends up rewriting the request into our own [locale]
+      // route with a Clerk-generated token in place of the locale segment,
+      // 404ing every protected page. Redirecting to our own sign-in page
+      // directly sidesteps that handshake entirely.
+      const locale = req.nextUrl.pathname.split("/")[1] || routing.defaultLocale;
+      const signInUrl = new URL(`/${locale}/sign-in`, req.url);
+      signInUrl.searchParams.set("redirect_url", req.nextUrl.pathname);
+      return NextResponse.redirect(signInUrl);
+    }
   }
   return intlMiddleware(req);
 });
