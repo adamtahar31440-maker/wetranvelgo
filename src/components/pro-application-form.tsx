@@ -310,21 +310,6 @@ export function ProApplicationForm({
           <p className="mt-1 text-xs text-foreground/50">{t.priceLevelHint}</p>
         </div>
 
-        {isCarRental && (
-          <div className="space-y-4 rounded-xl border border-ocean-dark/20 bg-ocean-dark/5 p-4">
-            <SubcategoryMultiSelect
-              options={subcategoriesByCategory[categoryId ?? -1] ?? []}
-              locale={lang}
-              label={t.fieldVehicleTypes}
-            />
-            <div>
-              <label className={labelClass}>{t.fieldAvgDailyPrice}</label>
-              <input type="number" name="avgDailyPriceMad" min={0} step={1} className={inputClass} />
-              <p className="mt-1 text-xs text-foreground/50">{t.avgDailyPriceHint}</p>
-            </div>
-          </div>
-        )}
-
         {/* Every business gets the same digital catalog + QR code feature — only
             the section title changes (menu, room rates, catalog...) per category. */}
         <div className="rounded-xl border border-ocean-dark/20 bg-ocean-dark/5 p-4">
