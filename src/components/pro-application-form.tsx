@@ -63,6 +63,7 @@ export function ProApplicationForm({
   const isCarRental = categoryType === "location-vehicules";
   const isRealEstate = categoryType === "agences-immobilieres";
   const isActivity = categoryType === "activite";
+  const isRestaurant = categoryType === "restaurant";
   const showMultiSubcategory = hasMultiSubcategory(categoryType);
   const multiSubcategoryLabel = isCarRental
     ? t.fieldVehicleTypes
@@ -70,7 +71,9 @@ export function ProApplicationForm({
       ? t.fieldPropertyTypes
       : isActivity
         ? t.fieldActivityTypes
-        : t.fieldOnsiteServices;
+        : isRestaurant
+          ? t.fieldCuisineTypes
+          : t.fieldOnsiteServices;
 
   const [cityId, setCityId] = useState<number | null>(cities[0]?.id ?? null);
   const handleLocationChange = (lat: number, lng: number) => {

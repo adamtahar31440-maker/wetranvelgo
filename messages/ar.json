@@ -285,6 +285,7 @@
     "fieldPropertyTypes": "أنواع العقارات المقدمة",
     "fieldActivityTypes": "أنواع الأنشطة المقدمة",
     "fieldOnsiteServices": "خدمات وأنشطة في الموقع (مطعم، بار، ملهى ليلي، متجر...)",
+    "fieldCuisineTypes": "أنواع المطبخ والخدمات المقدمة",
     "fieldAvgDailyPrice": "السعر المتوسط لكل يوم (درهم)",
     "avgDailyPriceHint": "يعطي العملاء فكرة عن ميزانيتك، معروضة على ملفك الشخصي"
   },

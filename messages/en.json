@@ -285,6 +285,7 @@
     "fieldPropertyTypes": "Property types offered",
     "fieldActivityTypes": "Activity types offered",
     "fieldOnsiteServices": "On-site services & amenities (restaurant, bar, nightclub, shop...)",
+    "fieldCuisineTypes": "Cuisine types & services offered",
     "fieldAvgDailyPrice": "Average daily price (MAD)",
     "avgDailyPriceHint": "Gives customers an idea of your budget, displayed on your profile"
   },

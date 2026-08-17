@@ -10,6 +10,7 @@ export type ProFormStrings = {
   fieldPropertyTypes: string;
   fieldActivityTypes: string;
   fieldOnsiteServices: string;
+  fieldCuisineTypes: string;
   fieldAvgDailyPrice: string;
   avgDailyPriceHint: string;
   name: string;
@@ -124,6 +125,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     fieldPropertyTypes: "Types de biens proposés",
     fieldActivityTypes: "Types d'activités proposées",
     fieldOnsiteServices: "Services et activités sur place (restaurant, bar, boîte de nuit, boutique...)",
+    fieldCuisineTypes: "Types de cuisine et services proposés",
     fieldAvgDailyPrice: "Prix moyen par jour (MAD)",
     avgDailyPriceHint: "Donne une idée du budget aux clients, affiché sur votre fiche",
     name: "Nom de l'établissement",
@@ -240,6 +242,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     fieldPropertyTypes: "Property types offered",
     fieldActivityTypes: "Activity types offered",
     fieldOnsiteServices: "On-site services & amenities (restaurant, bar, nightclub, shop...)",
+    fieldCuisineTypes: "Cuisine types & services offered",
     fieldAvgDailyPrice: "Average daily price (MAD)",
     avgDailyPriceHint: "Gives customers an idea of your budget, displayed on your profile",
     name: "Business name",
@@ -356,6 +359,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     fieldPropertyTypes: "أنواع العقارات المقدمة",
     fieldActivityTypes: "أنواع الأنشطة المقدمة",
     fieldOnsiteServices: "خدمات وأنشطة في الموقع (مطعم، بار، ملهى ليلي، متجر...)",
+    fieldCuisineTypes: "أنواع المطبخ والخدمات المقدمة",
     fieldAvgDailyPrice: "السعر المتوسط لكل يوم (درهم)",
     avgDailyPriceHint: "يعطي العملاء فكرة عن ميزانيتك، معروضة على ملفك الشخصي",
     name: "اسم المنشأة",
@@ -471,6 +475,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     fieldPropertyTypes: "Tipos de propiedades ofrecidas",
     fieldActivityTypes: "Tipos de actividades ofrecidas",
     fieldOnsiteServices: "Servicios y actividades en el lugar (restaurante, bar, discoteca, tienda...)",
+    fieldCuisineTypes: "Tipos de cocina y servicios ofrecidos",
     fieldAvgDailyPrice: "Precio medio diario (MAD)",
     avgDailyPriceHint: "Da a los clientes una idea de tu presupuesto, mostrado en tu perfil",
     name: "Nombre del establecimiento",
@@ -587,6 +592,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     fieldPropertyTypes: "Angebotene Immobilientypen",
     fieldActivityTypes: "Angebotene Aktivitätsarten",
     fieldOnsiteServices: "Leistungen & Aktivitäten vor Ort (Restaurant, Bar, Nachtclub, Boutique...)",
+    fieldCuisineTypes: "Angebotene Küchenarten & Leistungen",
     fieldAvgDailyPrice: "Durchschnittlicher Tagespreis (MAD)",
     avgDailyPriceHint: "Gibt Kunden eine Vorstellung von deinem Budget, angezeigt in deinem Profil",
     name: "Name des Betriebs",
@@ -703,6 +709,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     fieldPropertyTypes: "Tipi di immobili offerti",
     fieldActivityTypes: "Tipi di attività offerte",
     fieldOnsiteServices: "Servizi e attività in loco (ristorante, bar, discoteca, negozio...)",
+    fieldCuisineTypes: "Tipi di cucina e servizi offerti",
     fieldAvgDailyPrice: "Prezzo medio giornaliero (MAD)",
     avgDailyPriceHint: "Dà ai clienti un'idea del tuo budget, visualizzato nel tuo profilo",
     name: "Nome dell'attività",
@@ -819,6 +826,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     fieldPropertyTypes: "Tipos de imóveis oferecidos",
     fieldActivityTypes: "Tipos de atividades oferecidas",
     fieldOnsiteServices: "Serviços e atividades no local (restaurante, bar, boate, loja...)",
+    fieldCuisineTypes: "Tipos de cozinha e serviços oferecidos",
     fieldAvgDailyPrice: "Preço médio diário (MAD)",
     avgDailyPriceHint: "Dá aos clientes uma ideia do seu orçamento, exibido em seu perfil",
     name: "Nome do estabelecimento",
@@ -935,6 +943,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     fieldPropertyTypes: "Предлагаемые типы недвижимости",
     fieldActivityTypes: "Предлагаемые виды деятельности",
     fieldOnsiteServices: "Услуги и активности на месте (ресторан, бар, ночной клуб, магазин...)",
+    fieldCuisineTypes: "Виды кухни и предлагаемые услуги",
     fieldAvgDailyPrice: "Средняя дневная цена (MAD)",
     avgDailyPriceHint: "Дает клиентам представление о вашем бюджете, отображаемое в вашем профиле",
     name: "Название заведения",
@@ -1051,6 +1060,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     fieldPropertyTypes: "提供的房产类型",
     fieldActivityTypes: "提供的活动类型",
     fieldOnsiteServices: "现场服务和活动（餐厅、酒吧、夜总会、商店等）",
+    fieldCuisineTypes: "提供的菜系和服务类型",
     fieldAvgDailyPrice: "平均日价格 (MAD)",
     avgDailyPriceHint: "让客户了解您的预算，显示在您的个人资料上",
     name: "商户名称",
@@ -1166,6 +1176,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     fieldPropertyTypes: "제공되는 부동산 유형",
     fieldActivityTypes: "제공되는 액티비티 유형",
     fieldOnsiteServices: "현장 서비스 및 편의시설 (레스토랑, 바, 나이트클럽, 상점 등)",
+    fieldCuisineTypes: "제공되는 요리 종류 및 서비스",
     fieldAvgDailyPrice: "평균 일일 요금 (MAD)",
     avgDailyPriceHint: "고객에게 예산에 대한 개념을 제공하며 프로필에 표시됩니다",
     name: "업체명",
@@ -1282,6 +1293,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     fieldPropertyTypes: "Sunulan emlak türleri",
     fieldActivityTypes: "Sunulan aktivite türleri",
     fieldOnsiteServices: "Yerinde hizmetler ve aktiviteler (restoran, bar, gece kulübü, mağaza...)",
+    fieldCuisineTypes: "Sunulan mutfak türleri ve hizmetler",
     fieldAvgDailyPrice: "Ortalama günlük fiyat (MAD)",
     avgDailyPriceHint: "Müşterilere bütçeniz hakkında bir fikir verir ve profilinizde görüntülenir",
     name: "İşletme adı",
@@ -1398,6 +1410,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     fieldPropertyTypes: "סוגי הנכסים המוצעים",
     fieldActivityTypes: "סוגי הפעילויות המוצעות",
     fieldOnsiteServices: "שירותים ופעילויות במקום (מסעדה, בר, מועדון לילה, חנות...)",
+    fieldCuisineTypes: "סוגי מטבח ושירותים מוצעים",
     fieldAvgDailyPrice: "מחיר יומי ממוצע (MAD)",
     avgDailyPriceHint: "נותן ללקוחות מושג של התקציב שלך, המוצג בפרופיל שלך",
     name: "שם העסק",

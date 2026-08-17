@@ -285,6 +285,7 @@
     "fieldPropertyTypes": "Tipos de propiedades ofrecidas",
     "fieldActivityTypes": "Tipos de actividades ofrecidas",
     "fieldOnsiteServices": "Servicios y actividades en el lugar (restaurante, bar, discoteca, tienda...)",
+    "fieldCuisineTypes": "Tipos de cocina y servicios ofrecidos",
     "fieldAvgDailyPrice": "Precio medio diario (MAD)",
     "avgDailyPriceHint": "Da a los clientes una idea de tu presupuesto, mostrado en tu perfil"
   },

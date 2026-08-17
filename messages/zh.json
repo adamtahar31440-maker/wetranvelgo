@@ -285,6 +285,7 @@
     "fieldPropertyTypes": "提供的房产类型",
     "fieldActivityTypes": "提供的活动类型",
     "fieldOnsiteServices": "现场服务和活动（餐厅、酒吧、夜总会、商店等）",
+    "fieldCuisineTypes": "提供的菜系和服务类型",
     "fieldAvgDailyPrice": "平均日价格 (MAD)",
     "avgDailyPriceHint": "让客户了解您的预算，显示在您的个人资料上"
   },

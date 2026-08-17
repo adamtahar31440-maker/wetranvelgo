@@ -285,6 +285,7 @@
     "fieldPropertyTypes": "סוגי הנכסים המוצעים",
     "fieldActivityTypes": "סוגי הפעילויות המוצעות",
     "fieldOnsiteServices": "שירותים ופעילויות במקום (מסעדה, בר, מועדון לילה, חנות...)",
+    "fieldCuisineTypes": "סוגי מטבח ושירותים מוצעים",
     "fieldAvgDailyPrice": "מחיר יומי ממוצע (MAD)",
     "avgDailyPriceHint": "נותן ללקוחות מושג של התקציב שלך, המוצג בפרופיל שלך"
   },

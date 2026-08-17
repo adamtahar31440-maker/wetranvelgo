@@ -97,6 +97,7 @@ export default async function ProDashboardPage({
   const isCarRental = myEstablishmentCategoryType === "location-vehicules";
   const isRealEstate = myEstablishmentCategoryType === "agences-immobilieres";
   const isActivity = myEstablishmentCategoryType === "activite";
+  const isRestaurant = myEstablishmentCategoryType === "restaurant";
   const showMultiSubcategory = hasMultiSubcategory(myEstablishmentCategoryType);
   const multiSubcategoryLabel = isCarRental
     ? t("fieldVehicleTypes")
@@ -104,7 +105,9 @@ export default async function ProDashboardPage({
       ? t("fieldPropertyTypes")
       : isActivity
         ? t("fieldActivityTypes")
-        : t("fieldOnsiteServices");
+        : isRestaurant
+          ? t("fieldCuisineTypes")
+          : t("fieldOnsiteServices");
   const currentPlanKey = subscription?.status === "active" ? subscription.planKey : "starter";
   const maxPhotos = plans.find((p) => p.key === currentPlanKey)?.maxPhotos ?? null;
   const subcategoriesByCategory = Object.fromEntries(
