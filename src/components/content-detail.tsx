@@ -42,7 +42,10 @@ export function ContentDetail({
         <h1 className="text-3xl font-semibold text-ocean-dark sm:text-4xl">{title}</h1>
         {body && (
           <div
-            className="prose prose-lg mt-6 max-w-none text-foreground/80 prose-headings:text-ocean-dark prose-img:rounded-xl"
+            // break-words: admin-authored content can contain long unbroken
+            // tokens (a URL, a phone/reference number) that would otherwise
+            // force the whole page to scroll horizontally on narrow screens.
+            className="prose prose-lg mt-6 max-w-none break-words text-foreground/80 prose-headings:text-ocean-dark prose-img:rounded-xl"
             dangerouslySetInnerHTML={{ __html: body }}
           />
         )}

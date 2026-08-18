@@ -26,6 +26,10 @@ body {
   background: var(--background);
   color: var(--foreground);
   -webkit-tap-highlight-color: transparent;
+  /* Safety net: admin-authored content (articles, descriptions) can contain
+     a long unbroken token that individual components might miss wrapping —
+     never let that force horizontal scroll on the whole page. */
+  overflow-x: hidden;
 }
 
 html[dir="rtl"] {
