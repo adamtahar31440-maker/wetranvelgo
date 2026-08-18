@@ -289,6 +289,7 @@
     "fieldActivityTypes": "Tipi di attività offerte",
     "fieldOnsiteServices": "Servizi e attività in loco (ristorante, bar, discoteca, negozio...)",
     "fieldCuisineTypes": "Tipi di cucina e servizi offerti",
+    "fieldProductTypes": "Tipi di prodotti offerti",
     "fieldAvgDailyPrice": "Prezzo medio giornaliero (MAD)",
     "avgDailyPriceHint": "Dà ai clienti un'idea del tuo budget, visualizzato nel tuo profilo"
   },

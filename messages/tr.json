@@ -289,6 +289,7 @@
     "fieldActivityTypes": "Sunulan aktivite türleri",
     "fieldOnsiteServices": "Yerinde hizmetler ve aktiviteler (restoran, bar, gece kulübü, mağaza...)",
     "fieldCuisineTypes": "Sunulan mutfak türleri ve hizmetler",
+    "fieldProductTypes": "Sunulan ürün türleri",
     "fieldAvgDailyPrice": "Ortalama günlük fiyat (MAD)",
     "avgDailyPriceHint": "Müşterilere bütçeniz hakkında bir fikir verir ve profilinizde görüntülenir"
   },

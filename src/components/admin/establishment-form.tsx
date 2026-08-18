@@ -81,6 +81,7 @@ export function EstablishmentForm({
   const isRealEstate = categoryType === "agences-immobilieres";
   const isActivity = categoryType === "activite";
   const isRestaurant = categoryType === "restaurant";
+  const isShopping = categoryType === "shopping";
   const showMultiSubcategory = hasMultiSubcategory(categoryType);
   const multiSubcategoryLabel = isCarRental
     ? "Types de véhicules proposés"
@@ -90,7 +91,9 @@ export function EstablishmentForm({
         ? "Types d'activités proposées"
         : isRestaurant
           ? "Types de cuisine et services proposés"
-          : "Services et activités sur place (restaurant, bar, boîte de nuit, boutique...)";
+          : isShopping
+            ? "Types de produits proposés"
+            : "Services et activités sur place (restaurant, bar, boîte de nuit, boutique...)";
   return (
     <form action={upsertEstablishment} className="space-y-8">
       <input type="hidden" name="locale" value={locale} />

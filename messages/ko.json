@@ -289,6 +289,7 @@
     "fieldActivityTypes": "제공되는 액티비티 유형",
     "fieldOnsiteServices": "현장 서비스 및 편의시설 (레스토랑, 바, 나이트클럽, 상점 등)",
     "fieldCuisineTypes": "제공되는 요리 종류 및 서비스",
+    "fieldProductTypes": "제공되는 제품 유형",
     "fieldAvgDailyPrice": "평균 일일 요금 (MAD)",
     "avgDailyPriceHint": "고객에게 예산에 대한 개념을 제공하며 프로필에 표시됩니다"
   },
