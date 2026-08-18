@@ -34,7 +34,15 @@ export default async function AdminProfessionalsPage({
     adminGetEstablishments(),
     adminGetCities(),
   ]);
-  const ficheByProfessionalId = new Map(establishments.map((e) => [e.professionalId, e]));
+  // A professional can run several establishments — keep every one, not just
+  // the last seen per id, so the admin can reach all of a pro's fiches.
+  const fichesByProfessionalId = new Map<number, typeof establishments>();
+  for (const e of establishments) {
+    if (e.professionalId == null) continue;
+    const list = fichesByProfessionalId.get(e.professionalId) ?? [];
+    list.push(e);
+    fichesByProfessionalId.set(e.professionalId, list);
+  }
   const cityById = new Map(cities.map((c) => [c.id, c]));
 
   const items = allItems.filter((p) => {
@@ -105,14 +113,15 @@ export default async function AdminProfessionalsPage({
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex flex-wrap items-center gap-3">
-                    {ficheByProfessionalId.has(p.id) && (
+                    {(fichesByProfessionalId.get(p.id) ?? []).map((e) => (
                       <Link
-                        href={`/${locale}/admin/establissements/${ficheByProfessionalId.get(p.id)!.id}`}
+                        key={e.id}
+                        href={`/${locale}/admin/establissements/${e.id}`}
                         className="text-azur hover:underline"
                       >
-                        Voir la fiche
+                        {e.name.fr}
                       </Link>
-                    )}
+                    ))}
                     {p.status !== "validated" && (
                       <form action={setProfessionalStatus.bind(null, p.id, "validated")}>
                         <button type="submit" className="text-green-700 hover:underline">

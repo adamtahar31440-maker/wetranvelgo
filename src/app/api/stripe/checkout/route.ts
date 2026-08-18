@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { safeCurrentUser as currentUser } from "@/lib/auth";
 import { getStripe, STRIPE_CURRENCY } from "@/lib/stripe";
-import { getProfessionalByClerkId, getSubscriptionPlans } from "@/lib/admin-data";
+import { getProfessionalByClerkId, getEstablishmentsByProfessionalId, getSubscriptionPlans } from "@/lib/admin-data";
 
 // Paid subscriptions are paused for 6 months (launch phase: free signup only).
 // Flip this back to false to re-enable checkout.
@@ -20,12 +20,20 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "not_a_validated_professional" }, { status: 403 });
   }
 
-  const { planKey, billingCycle, locale } = await req.json();
+  const { planKey, billingCycle, locale, establishmentId } = await req.json();
   const loc = typeof locale === "string" ? locale : "fr";
   const plans = await getSubscriptionPlans();
   const plan = plans.find((p) => p.key === planKey);
   if (!plan || plan.priceMonthlyMad === 0) {
     return NextResponse.json({ error: "invalid_plan" }, { status: 400 });
+  }
+
+  // Each establishment is billed independently — verify the requested one
+  // actually belongs to this professional before creating a session for it.
+  const myEstablishments = await getEstablishmentsByProfessionalId(professional.id);
+  const establishment = myEstablishments.find((e) => e.id === Number(establishmentId));
+  if (!establishment) {
+    return NextResponse.json({ error: "invalid_establishment" }, { status: 400 });
   }
 
   const amountMad = billingCycle === "yearly" ? plan.priceYearlyMad : plan.priceMonthlyMad;
@@ -58,6 +66,7 @@ export async function POST(req: NextRequest) {
     ],
     metadata: {
       professionalId: String(professional.id),
+      establishmentId: String(establishment.id),
       planKey: plan.key,
       billingCycle,
     },

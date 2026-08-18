@@ -66,6 +66,17 @@ export async function adminGetEstablishmentById(id: number) {
   return rows[0] ?? null;
 }
 
+// A professional can run several establishments — this is what the pro
+// dashboard uses instead of filtering the whole platform's establishment list.
+export async function getEstablishmentsByProfessionalId(professionalId: number) {
+  const db = getDb();
+  return db
+    .select()
+    .from(establishments)
+    .where(eq(establishments.professionalId, professionalId))
+    .orderBy(establishments.createdAt);
+}
+
 // ---- Label evaluations ("WeTravelGo Approved") ----
 export async function adminGetLabelEvaluations(establishmentId: number) {
   const db = getDb();
@@ -233,12 +244,14 @@ export async function adminGetSubscriptions() {
   return db.select().from(subscriptions).orderBy(desc(subscriptions.createdAt));
 }
 
-export async function getSubscriptionByProfessionalId(professionalId: number) {
+// Each establishment is billed/quota-limited independently — see
+// src/db/schema.ts's subscriptions.establishmentId comment.
+export async function getSubscriptionByEstablishmentId(establishmentId: number) {
   const db = getDb();
   const rows = await db
     .select()
     .from(subscriptions)
-    .where(eq(subscriptions.professionalId, professionalId))
+    .where(eq(subscriptions.establishmentId, establishmentId))
     .orderBy(desc(subscriptions.createdAt));
   return rows[0] ?? null;
 }
@@ -249,12 +262,12 @@ export async function adminGetInvoices() {
   return db.select().from(invoices).orderBy(desc(invoices.issuedAt));
 }
 
-export async function getInvoicesByProfessionalId(professionalId: number) {
+export async function getInvoicesByEstablishmentId(establishmentId: number) {
   const db = getDb();
   return db
     .select()
     .from(invoices)
-    .where(eq(invoices.professionalId, professionalId))
+    .where(eq(invoices.establishmentId, establishmentId))
     .orderBy(desc(invoices.issuedAt));
 }
 

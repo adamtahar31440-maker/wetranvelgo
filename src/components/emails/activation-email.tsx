@@ -5,13 +5,15 @@ export function ActivationEmail({
   contactName,
   companyName,
   dashboardUrl,
-  listingUrl,
+  listings,
   catalogLabel,
 }: {
   contactName: string;
   companyName: string;
   dashboardUrl: string;
-  listingUrl: string | null;
+  // One entry per establishment validated on this account — a pro can run
+  // several independent businesses under one login.
+  listings: { url: string; name: string }[];
   // e.g. "Menu digital", "Catalogue digital", "Biens immobiliers" — see qrFeatureLabel.
   catalogLabel: string;
 }) {
@@ -27,11 +29,11 @@ export function ActivationEmail({
         tout moment depuis votre tableau de bord.
       </Text>
       <Section style={{ textAlign: "center", margin: "24px 0 8px" }}>
-        {listingUrl && (
-          <a href={listingUrl} style={emailStyles.button}>
-            Voir ma fiche
+        {listings.map((l) => (
+          <a key={l.url} href={l.url} style={emailStyles.button}>
+            {listings.length > 1 ? `Voir « ${l.name} »` : "Voir ma fiche"}
           </a>
-        )}
+        ))}
         <a href={dashboardUrl} style={emailStyles.buttonSecondary}>
           Mon tableau de bord
         </a>

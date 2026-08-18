@@ -206,6 +206,11 @@ export const subscriptionPlans = pgTable("subscription_plans", {
 export const subscriptions = pgTable("subscriptions", {
   id: serial("id").primaryKey(),
   professionalId: integer("professional_id").notNull(),
+  // A professional can run several establishments (see [ville]/dashboard
+  // "add another business"), each billed and quota-limited independently —
+  // this is the scoping key; professionalId is kept for pro-wide admin
+  // queries/reporting and the whole-account delete cascade.
+  establishmentId: integer("establishment_id").notNull(),
   planKey: varchar("plan_key", { length: 32 }).notNull(),
   billingCycle: varchar("billing_cycle", { length: 16 }).notNull().default("monthly"), // monthly|yearly
   status: varchar("status", { length: 16 }).notNull().default("active"), // active|trialing|past_due|canceled|manual
@@ -220,6 +225,7 @@ export const invoices = pgTable("invoices", {
   id: serial("id").primaryKey(),
   subscriptionId: integer("subscription_id"),
   professionalId: integer("professional_id").notNull(),
+  establishmentId: integer("establishment_id").notNull(),
   amountMad: integer("amount_mad").notNull(),
   status: varchar("status", { length: 16 }).notNull().default("pending"), // paid|pending|failed|refunded
   paymentMethod: varchar("payment_method", { length: 24 }),

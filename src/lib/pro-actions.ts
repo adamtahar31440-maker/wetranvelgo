@@ -10,7 +10,7 @@ import { professionals, establishments, categories, serviceOrders, labelApplicat
 import {
   getProfessionalByClerkId,
   getLabelApplicationByEstablishmentId,
-  getSubscriptionByProfessionalId,
+  getSubscriptionByEstablishmentId,
   getSubscriptionPlans,
 } from "@/lib/admin-data";
 import { ALL_LOCALES } from "@/lib/localized-form";
@@ -44,17 +44,27 @@ export async function applyAsProfessional(formData: FormData) {
 
   const db = getDb();
   const existingProfessional = await getProfessionalByClerkId(user.id);
+  // A pro in good standing can add another, fully independent business from
+  // their dashboard ("Ajouter un commerce") — that flow sets this hidden
+  // field so this same action/form can be reused instead of duplicating it.
+  const addAnotherBusiness = formData.get("addAnotherBusiness") === "1";
   if (existingProfessional) {
-    const [existingEstablishment] = await db
-      .select({ id: establishments.id })
-      .from(establishments)
-      .where(eq(establishments.professionalId, existingProfessional.id));
-    // A professional account with no establishment means a previous attempt
-    // created the account but crashed before finishing the fiche (e.g. a bad
-    // field value the DB rejected) — let them pick up where they left off
-    // instead of being silently stuck forever on an account that can never
-    // get a listing.
-    if (existingEstablishment) return;
+    if (addAnotherBusiness) {
+      if (existingProfessional.status === "refused" || existingProfessional.status === "suspended") {
+        throw new Error("Forbidden");
+      }
+    } else {
+      const [existingEstablishment] = await db
+        .select({ id: establishments.id })
+        .from(establishments)
+        .where(eq(establishments.professionalId, existingProfessional.id));
+      // A professional account with no establishment means a previous attempt
+      // created the account but crashed before finishing the fiche (e.g. a bad
+      // field value the DB rejected) — let them pick up where they left off
+      // instead of being silently stuck forever on an account that can never
+      // get a listing.
+      if (existingEstablishment) return;
+    }
   }
 
   const categoryId = Number(formData.get("categoryId"));
@@ -351,6 +361,11 @@ export async function applyAsProfessional(formData: FormData) {
   }
 
   revalidatePath("/", "layout");
+
+  if (addAnotherBusiness) {
+    const locale = String(formData.get("locale") ?? "fr");
+    redirect(`/${locale}/pro/dashboard?establishment=${establishment.id}&added=1`);
+  }
 }
 
 // One form, one button: the fiche and the digital menu (when the establishment
@@ -505,7 +520,7 @@ export async function updateOwnEstablishment(formData: FormData) {
   }
 
   const [subscription, plans] = await Promise.all([
-    getSubscriptionByProfessionalId(professional.id),
+    getSubscriptionByEstablishmentId(establishment.id),
     getSubscriptionPlans(),
   ]);
   const currentPlanKey = subscription?.status === "active" ? subscription.planKey : "starter";

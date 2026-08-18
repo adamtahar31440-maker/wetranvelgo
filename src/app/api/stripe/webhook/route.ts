@@ -3,7 +3,7 @@ import Stripe from "stripe";
 import { getStripe } from "@/lib/stripe";
 import { getDb } from "@/db";
 import { subscriptions, invoices } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 
 export async function POST(req: NextRequest) {
   const signature = req.headers.get("stripe-signature");
@@ -29,16 +29,18 @@ export async function POST(req: NextRequest) {
     case "checkout.session.completed": {
       const session = event.data.object as Stripe.Checkout.Session;
       const professionalId = Number(session.metadata?.professionalId);
+      const establishmentId = Number(session.metadata?.establishmentId);
       const planKey = session.metadata?.planKey;
       const billingCycle = session.metadata?.billingCycle as "monthly" | "yearly" | undefined;
-      if (professionalId && planKey) {
+      if (professionalId && establishmentId && planKey) {
         const existing = await db
           .select()
           .from(subscriptions)
-          .where(eq(subscriptions.professionalId, professionalId));
+          .where(and(eq(subscriptions.professionalId, professionalId), eq(subscriptions.establishmentId, establishmentId)));
 
         const values = {
           professionalId,
+          establishmentId,
           planKey,
           billingCycle: billingCycle ?? "monthly",
           status: "active" as const,
@@ -55,6 +57,7 @@ export async function POST(req: NextRequest) {
 
         await db.insert(invoices).values({
           professionalId,
+          establishmentId,
           amountMad: (session.amount_total ?? 0) / 100,
           status: "paid",
           paymentMethod: "stripe",

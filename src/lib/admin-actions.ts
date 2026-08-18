@@ -685,7 +685,7 @@ export async function setProfessionalStatus(
   // only once the professional is validated; it's hidden again if refused
   // or suspended.
   if (status === "validated") {
-    const [rows, [establishment]] = await Promise.all([
+    const [rows, updatedEstablishments] = await Promise.all([
       db.select().from(professionals).where(eq(professionals.id, id)),
       db
         .update(establishments)
@@ -710,20 +710,25 @@ export async function setProfessionalStatus(
     }
 
     if (pro?.email) {
-      let listingUrl: string | null = null;
+      const listings: { url: string; name: string }[] = [];
+      // Generic wording when there's more than one business — no single
+      // establishment's category to describe the digital-catalog feature by.
       let catalogLabel = qrFeatureLabel(undefined, "fr");
-      if (establishment) {
+      for (const establishment of updatedEstablishments) {
         const [[category], [city]] = await Promise.all([
           db.select().from(categories).where(eq(categories.id, establishment.categoryId)),
           db.select().from(cities).where(eq(cities.id, establishment.cityId)),
         ]);
         if (category && city) {
-          listingUrl = `https://wetravelgo.com/fr/${city.slug}/${category.slug}/${establishment.slug}`;
-          catalogLabel = qrFeatureLabel(category.type, "fr");
+          listings.push({
+            url: `https://wetravelgo.com/fr/${city.slug}/${category.slug}/${establishment.slug}`,
+            name: establishment.name.fr,
+          });
+          if (updatedEstablishments.length === 1) catalogLabel = qrFeatureLabel(category.type, "fr");
         }
       }
       waitUntil(
-        sendActivationEmail(pro.email, pro.contactName || pro.companyName, pro.companyName, listingUrl, catalogLabel)
+        sendActivationEmail(pro.email, pro.contactName || pro.companyName, pro.companyName, listings, catalogLabel)
       );
     }
   } else if (status === "refused" || status === "suspended") {
@@ -767,6 +772,7 @@ export async function deleteProfessional(id: number) {
 
 export async function changeSubscriptionPlan(
   professionalId: number,
+  establishmentId: number,
   planKey: string,
   billingCycle: "monthly" | "yearly"
 ) {
@@ -775,7 +781,7 @@ export async function changeSubscriptionPlan(
   const existing = await db
     .select()
     .from(subscriptions)
-    .where(eq(subscriptions.professionalId, professionalId));
+    .where(and(eq(subscriptions.professionalId, professionalId), eq(subscriptions.establishmentId, establishmentId)));
 
   if (existing[0]) {
     await db
@@ -785,6 +791,7 @@ export async function changeSubscriptionPlan(
   } else {
     await db.insert(subscriptions).values({
       professionalId,
+      establishmentId,
       planKey,
       billingCycle,
       status: "manual",

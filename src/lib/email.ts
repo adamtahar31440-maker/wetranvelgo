@@ -34,7 +34,7 @@ export async function sendActivationEmail(
   to: string,
   contactName: string,
   companyName: string,
-  listingUrl: string | null,
+  listings: { url: string; name: string }[],
   catalogLabel: string
 ) {
   try {
@@ -46,7 +46,7 @@ export async function sendActivationEmail(
         contactName,
         companyName,
         dashboardUrl: "https://wetravelgo.com/fr/pro/dashboard",
-        listingUrl,
+        listings,
         catalogLabel,
       }),
     });

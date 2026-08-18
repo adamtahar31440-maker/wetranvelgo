@@ -3,9 +3,9 @@ import { safeCurrentUser } from "@/lib/auth";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import {
   getProfessionalByClerkId,
-  getSubscriptionByProfessionalId,
-  getInvoicesByProfessionalId,
-  adminGetEstablishments,
+  getEstablishmentsByProfessionalId,
+  getSubscriptionByEstablishmentId,
+  getInvoicesByEstablishmentId,
   getSubscriptionPlans,
   getAllCategories,
   adminGetSubcategories,
@@ -27,6 +27,7 @@ import { UpdateSuccessBanner } from "@/components/update-success-banner";
 import { PRICE_LEVELS, priceLevelLabel, buildSubcategoryMap, subcategoryLabel, flattenSubcategories } from "@/lib/labels";
 import { AiDescriptionField } from "@/components/ai-description-field";
 import { AddressLocationPicker } from "@/components/address-location-picker";
+import { cn } from "@/lib/utils";
 
 const inputClass = "w-full rounded-lg border border-black/10 px-3 py-2 text-sm outline-none focus:border-ocean-dark";
 const labelClass = "mb-1 block text-xs font-semibold text-foreground/60";
@@ -36,10 +37,10 @@ export default async function ProDashboardPage({
   searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ updated?: string }>;
+  searchParams: Promise<{ updated?: string; establishment?: string; addBusiness?: string; added?: string }>;
 }) {
   const { locale } = await params;
-  const { updated } = await searchParams;
+  const { updated, establishment: establishmentParam, addBusiness, added } = await searchParams;
   setRequestLocale(locale);
   const t = await getTranslations("dashboard");
   const user = await safeCurrentUser();
@@ -83,14 +84,51 @@ export default async function ProDashboardPage({
     );
   }
 
-  const [subscription, invoices, allEstablishments, plans, categories] = await Promise.all([
-    getSubscriptionByProfessionalId(professional.id),
-    getInvoicesByProfessionalId(professional.id),
-    adminGetEstablishments(),
+  // A pro in good standing can add another, fully independent business —
+  // reuses the exact same signup form/action as a first-time pro, just with
+  // an extra hidden field so applyAsProfessional knows not to no-op.
+  if (addBusiness === "1") {
+    const [categories, cities] = await Promise.all([getAllCategories(), getActiveCities()]);
+    const subcategoriesByCategory = Object.fromEntries(
+      await Promise.all(categories.map(async (c) => [c.id, await adminGetSubcategories(c.id)]))
+    );
+    return (
+      <div className="space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          {langSwitcher}
+          <Link href={`/${locale}/pro/dashboard`} className="text-sm font-medium text-ocean-dark hover:underline">
+            {t("cancelAddBusiness")}
+          </Link>
+        </div>
+        <ProApplicationForm
+          action={applyAsProfessional}
+          categories={categories}
+          subcategoriesByCategory={subcategoriesByCategory}
+          cities={cities}
+          defaultLocale={locale}
+          extraHiddenFields={[
+            { name: "addAnotherBusiness", value: "1" },
+            { name: "locale", value: locale },
+          ]}
+        />
+      </div>
+    );
+  }
+
+  const [myEstablishments, plans, categories] = await Promise.all([
+    getEstablishmentsByProfessionalId(professional.id),
     getSubscriptionPlans(),
     getAllCategories(),
   ]);
-  const myEstablishment = allEstablishments.find((e) => e.professionalId === professional.id);
+  const requestedEstablishmentId = Number(establishmentParam);
+  const myEstablishment =
+    myEstablishments.find((e) => e.id === requestedEstablishmentId) ?? myEstablishments[0] ?? null;
+  const [subscription, invoices] = myEstablishment
+    ? await Promise.all([
+        getSubscriptionByEstablishmentId(myEstablishment.id),
+        getInvoicesByEstablishmentId(myEstablishment.id),
+      ])
+    : [null, []];
   const myEstablishmentCategoryType = myEstablishment
     ? categories.find((c) => c.id === myEstablishment.categoryId)?.type
     : undefined;
@@ -120,6 +158,7 @@ export default async function ProDashboardPage({
   return (
     <div className="space-y-10">
       {updated === "1" && <UpdateSuccessBanner message={t("updateSuccess")} />}
+      {added === "1" && <UpdateSuccessBanner message={t("businessAddedSuccess")} />}
 
       {professional.status === "pending" && (
         <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4">
@@ -133,6 +172,29 @@ export default async function ProDashboardPage({
           <p className="text-sm text-foreground/60">{t("tagline")}</p>
         </div>
         {langSwitcher}
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2">
+        {myEstablishments.map((e) => (
+          <Link
+            key={e.id}
+            href={`/${locale}/pro/dashboard?establishment=${e.id}`}
+            className={cn(
+              "rounded-full px-4 py-1.5 text-xs font-semibold transition",
+              e.id === myEstablishment?.id
+                ? "bg-ocean-dark text-white"
+                : "border border-black/10 text-foreground/70 hover:bg-black/5"
+            )}
+          >
+            {e.name.fr}
+          </Link>
+        ))}
+        <Link
+          href={`/${locale}/pro/dashboard?addBusiness=1`}
+          className="rounded-full border border-dashed border-ocean-dark/40 px-4 py-1.5 text-xs font-semibold text-ocean-dark hover:bg-ocean-dark/5"
+        >
+          {t("addAnotherBusiness")}
+        </Link>
       </div>
 
       {myEstablishment ? (

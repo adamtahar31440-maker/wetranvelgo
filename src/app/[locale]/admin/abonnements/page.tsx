@@ -1,13 +1,19 @@
-import { adminGetSubscriptions, adminGetProfessionals, getSubscriptionPlans } from "@/lib/admin-data";
+import { adminGetSubscriptions, adminGetProfessionals, adminGetEstablishments, getSubscriptionPlans } from "@/lib/admin-data";
 import { changeSubscriptionPlan } from "@/lib/admin-actions";
 
 export default async function AdminSubscriptionsPage() {
-  const [subscriptions, professionals, plans] = await Promise.all([
+  const [subscriptions, professionals, establishments, plans] = await Promise.all([
     adminGetSubscriptions(),
     adminGetProfessionals(),
+    adminGetEstablishments(),
     getSubscriptionPlans(),
   ]);
   const proById = new Map(professionals.map((p) => [p.id, p]));
+  // A professional can run several establishments, each on its own plan —
+  // list every establishment (not just ones that already have a subscription
+  // row, since "starter" has none) so admin can grant/change any business's
+  // quota, Stripe being disabled for now.
+  const subByEstablishmentId = new Map(subscriptions.map((s) => [s.establishmentId, s]));
 
   return (
     <div>
@@ -37,6 +43,7 @@ export default async function AdminSubscriptionsPage() {
           <thead className="border-b border-black/5 bg-sand/30 text-xs uppercase text-foreground/60">
             <tr>
               <th className="px-4 py-3">Professionnel</th>
+              <th className="px-4 py-3">Établissement</th>
               <th className="px-4 py-3">Plan</th>
               <th className="px-4 py-3">Cycle</th>
               <th className="px-4 py-3">Statut</th>
@@ -44,47 +51,54 @@ export default async function AdminSubscriptionsPage() {
             </tr>
           </thead>
           <tbody>
-            {subscriptions.length === 0 && (
+            {establishments.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-4 py-8 text-center text-foreground/50">
-                  Aucun abonnement actif pour le moment.
+                <td colSpan={6} className="px-4 py-8 text-center text-foreground/50">
+                  Aucun établissement pour le moment.
                 </td>
               </tr>
             )}
-            {subscriptions.map((s) => (
-              <tr key={s.id} className="border-b border-black/5 last:border-0">
-                <td className="px-4 py-3 font-medium text-ocean-dark">
-                  {proById.get(s.professionalId)?.companyName ?? "—"}
-                </td>
-                <td className="px-4 py-3 text-foreground/70">{s.planKey}</td>
-                <td className="px-4 py-3 text-foreground/70">{s.billingCycle}</td>
-                <td className="px-4 py-3 text-foreground/70">{s.status}</td>
-                <td className="px-4 py-3">
-                  <form
-                    action={async (formData: FormData) => {
-                      "use server";
-                      await changeSubscriptionPlan(
-                        s.professionalId,
-                        String(formData.get("planKey")),
-                        formData.get("billingCycle") as "monthly" | "yearly"
-                      );
-                    }}
-                    className="flex items-center gap-2"
-                  >
-                    <select name="planKey" defaultValue={s.planKey} className="rounded-lg border border-black/10 px-2 py-1 text-xs">
-                      {plans.map((p) => (
-                        <option key={p.key} value={p.key}>{p.key}</option>
-                      ))}
-                    </select>
-                    <select name="billingCycle" defaultValue={s.billingCycle} className="rounded-lg border border-black/10 px-2 py-1 text-xs">
-                      <option value="monthly">Mensuel</option>
-                      <option value="yearly">Annuel</option>
-                    </select>
-                    <button type="submit" className="text-azur hover:underline">Appliquer</button>
-                  </form>
-                </td>
-              </tr>
-            ))}
+            {establishments.map((e) => {
+              const sub = e.professionalId != null ? subByEstablishmentId.get(e.id) : undefined;
+              return (
+                <tr key={e.id} className="border-b border-black/5 last:border-0">
+                  <td className="px-4 py-3 font-medium text-ocean-dark">
+                    {e.professionalId != null ? proById.get(e.professionalId)?.companyName ?? "—" : "—"}
+                  </td>
+                  <td className="px-4 py-3 text-foreground/70">{e.name.fr}</td>
+                  <td className="px-4 py-3 text-foreground/70">{sub?.planKey ?? "starter"}</td>
+                  <td className="px-4 py-3 text-foreground/70">{sub?.billingCycle ?? "monthly"}</td>
+                  <td className="px-4 py-3 text-foreground/70">{sub?.status ?? "—"}</td>
+                  <td className="px-4 py-3">
+                    {e.professionalId != null && (
+                      <form
+                        action={async (formData: FormData) => {
+                          "use server";
+                          await changeSubscriptionPlan(
+                            e.professionalId!,
+                            e.id,
+                            String(formData.get("planKey")),
+                            formData.get("billingCycle") as "monthly" | "yearly"
+                          );
+                        }}
+                        className="flex items-center gap-2"
+                      >
+                        <select name="planKey" defaultValue={sub?.planKey ?? "starter"} className="rounded-lg border border-black/10 px-2 py-1 text-xs">
+                          {plans.map((p) => (
+                            <option key={p.key} value={p.key}>{p.key}</option>
+                          ))}
+                        </select>
+                        <select name="billingCycle" defaultValue={sub?.billingCycle ?? "monthly"} className="rounded-lg border border-black/10 px-2 py-1 text-xs">
+                          <option value="monthly">Mensuel</option>
+                          <option value="yearly">Annuel</option>
+                        </select>
+                        <button type="submit" className="text-azur hover:underline">Appliquer</button>
+                      </form>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

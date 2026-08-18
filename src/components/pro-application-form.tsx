@@ -48,12 +48,17 @@ export function ProApplicationForm({
   subcategoriesByCategory,
   cities,
   defaultLocale,
+  extraHiddenFields = [],
 }: {
   action: (formData: FormData) => void;
   categories: { id: number; type: string; name: Record<string, string> }[];
   subcategoriesByCategory: Record<number, { slug: string; name: Record<string, string> }[]>;
   cities: { id: number; slug: string; name: Record<string, string>; lat: number | null; lng: number | null }[];
   defaultLocale: string;
+  // Lets a parent (e.g. the pro dashboard's "add another business" flow) mark
+  // this submission for applyAsProfessional without the component needing to
+  // know anything about that use case.
+  extraHiddenFields?: { name: string; value: string }[];
 }) {
   const [lang, setLang] = useState(ALL_LOCALES.includes(defaultLocale) ? defaultLocale : "fr");
   const t = PRO_FORM_STRINGS[lang] ?? PRO_FORM_STRINGS.fr;
@@ -126,6 +131,10 @@ export function ProApplicationForm({
         dir={dir}
         className="max-w-2xl space-y-6 rounded-2xl border border-black/5 bg-white p-6"
       >
+        {extraHiddenFields.map((f) => (
+          <input key={f.name} type="hidden" name={f.name} value={f.value} />
+        ))}
+
         <div className="rounded-xl border border-ocean-dark/20 bg-ocean-dark/5 p-4">
           <label className={labelClass}>{t.langLabel}</label>
           <select
