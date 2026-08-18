@@ -1,6 +1,7 @@
 import { Resend } from "resend";
 import { WelcomeEmail } from "@/components/emails/welcome-email";
 import { ActivationEmail } from "@/components/emails/activation-email";
+import { BusinessAddedEmail } from "@/components/emails/business-added-email";
 
 const FROM = "WeTravelGo <contact@wetravelgo.com>";
 
@@ -27,6 +28,32 @@ export async function sendWelcomeEmail(to: string, contactName: string, companyN
     });
   } catch (err) {
     console.error("Failed to send welcome email to", to, err);
+  }
+}
+
+// Sent when a pro in good standing adds an additional, independent business
+// from their dashboard (see applyAsProfessional's addAnotherBusiness path) —
+// distinct from sendWelcomeEmail, which only fires for the very first one.
+export async function sendBusinessAddedEmail(
+  to: string,
+  contactName: string,
+  companyName: string,
+  listingUrl: string | null
+) {
+  try {
+    await getClient().emails.send({
+      from: FROM,
+      to,
+      subject: `Votre nouveau commerce ${companyName} est en ligne 🎉`,
+      react: BusinessAddedEmail({
+        contactName,
+        companyName,
+        listingUrl,
+        dashboardUrl: "https://wetravelgo.com/fr/pro/dashboard",
+      }),
+    });
+  } catch (err) {
+    console.error("Failed to send business-added email to", to, err);
   }
 }
 

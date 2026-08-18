@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { waitUntil } from "@vercel/functions";
 import { eq, and } from "drizzle-orm";
 import { getDb } from "@/db";
-import { professionals, establishments, categories, serviceOrders, labelApplications } from "@/db/schema";
+import { professionals, establishments, categories, cities, serviceOrders, labelApplications } from "@/db/schema";
 import {
   getProfessionalByClerkId,
   getLabelApplicationByEstablishmentId,
@@ -16,7 +16,7 @@ import {
 import { ALL_LOCALES } from "@/lib/localized-form";
 import { translateFields } from "@/lib/translate";
 import { slugify } from "@/lib/slug";
-import { sendWelcomeEmail } from "@/lib/email";
+import { sendWelcomeEmail, sendBusinessAddedEmail } from "@/lib/email";
 import { truncate } from "@/lib/truncate";
 
 const OPEN_APPLICATION_STATUSES = ["pending", "info_requested", "visit_scheduled", "on_hold"];
@@ -364,6 +364,14 @@ export async function applyAsProfessional(formData: FormData) {
 
   if (addAnotherBusiness) {
     const locale = String(formData.get("locale") ?? "fr");
+    if (professional.email) {
+      const [city] = await db.select().from(cities).where(eq(cities.id, cityId));
+      const listingUrl =
+        category && city
+          ? `https://wetravelgo.com/fr/${city.slug}/${category.slug}/${establishment.slug}`
+          : null;
+      waitUntil(sendBusinessAddedEmail(professional.email, contactName || name, name, listingUrl));
+    }
     redirect(`/${locale}/pro/dashboard?establishment=${establishment.id}&added=1`);
   }
 }
