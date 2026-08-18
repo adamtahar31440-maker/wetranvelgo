@@ -289,6 +289,7 @@
     "fieldActivityTypes": "Angebotene Aktivitätsarten",
     "fieldOnsiteServices": "Leistungen & Aktivitäten vor Ort (Restaurant, Bar, Nachtclub, Boutique...)",
     "fieldCuisineTypes": "Angebotene Küchenarten & Leistungen",
+    "fieldProductTypes": "Angebotene Produktarten",
     "fieldAvgDailyPrice": "Durchschnittlicher Tagespreis (MAD)",
     "avgDailyPriceHint": "Gibt Kunden eine Vorstellung von deinem Budget, angezeigt in deinem Profil"
   },

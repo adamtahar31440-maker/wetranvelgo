@@ -762,7 +762,14 @@ export async function deleteProfessional(id: number) {
 
   try {
     const client = await clerkClient();
-    await client.users.deleteUser(professional.clerkUserId);
+    const clerkUser = await client.users.getUser(professional.clerkUserId);
+    const currentRole = clerkUser.publicMetadata?.role as Role | undefined;
+    // Never delete the login of a staff/admin account that also happens to
+    // hold (or once held, e.g. via a test listing) a professional record —
+    // only a plain "professional" account's login should be removed here.
+    if (!currentRole || !ADMIN_ROLES.includes(currentRole)) {
+      await client.users.deleteUser(professional.clerkUserId);
+    }
   } catch {
     // DB cleanup already succeeded; the Clerk account may already be gone.
   }

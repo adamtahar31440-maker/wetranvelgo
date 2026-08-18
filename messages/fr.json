@@ -289,6 +289,7 @@
     "fieldActivityTypes": "Types d'activités proposées",
     "fieldOnsiteServices": "Services et activités sur place (restaurant, bar, boîte de nuit, boutique...)",
     "fieldCuisineTypes": "Types de cuisine et services proposés",
+    "fieldProductTypes": "Types de produits proposés",
     "fieldAvgDailyPrice": "Prix moyen par jour (MAD)",
     "avgDailyPriceHint": "Donne une idée du budget aux clients, affiché sur votre fiche"
   },
