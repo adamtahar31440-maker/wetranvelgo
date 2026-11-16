@@ -11,7 +11,7 @@ export function loadGoogleMaps(apiKey: string): Promise<void> {
     (window as unknown as Record<string, () => void>)[callbackName] = () => resolve();
 
     const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(apiKey)}&libraries=places&callback=${callbackName}`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(apiKey)}&libraries=places&v=weekly&callback=${callbackName}`;
     script.async = true;
     script.onerror = () => {
       loadPromise = null;
