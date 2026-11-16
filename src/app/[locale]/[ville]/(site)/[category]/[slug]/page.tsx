@@ -29,6 +29,7 @@ import {
   getCategoryBySlug,
   getSubcategories,
   getCityBySlug,
+  getCategories,
 } from "@/lib/data";
 import { getLabelBadges, getApprovedReviewsForEstablishment } from "@/lib/admin-data";
 import { EstablishmentCard } from "@/components/establishment-card";
@@ -40,6 +41,8 @@ import { PhotoGallery } from "@/components/photo-gallery";
 import { HoursDisplay } from "@/components/hours-display";
 import { ProductCategoryList } from "@/components/product-category-list";
 import { ContentDetail } from "@/components/content-detail";
+import { EventDetail } from "@/components/event-detail";
+import { EVENTS_SECTION_SLUG, getApprovedEventBySlug, getEstablishmentsByIds } from "@/lib/events";
 import { ClampedText } from "@/components/clamped-text";
 import { stripHtml } from "@/lib/html";
 
@@ -71,6 +74,17 @@ export async function generateMetadata({
   if (!cat) {
     const section = await getSiteSectionBySlug(category);
     if (!section) return {};
+    const event = category === EVENTS_SECTION_SLUG ? await getApprovedEventBySlug(slug, city.id) : null;
+    if (event) {
+      const title = event.title[locale] ?? event.title.fr;
+      const description = (event.description[locale] ?? event.description.fr).slice(0, 155);
+      return {
+        title,
+        description,
+        alternates: { canonical: `${SITE_URL}/${locale}/${ville}/${category}/${slug}` },
+        openGraph: { title, description, images: event.coverImage ? [event.coverImage] : undefined },
+      };
+    }
     const page = await getContentPageBySlug(category, slug, city.id);
     if (!page) return {};
     const title = page.title[locale] ?? page.title.fr;
@@ -111,6 +125,45 @@ export default async function EstablishmentPage({
   if (!cat) {
     const section = await getSiteSectionBySlug(category);
     if (!section) notFound();
+    const event = category === EVENTS_SECTION_SLUG ? await getApprovedEventBySlug(slug, city.id) : null;
+    if (event) {
+      const [tEvents, tCommon, organizers, allCategories] = await Promise.all([
+        getTranslations("events"),
+        getTranslations("common"),
+        getEstablishmentsByIds(event.establishmentId ? [event.establishmentId] : []),
+        getCategories(),
+      ]);
+      const est = organizers[0];
+      // Only link to the organizer's fiche while it's actually public.
+      const estCategory = est?.status === "active" ? allCategories.find((c) => c.id === est.categoryId) : undefined;
+      return (
+        <EventDetail
+          locale={locale}
+          event={event}
+          backHref={`/${locale}/${ville}/${category}`}
+          organizer={
+            est
+              ? {
+                  name: est.name[locale] ?? est.name.fr,
+                  href: estCategory ? `/${locale}/${ville}/${estCategory.slug}/${est.slug}` : null,
+                  address: est.address,
+                }
+              : null
+          }
+          labels={{
+            back: tEvents("backToEvents") || tCommon("back"),
+            date: tEvents("dateLabel"),
+            location: tEvents("locationLabel"),
+            price: tEvents("priceLabel"),
+            free: tEvents("free"),
+            organizer: tEvents("organizerLabel"),
+            book: tEvents("book"),
+            call: tEvents("call"),
+            past: tEvents("statusPast"),
+          }}
+        />
+      );
+    }
     const page = await getContentPageBySlug(category, slug, city.id);
     if (!page) notFound();
 

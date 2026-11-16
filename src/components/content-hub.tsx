@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import type { ReactNode } from "react";
 
 export function ContentHub({
   locale,
@@ -7,12 +8,15 @@ export function ContentHub({
   title,
   subtitle,
   pages,
+  children,
 }: {
   locale: string;
   basePath: string;
   title: string;
   subtitle?: string;
   pages: { slug: string; title: Record<string, string>; coverImage?: string | null }[];
+  /** Extra content between the header and the page grid (e.g. pro events). */
+  children?: ReactNode;
 }) {
   return (
     <div>
@@ -23,23 +27,26 @@ export function ContentHub({
         </div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {pages.map((p) => (
-            <Link
-              key={p.slug}
-              href={`/${locale}/${basePath}/${p.slug}`}
-              className="group block overflow-hidden rounded-2xl border border-black/5 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
-            >
-              <div className="relative aspect-[16/10] w-full overflow-hidden bg-sand">
-                {p.coverImage && (
-                  <Image
-                    src={p.coverImage}
-                    alt={p.title[locale] ?? p.title.fr}
-                    fill
-                    className="object-cover transition duration-500 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
+      {children}
+
+      {(pages.length > 0 || !children) && (
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {pages.map((p) => (
+              <Link
+                key={p.slug}
+                href={`/${locale}/${basePath}/${p.slug}`}
+                className="group block overflow-hidden rounded-2xl border border-black/5 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+              >
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-sand">
+                  {p.coverImage && (
+                    <Image
+                      src={p.coverImage}
+                      alt={p.title[locale] ?? p.title.fr}
+                      fill
+                      className="object-cover transition duration-500 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                    />
                 )}
               </div>
               <div className="p-4">
@@ -51,6 +58,7 @@ export function ContentHub({
           ))}
         </div>
       </div>
+      )}
     </div>
   );
 }

@@ -14,6 +14,7 @@ export default async function AdminDashboardPage() {
         <StatCard label="Abonnements actifs" value={stats.activeSubscriptions} />
         <StatCard label="Abonnés newsletter" value={stats.newsletterSubscribers} />
         <StatCard label="Scans QR" value={stats.menuScans} />
+        <StatCard label="Événements en attente" value={stats.eventsPending} />
       </div>
     </div>
   );

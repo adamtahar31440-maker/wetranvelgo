@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
 import { getAllEstablishments, getCategories, getActiveCities } from "@/lib/data";
+import { EVENTS_SECTION_SLUG, getUpcomingEvents } from "@/lib/events";
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://wetravelgo.com";
 
@@ -16,6 +17,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     getActiveCities(),
   ]);
 
+  const upcomingEventsByCity = new Map(
+    await Promise.all(cities.map(async (city) => [city.id, await getUpcomingEvents(city.id)] as const))
+  );
   const categoryById = new Map(categories.map((c) => [c.id, c]));
   const establishmentsByCity = new Map<number, typeof establishments>();
   for (const e of establishments) {
@@ -40,6 +44,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         const path = cat ? cat.slug : null;
         if (!path) continue;
         entries.push({ url: `${BASE_URL}/${locale}/${city.slug}/${path}/${e.slug}`, changeFrequency: "monthly" });
+      }
+      for (const ev of upcomingEventsByCity.get(city.id) ?? []) {
+        entries.push({
+          url: `${BASE_URL}/${locale}/${city.slug}/${EVENTS_SECTION_SLUG}/${ev.slug}`,
+          changeFrequency: "weekly",
+        });
       }
     }
   }

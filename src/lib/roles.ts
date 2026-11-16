@@ -31,6 +31,7 @@ export const PERMISSIONS: Record<
   | "nav"
   | "reviews"
   | "comments"
+  | "events"
   | "media"
   | "translations"
   | "seo"
@@ -56,6 +57,7 @@ export const PERMISSIONS: Record<
   nav: ["admin"],
   reviews: ["admin", "moderator"],
   comments: ["admin", "moderator"],
+  events: ["admin", "moderator"],
   media: ["admin", "moderator"],
   translations: ["admin", "translator"],
   seo: ["admin"],

@@ -28,6 +28,7 @@ import { PRICE_LEVELS, priceLevelLabel, buildSubcategoryMap, subcategoryLabel, f
 import { AiDescriptionField } from "@/components/ai-description-field";
 import { AddressLocationPicker } from "@/components/address-location-picker";
 import { cn } from "@/lib/utils";
+import { CalendarDays } from "lucide-react";
 
 const inputClass = "w-full rounded-lg border border-black/10 px-3 py-2 text-sm outline-none focus:border-ocean-dark";
 const labelClass = "mb-1 block text-xs font-semibold text-foreground/60";
@@ -157,6 +158,7 @@ export default async function ProDashboardPage({
   const myEstablishmentSubcategories = myEstablishment ? subcategoriesByCategory[myEstablishment.categoryId] ?? [] : [];
   const subcategoryMap = buildSubcategoryMap(myEstablishmentSubcategories);
   const activityOptions = flattenSubcategories(categories, subcategoriesByCategory);
+  const tEvents = await getTranslations("events");
 
   return (
     <div className="space-y-10">
@@ -199,6 +201,26 @@ export default async function ProDashboardPage({
           {t("addAnotherBusiness")}
         </Link>
       </div>
+
+      <section className="flex flex-col gap-4 rounded-2xl border border-black/5 bg-white p-6 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-start gap-3">
+          <CalendarDays className="mt-0.5 h-5 w-5 shrink-0 text-terracotta" aria-hidden />
+          <div>
+            <h2 className="text-sm font-semibold text-ocean-dark">{tEvents("myEventsTitle")}</h2>
+            <p className="mt-1 text-sm text-foreground/60">
+              {professional.status === "validated" ? tEvents("myEventsIntro") : tEvents("notValidated")}
+            </p>
+          </div>
+        </div>
+        {professional.status === "validated" && (
+          <Link
+            href={`/${locale}/pro/dashboard/evenements`}
+            className="shrink-0 rounded-full bg-ocean-dark px-4 py-2 text-center text-sm font-semibold text-white hover:bg-ocean"
+          >
+            {tEvents("manageEvents")}
+          </Link>
+        )}
+      </section>
 
       {myEstablishment ? (
         <form action={updateOwnEstablishment} className="space-y-10">

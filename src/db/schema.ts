@@ -258,6 +258,34 @@ export const reviews = pgTable("reviews", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// Events published by validated professionals (concerts, ateliers, soirées,
+// promotions...) and shown in the "evenements" site section once approved by
+// the WeTravelGo team. Dates are stored as the city's local wall-clock time
+// (no timezone) — what the pro typed is exactly what visitors see.
+export const events = pgTable("events", {
+  id: serial("id").primaryKey(),
+  cityId: integer("city_id").notNull(),
+  professionalId: integer("professional_id").notNull(),
+  establishmentId: integer("establishment_id"), // null = not tied to one of the pro's businesses
+  slug: varchar("slug", { length: 160 }).notNull(),
+  title: jsonb("title").$type<Localized>().notNull(),
+  description: jsonb("description").$type<Localized>().notNull(),
+  startsAt: timestamp("starts_at", { mode: "string" }).notNull(),
+  endsAt: timestamp("ends_at", { mode: "string" }),
+  location: varchar("location", { length: 255 }),
+  isFree: boolean("is_free").notNull().default(false),
+  priceMad: integer("price_mad"),
+  coverImage: varchar("cover_image", { length: 255 }),
+  bookingUrl: varchar("booking_url", { length: 255 }),
+  phone: varchar("phone", { length: 64 }),
+  status: varchar("status", { length: 16 }).notNull().default("pending"), // pending|approved|rejected
+  rejectionReason: text("rejection_reason"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+}, (table) => [
+  unique().on(table.cityId, table.slug),
+]);
+
 export const favorites = pgTable("favorites", {
   id: serial("id").primaryKey(),
   clerkUserId: varchar("clerk_user_id", { length: 64 }).notNull(),

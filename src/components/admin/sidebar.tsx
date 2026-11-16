@@ -23,6 +23,7 @@ const SECTIONS: { href: string; label: string; permission?: Permission; group?: 
   { href: "/label-candidatures", label: "Candidatures Label", permission: "label", group: "Établissements" },
   { href: "/avis", label: "Avis", permission: "reviews", group: "Établissements" },
   { href: "/menu-scans", label: "Scans QR", permission: "establishments", group: "Établissements" },
+  { href: "/evenements", label: "Événements", permission: "events", group: "Établissements" },
 
   { href: "/utilisateurs", label: "Utilisateurs", permission: "users", group: "Utilisateurs & Pros" },
   { href: "/professionnels", label: "Professionnels", permission: "professionals", group: "Utilisateurs & Pros" },

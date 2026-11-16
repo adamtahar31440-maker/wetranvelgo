@@ -28,6 +28,7 @@ import {
   labelBadges,
   labelApplications,
   siteSections,
+  events,
 } from "@/db/schema";
 import { can, ADMIN_ROLES, type Role } from "@/lib/roles";
 import { LABEL_CRITERIA } from "@/lib/label-criteria";
@@ -754,6 +755,7 @@ export async function deleteProfessional(id: number) {
   }
 
   await db.delete(labelApplications).where(eq(labelApplications.professionalId, id));
+  await db.delete(events).where(eq(events.professionalId, id));
   await db.delete(establishments).where(eq(establishments.professionalId, id));
   await db.delete(subscriptions).where(eq(subscriptions.professionalId, id));
   await db.delete(invoices).where(eq(invoices.professionalId, id));

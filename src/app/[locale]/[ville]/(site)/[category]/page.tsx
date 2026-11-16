@@ -17,6 +17,8 @@ import {
 import { Section } from "@/components/section";
 import { ContentHub } from "@/components/content-hub";
 import { CategoryEstablishments } from "@/components/category-establishments";
+import { EventList } from "@/components/event-list";
+import { EVENTS_SECTION_SLUG, getUpcomingEvents, getEstablishmentsByIds } from "@/lib/events";
 
 // Cached and reused for every visitor for up to 1h instead of hitting the DB on
 // every request — admin saves still show up immediately via revalidatePath.
@@ -80,13 +82,33 @@ export default async function CategoryPage({
     const section = await getSiteSectionBySlug(category);
     if (!section) notFound();
     const pages = await getContentPages(category, city.id);
+    let eventsBlock = null;
+    if (category === EVENTS_SECTION_SLUG) {
+      const [t, upcoming] = await Promise.all([getTranslations("events"), getUpcomingEvents(city.id)]);
+      const organizers = await getEstablishmentsByIds([
+        ...new Set(upcoming.map((e) => e.establishmentId).filter((id): id is number => id != null)),
+      ]);
+      eventsBlock = (
+        <EventList
+          locale={locale}
+          basePath={`${ville}/${category}`}
+          events={upcoming}
+          organizerById={new Map(organizers.map((o) => [o.id, o]))}
+          title={t("upcomingTitle")}
+          emptyLabel={t("noUpcoming")}
+          freeLabel={t("free")}
+        />
+      );
+    }
     return (
       <ContentHub
         locale={locale}
         basePath={`${ville}/${category}`}
         title={section.name[locale] ?? section.name.fr}
         pages={pages}
-      />
+      >
+        {eventsBlock}
+      </ContentHub>
     );
   }
 

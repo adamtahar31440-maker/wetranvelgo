@@ -22,6 +22,7 @@ import {
   siteSections,
   subcategories,
   menuScans,
+  events,
 } from "@/db/schema";
 import { desc, eq, count, asc, and, isNull } from "drizzle-orm";
 
@@ -35,6 +36,7 @@ export async function getDashboardStats() {
     subscriptionsActive,
     newsletterCount,
     menuScansTotal,
+    eventsPending,
   ] = await Promise.all([
     db.select({ c: count() }).from(establishments),
     db.select({ c: count() }).from(professionals),
@@ -42,6 +44,7 @@ export async function getDashboardStats() {
     db.select({ c: count() }).from(subscriptions).where(eq(subscriptions.status, "active")),
     db.select({ c: count() }).from(newsletterSubscribers),
     db.select({ c: count() }).from(menuScans),
+    db.select({ c: count() }).from(events).where(eq(events.status, "pending")),
   ]);
 
   return {
@@ -51,6 +54,7 @@ export async function getDashboardStats() {
     activeSubscriptions: subscriptionsActive[0]?.c ?? 0,
     newsletterSubscribers: newsletterCount[0]?.c ?? 0,
     menuScans: menuScansTotal[0]?.c ?? 0,
+    eventsPending: eventsPending[0]?.c ?? 0,
   };
 }
 
