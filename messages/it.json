@@ -124,7 +124,9 @@
     "legal": "Note legali",
     "privacy": "Privacy",
     "contact": "Contatto",
-    "rights": "Tutti i diritti riservati."
+    "rights": "Tutti i diritti riservati.",
+    "installApp": "Installa l'app",
+    "installAppIosHint": "Su iPhone/iPad: in Safari, tocca Condividi e poi «Aggiungi alla schermata Home»."
   },
   "common": {
     "readMore": "Scopri di più",

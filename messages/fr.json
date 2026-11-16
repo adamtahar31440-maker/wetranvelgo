@@ -124,7 +124,9 @@
     "legal": "Mentions légales",
     "privacy": "Confidentialité",
     "contact": "Contact",
-    "rights": "Tous droits réservés."
+    "rights": "Tous droits réservés.",
+    "installApp": "Installer l'application",
+    "installAppIosHint": "Sur iPhone/iPad : dans Safari, appuyez sur Partager puis « Sur l'écran d'accueil »."
   },
   "common": {
     "readMore": "En savoir plus",

@@ -20,6 +20,20 @@ const nextConfig: NextConfig = {
   // makes Clerk treat the request as cross-domain and triggers a handshake
   // redirect that breaks routing, so www must redirect to the apex, not the
   // other way around.
+  // The service worker must never be served from an HTTP cache, or installed
+  // apps would keep running an outdated one.
+  async headers() {
+    return [
+      {
+        source: "/sw.js",
+        headers: [
+          { key: "Content-Type", value: "application/javascript; charset=utf-8" },
+          { key: "Cache-Control", value: "no-cache, no-store, must-revalidate" },
+          { key: "Content-Security-Policy", value: "default-src 'self'; script-src 'self'" },
+        ],
+      },
+    ];
+  },
   async redirects() {
     return [
       {

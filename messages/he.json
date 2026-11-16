@@ -124,7 +124,9 @@
     "legal": "מידע משפטי",
     "privacy": "פרטיות",
     "contact": "צור קשר",
-    "rights": "כל הזכויות שמורות."
+    "rights": "כל הזכויות שמורות.",
+    "installApp": "התקנת האפליקציה",
+    "installAppIosHint": "ב-iPhone/iPad: ב-Safari, הקישו על שיתוף ואז על „הוספה למסך הבית”."
   },
   "common": {
     "readMore": "למידע נוסף",

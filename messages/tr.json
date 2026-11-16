@@ -124,7 +124,9 @@
     "legal": "Yasal Bilgiler",
     "privacy": "Gizlilik",
     "contact": "İletişim",
-    "rights": "Tüm hakları saklıdır."
+    "rights": "Tüm hakları saklıdır.",
+    "installApp": "Uygulamayı yükle",
+    "installAppIosHint": "iPhone/iPad'de: Safari'de Paylaş'a, ardından \"Ana Ekrana Ekle\"ye dokunun."
   },
   "common": {
     "readMore": "Daha fazla bilgi",

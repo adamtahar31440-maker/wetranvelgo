@@ -124,7 +124,9 @@
     "legal": "法律声明",
     "privacy": "隐私政策",
     "contact": "联系我们",
-    "rights": "版权所有。"
+    "rights": "版权所有。",
+    "installApp": "安装应用",
+    "installAppIosHint": "在 iPhone/iPad 上：在 Safari 中点按“分享”，然后选择“添加到主屏幕”。"
   },
   "common": {
     "readMore": "了解更多",

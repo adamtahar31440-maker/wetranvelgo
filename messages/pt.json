@@ -124,7 +124,9 @@
     "legal": "Aviso legal",
     "privacy": "Privacidade",
     "contact": "Contacto",
-    "rights": "Todos os direitos reservados."
+    "rights": "Todos os direitos reservados.",
+    "installApp": "Instalar o aplicativo",
+    "installAppIosHint": "No iPhone/iPad: no Safari, toque em Compartilhar e depois em «Adicionar à Tela de Início»."
   },
   "common": {
     "readMore": "Saber mais",

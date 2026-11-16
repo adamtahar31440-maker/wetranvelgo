@@ -124,7 +124,9 @@
     "legal": "법적 고지",
     "privacy": "개인정보처리방침",
     "contact": "문의하기",
-    "rights": "모든 권리 보유."
+    "rights": "모든 권리 보유.",
+    "installApp": "앱 설치",
+    "installAppIosHint": "iPhone/iPad: Safari에서 공유를 누른 다음 '홈 화면에 추가'를 선택하세요."
   },
   "common": {
     "readMore": "더 알아보기",

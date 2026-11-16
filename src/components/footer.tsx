@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
+import { InstallAppButton } from "@/components/install-app-button";
 
 export function Footer({
   ville,
@@ -70,6 +71,7 @@ export function Footer({
               wetravelgo.com
             </p>
             <p className="mt-3 text-sm text-white/70">{cityLabel ?? ville}, Maroc</p>
+            <InstallAppButton label={t("installApp")} iosHint={t("installAppIosHint")} className="mt-4" />
           </div>
         </div>
 

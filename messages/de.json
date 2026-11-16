@@ -124,7 +124,9 @@
     "legal": "Impressum",
     "privacy": "Datenschutz",
     "contact": "Kontakt",
-    "rights": "Alle Rechte vorbehalten."
+    "rights": "Alle Rechte vorbehalten.",
+    "installApp": "App installieren",
+    "installAppIosHint": "Auf iPhone/iPad: Tippe in Safari auf „Teilen“ und dann auf „Zum Home-Bildschirm“."
   },
   "common": {
     "readMore": "Mehr erfahren",

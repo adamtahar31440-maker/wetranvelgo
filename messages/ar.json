@@ -124,7 +124,9 @@
     "legal": "إشعار قانوني",
     "privacy": "الخصوصية",
     "contact": "اتصل بنا",
-    "rights": "جميع الحقوق محفوظة."
+    "rights": "جميع الحقوق محفوظة.",
+    "installApp": "تثبيت التطبيق",
+    "installAppIosHint": "على iPhone/iPad: في Safari، اضغط على مشاركة ثم «إضافة إلى الشاشة الرئيسية»."
   },
   "common": {
     "readMore": "اقرأ المزيد",

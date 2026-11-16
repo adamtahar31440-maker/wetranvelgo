@@ -124,7 +124,9 @@
     "legal": "Legal notice",
     "privacy": "Privacy",
     "contact": "Contact",
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "installApp": "Install the app",
+    "installAppIosHint": "On iPhone/iPad: in Safari, tap Share, then “Add to Home Screen”."
   },
   "common": {
     "readMore": "Read more",
