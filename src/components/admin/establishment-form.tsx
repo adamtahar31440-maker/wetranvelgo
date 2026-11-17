@@ -16,10 +16,12 @@ import { PhoneField } from "@/components/phone-field";
 import { ImageUploader } from "@/components/image-uploader";
 import { SingleImageField } from "@/components/single-image-field";
 import { MenuEditor } from "@/components/menu-editor";
-import { storedMenuToInput } from "@/lib/digital-menu";
+import { ExtraMenuSections } from "@/components/extra-menu-sections";
+import { offersMenuSections } from "@/lib/menu-sections";
+import { storedMenuToInput, storedSectionsToInput } from "@/lib/digital-menu";
 import { qrFeatureLabel } from "@/lib/qr-feature-label";
 import { PRO_FORM_STRINGS } from "@/lib/pro-form-i18n";
-import type { DigitalMenuItem } from "@/lib/menu-types";
+import type { DigitalMenuItem, MenuSection } from "@/lib/menu-types";
 
 type Category = { id: number; type: string; name: Record<string, string> };
 type Subcategory = { slug: string; name: Record<string, string> };
@@ -65,6 +67,7 @@ type Establishment = {
   menuPhoto: string | null;
   menuBanner: string | null;
   digitalMenu: DigitalMenuItem[] | null;
+  menuSections?: MenuSection[] | null;
 };
 
 // Same French labels as the pro's own signup form, so the admin sees the
@@ -124,6 +127,37 @@ export function EstablishmentForm({
             : isWellness
               ? "Soins et prestations proposés"
               : "Services et activités sur place (restaurant, bar, boîte de nuit, boutique...)";
+  // Shared by the main catalog editor and each extra QR section's.
+  const menuEditorLabels = {
+    namePlaceholder: t.menuItemNamePlaceholder,
+    descriptionPlaceholder: t.menuItemDescriptionPlaceholder,
+    categoryNamePlaceholder: t.menuItemCategoryPlaceholder,
+    pricePlaceholder: t.menuItemPricePlaceholder,
+    variantLabelPlaceholder: t.menuVariantLabelPlaceholder,
+    addItemLabel: t.menuAddItem,
+    addVariantLabel: t.menuAddVariant,
+    addCategoryLabel: t.menuAddCategory,
+    newCategoryDefaultName: t.menuNewCategoryDefault,
+    uncategorizedLabel: t.menuUncategorized,
+    orderLabel: t.menuCategoryOrderLabel,
+    collapseAllLabel: t.menuCollapseAll,
+    expandAllLabel: t.menuExpandAll,
+    singlePriceLabel: t.menuSinglePriceLabel,
+    variantPriceLabel: t.menuVariantPriceLabel,
+    scanLabel: t.menuScanDocument,
+    scanningLabel: t.menuScanning,
+    scanHint: t.menuScanHint,
+    scanErrorText: t.menuScanError,
+    scanUnsupportedFormatText: t.imagesUnsupportedFormat,
+    scanSuccessTemplate: t.menuScanSuccess,
+    scanTakePhotoLabel: t.scanTakePhoto,
+    scanAnotherPageLabel: t.scanAnotherPage,
+    scanAnalyzeTemplate: t.scanAnalyze,
+    scanGalleryLabel: t.chooseFromGallery,
+    clearMenuLabel: t.clearMenu,
+    clearMenuConfirm: t.clearMenuConfirm,
+  };
+
   return (
     <form action={upsertEstablishment} className="space-y-8">
       <input type="hidden" name="locale" value={locale} />
@@ -324,34 +358,16 @@ export function EstablishmentForm({
         <MenuEditor
           name="menuItems"
           defaultItems={storedMenuToInput(establishment?.digitalMenu)}
-          namePlaceholder={t.menuItemNamePlaceholder}
-          descriptionPlaceholder={t.menuItemDescriptionPlaceholder}
-          categoryNamePlaceholder={t.menuItemCategoryPlaceholder}
-          pricePlaceholder={t.menuItemPricePlaceholder}
-          variantLabelPlaceholder={t.menuVariantLabelPlaceholder}
-          addItemLabel={t.menuAddItem}
-          addVariantLabel={t.menuAddVariant}
-          addCategoryLabel={t.menuAddCategory}
-          newCategoryDefaultName={t.menuNewCategoryDefault}
-          uncategorizedLabel={t.menuUncategorized}
-          orderLabel={t.menuCategoryOrderLabel}
-          collapseAllLabel={t.menuCollapseAll}
-          expandAllLabel={t.menuExpandAll}
-          singlePriceLabel={t.menuSinglePriceLabel}
-          variantPriceLabel={t.menuVariantPriceLabel}
-          scanLabel={t.menuScanDocument}
-          scanningLabel={t.menuScanning}
-          scanHint={t.menuScanHint}
-          scanErrorText={t.menuScanError}
-          scanUnsupportedFormatText={t.imagesUnsupportedFormat}
-          scanSuccessTemplate={t.menuScanSuccess}
-          scanTakePhotoLabel={t.scanTakePhoto}
-          scanAnotherPageLabel={t.scanAnotherPage}
-          scanAnalyzeTemplate={t.scanAnalyze}
-          scanGalleryLabel={t.chooseFromGallery}
-          clearMenuLabel={t.clearMenu}
-          clearMenuConfirm={t.clearMenuConfirm}
+          {...menuEditorLabels}
         />
+        {offersMenuSections(categoryType) && (
+          <ExtraMenuSections
+            locale="fr"
+            categoryType={categoryType}
+            editorLabels={menuEditorLabels}
+            defaultSections={storedSectionsToInput(establishment?.menuSections)}
+          />
+        )}
       </section>
 
       <div>

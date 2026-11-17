@@ -1,13 +1,14 @@
 import { ImageResponse } from "next/og";
 import QRCode from "qrcode";
 import { getEstablishmentBySlug } from "@/lib/data";
+import { hasDigitalCatalog } from "@/lib/digital-menu";
 
 export async function GET(req: Request, { params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const url = new URL(req.url);
 
   const establishment = await getEstablishmentBySlug(slug);
-  if (!establishment || !establishment.menuTranslationEnabled || (establishment.digitalMenu?.length ?? 0) === 0) {
+  if (!establishment || !establishment.menuTranslationEnabled || !hasDigitalCatalog(establishment)) {
     return new Response("Not found", { status: 404 });
   }
 

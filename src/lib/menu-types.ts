@@ -18,3 +18,10 @@ export type DigitalMenuItem = {
   // the public menu falls back to a generic dish/drink placeholder when unset.
   photo: string | null;
 };
+
+// Extra QR catalog sections of the same establishment — e.g. a hotel's
+// restaurant and spa. The establishment's own digitalMenu stays the first
+// section; these appear as extra tabs on the same QR page.
+export const MENU_SECTION_KINDS = ["hotel", "restaurant", "bar", "spa", "coiffeur", "boutique", "activites"] as const;
+export type MenuSectionKind = (typeof MENU_SECTION_KINDS)[number];
+export type MenuSection = { kind: MenuSectionKind; items: DigitalMenuItem[] };

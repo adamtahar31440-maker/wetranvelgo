@@ -41,7 +41,14 @@ import { RESERVED_TOP_LEVEL_SLUGS } from "@/lib/categories";
 import { adminCountEstablishmentsByCategory, adminCountEstablishmentsBySubcategory } from "@/lib/admin-data";
 import { getNavItems } from "@/lib/nav";
 import { sendActivationEmail } from "@/lib/email";
-import { parseMenuItems, isMenuUnchanged, addMenuTranslationFields } from "@/lib/digital-menu";
+import {
+  parseMenuItems,
+  isMenuUnchanged,
+  addMenuTranslationFields,
+  parseMenuSections,
+  areSectionsUnchanged,
+  addMenuSectionsTranslationFields,
+} from "@/lib/digital-menu";
 
 async function requireRole(section: Parameters<typeof can>[1]) {
   const user = await currentUser();
@@ -138,6 +145,11 @@ export async function upsertEstablishment(formData: FormData) {
     formData.has("menuItems") && !isMenuUnchanged(menuItemsInput, existing?.digitalMenu)
       ? addMenuTranslationFields(menuItemsInput, menuTranslationFields)
       : null;
+  const sectionsInput = parseMenuSections(formData);
+  const buildSections =
+    sectionsInput && !areSectionsUnchanged(sectionsInput, existing?.menuSections)
+      ? addMenuSectionsTranslationFields(sectionsInput, menuTranslationFields)
+      : null;
 
   const subcategoriesList = formData.getAll("subcategories").map(String).filter(Boolean);
   const data = {
@@ -185,6 +197,7 @@ export async function upsertEstablishment(formData: FormData) {
     menuPhoto: String(formData.get("menuPhoto") ?? "") || null,
     menuBanner: String(formData.get("menuBanner") ?? "") || null,
     ...(buildMenu ? { digitalMenu: buildMenu() } : {}),
+    ...(buildSections ? { menuSections: buildSections() } : {}),
   };
 
   let establishmentId = id;
@@ -244,6 +257,7 @@ export async function upsertEstablishment(formData: FormData) {
         }
 
         if (buildMenu) update.digitalMenu = buildMenu(translations);
+        if (buildSections) update.menuSections = buildSections(translations);
 
         await db.update(establishments).set(update).where(eq(establishments.id, establishmentId));
       })

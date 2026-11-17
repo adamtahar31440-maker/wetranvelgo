@@ -7,7 +7,9 @@ import { getAllCategories } from "@/lib/admin-data";
 import { qrFeatureLabel } from "@/lib/qr-feature-label";
 import { recordMenuScan } from "@/lib/menu-scans";
 import { routing } from "@/i18n/routing";
-import { DigitalMenuView } from "@/components/digital-menu-view";
+import { DigitalMenuView, type DigitalMenuSection } from "@/components/digital-menu-view";
+import { hasDigitalCatalog } from "@/lib/digital-menu";
+import { mainSectionKind, mainSectionLabel, menuSectionLabel } from "@/lib/menu-sections";
 import frMessages from "../../../../messages/fr.json";
 import enMessages from "../../../../messages/en.json";
 import arMessages from "../../../../messages/ar.json";
@@ -58,7 +60,7 @@ function detectLocale(acceptLanguage: string | null, preferred: string | null): 
 async function loadEstablishment(slug: string) {
   const establishment = await getEstablishmentBySlug(slug);
   if (!establishment || !establishment.menuTranslationEnabled) return null;
-  if ((establishment.digitalMenu?.length ?? 0) === 0) return null;
+  if (!hasDigitalCatalog(establishment)) return null;
   return establishment;
 }
 
@@ -84,10 +86,10 @@ export default async function DigitalMenuPage({
   searchParams,
 }: {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ lang?: string }>;
+  searchParams: Promise<{ lang?: string; section?: string }>;
 }) {
   const { slug } = await params;
-  const { lang } = await searchParams;
+  const { lang, section } = await searchParams;
   const establishment = await loadEstablishment(slug);
   if (!establishment) notFound();
 
@@ -97,26 +99,48 @@ export default async function DigitalMenuPage({
   const headersList = await headers();
   const initialLocale = detectLocale(headersList.get("accept-language"), lang ?? null);
 
-  const items = establishment.digitalMenu ?? [];
-  const availableLocales = routing.locales.filter(
-    (code) => code === "fr" || items.some((it) => !!it.name[code])
-  );
-
   const categories = await getAllCategories();
   const category = categories.find((c) => c.id === establishment.categoryId);
+
+  // Tabs: the establishment's own catalog first, then its extra sections
+  // (a hotel's restaurant, spa...) — empty ones are left out.
+  const allLocalesOf = (label: (locale: string) => string) =>
+    Object.fromEntries(routing.locales.map((l) => [l, label(l)]));
+  const mainKind = mainSectionKind(category?.type);
+  const sections: DigitalMenuSection[] = [
+    {
+      key: "main",
+      label: allLocalesOf((l) => mainSectionLabel(category?.type, l)),
+      iconKind: mainKind,
+      categoryType: category?.type,
+      items: establishment.digitalMenu ?? [],
+    },
+    ...(establishment.menuSections ?? []).map((s) => ({
+      key: s.kind,
+      label: allLocalesOf((l) => menuSectionLabel(s.kind, l)),
+      iconKind: s.kind,
+      categoryType: s.kind === "restaurant" || s.kind === "bar" ? "restaurant" : s.kind,
+      items: s.items,
+    })),
+  ].filter((s) => s.items.length > 0);
+
+  const allItems = sections.flatMap((s) => s.items);
+  const availableLocales = routing.locales.filter(
+    (code) => code === "fr" || allItems.some((it) => !!it.name[code])
+  );
 
   return (
     <DigitalMenuView
       establishmentName={establishment.name}
       logoUrl={establishment.menuPhoto}
       bannerUrl={establishment.menuBanner}
-      items={items}
+      sections={sections}
+      initialSectionKey={section}
       initialLocale={initialLocale}
       availableLocales={availableLocales}
       chrome={MENU_PAGE_MESSAGES[initialLocale] ?? MENU_PAGE_MESSAGES.fr}
       establishmentSlug={establishment.slug}
       categorySlug={category?.slug}
-      categoryType={category?.type}
     />
   );
 }

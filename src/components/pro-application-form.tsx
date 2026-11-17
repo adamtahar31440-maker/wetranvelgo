@@ -10,8 +10,11 @@ import { CategorySubcategoryPicker } from "@/components/category-subcategory-pic
 import { SubcategoryMultiSelect } from "@/components/subcategory-multi-select";
 import { qrFeatureLabel } from "@/lib/qr-feature-label";
 import { hasMultiSubcategory } from "@/lib/multi-subcategory";
+import { MENU_SECTION_KINDS } from "@/lib/menu-types";
 import { HoursEditor } from "@/components/hours-editor";
 import { MenuEditor } from "@/components/menu-editor";
+import { ExtraMenuSections } from "@/components/extra-menu-sections";
+import { offersMenuSections } from "@/lib/menu-sections";
 import { SingleImageField } from "@/components/single-image-field";
 import { ImageUploader } from "@/components/image-uploader";
 import { PhoneField } from "@/components/phone-field";
@@ -174,6 +177,37 @@ function ProApplicationFormInner({
       setGeneratingDescription(false);
     }
   }
+
+  // Shared by the main catalog editor and each extra QR section's.
+  const menuEditorLabels = {
+    namePlaceholder: t.menuItemNamePlaceholder,
+    descriptionPlaceholder: t.menuItemDescriptionPlaceholder,
+    categoryNamePlaceholder: t.menuItemCategoryPlaceholder,
+    pricePlaceholder: t.menuItemPricePlaceholder,
+    variantLabelPlaceholder: t.menuVariantLabelPlaceholder,
+    addItemLabel: t.menuAddItem,
+    addVariantLabel: t.menuAddVariant,
+    addCategoryLabel: t.menuAddCategory,
+    newCategoryDefaultName: t.menuNewCategoryDefault,
+    uncategorizedLabel: t.menuUncategorized,
+    orderLabel: t.menuCategoryOrderLabel,
+    collapseAllLabel: t.menuCollapseAll,
+    expandAllLabel: t.menuExpandAll,
+    singlePriceLabel: t.menuSinglePriceLabel,
+    variantPriceLabel: t.menuVariantPriceLabel,
+    scanLabel: t.menuScanDocument,
+    scanningLabel: t.menuScanning,
+    scanHint: t.menuScanHint,
+    scanErrorText: t.menuScanError,
+    scanUnsupportedFormatText: t.imagesUnsupportedFormat,
+    scanSuccessTemplate: t.menuScanSuccess,
+    scanTakePhotoLabel: t.scanTakePhoto,
+    scanAnotherPageLabel: t.scanAnotherPage,
+    scanAnalyzeTemplate: t.scanAnalyze,
+    scanGalleryLabel: t.chooseFromGallery,
+    clearMenuLabel: t.clearMenu,
+    clearMenuConfirm: t.clearMenuConfirm,
+  };
 
   return (
     <div>
@@ -439,34 +473,19 @@ function ProApplicationFormInner({
           <MenuEditor
             name="menuItems"
             defaultItems={dJson("menuItems", [])}
-            namePlaceholder={t.menuItemNamePlaceholder}
-            descriptionPlaceholder={t.menuItemDescriptionPlaceholder}
-            categoryNamePlaceholder={t.menuItemCategoryPlaceholder}
-            pricePlaceholder={t.menuItemPricePlaceholder}
-            variantLabelPlaceholder={t.menuVariantLabelPlaceholder}
-            addItemLabel={t.menuAddItem}
-            addVariantLabel={t.menuAddVariant}
-            addCategoryLabel={t.menuAddCategory}
-            newCategoryDefaultName={t.menuNewCategoryDefault}
-            uncategorizedLabel={t.menuUncategorized}
-            orderLabel={t.menuCategoryOrderLabel}
-            collapseAllLabel={t.menuCollapseAll}
-            expandAllLabel={t.menuExpandAll}
-            singlePriceLabel={t.menuSinglePriceLabel}
-            variantPriceLabel={t.menuVariantPriceLabel}
-            scanLabel={t.menuScanDocument}
-            scanningLabel={t.menuScanning}
-            scanHint={t.menuScanHint}
-            scanErrorText={t.menuScanError}
-            scanUnsupportedFormatText={t.imagesUnsupportedFormat}
-            scanSuccessTemplate={t.menuScanSuccess}
-            scanTakePhotoLabel={t.scanTakePhoto}
-            scanAnotherPageLabel={t.scanAnotherPage}
-            scanAnalyzeTemplate={t.scanAnalyze}
-            scanGalleryLabel={t.chooseFromGallery}
-            clearMenuLabel={t.clearMenu}
-            clearMenuConfirm={t.clearMenuConfirm}
+            {...menuEditorLabels}
           />
+          {offersMenuSections(categoryType) && (
+            <ExtraMenuSections
+              locale={lang}
+              categoryType={categoryType}
+              editorLabels={menuEditorLabels}
+              defaultSections={MENU_SECTION_KINDS.filter((kind) => d(`menuSection_${kind}`) != null).map((kind) => ({
+                kind,
+                items: dJson(`menuSection_${kind}`, []),
+              }))}
+            />
+          )}
         </div>
 
         <div>

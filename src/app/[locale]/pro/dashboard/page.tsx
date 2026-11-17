@@ -13,6 +13,8 @@ import {
 import { applyAsProfessional, updateOwnEstablishment } from "@/lib/pro-actions";
 import { getActiveCities } from "@/lib/data";
 import { MenuEditor } from "@/components/menu-editor";
+import { ExtraMenuSections } from "@/components/extra-menu-sections";
+import { offersMenuSections } from "@/lib/menu-sections";
 import { SingleImageField } from "@/components/single-image-field";
 import { SubmitButton } from "@/components/submit-button";
 import { ProApplicationForm, PRO_SIGNUP_DRAFT_KEY, PRO_ADD_BUSINESS_DRAFT_KEY } from "@/components/pro-application-form";
@@ -22,6 +24,7 @@ import { ImageUploader } from "@/components/image-uploader";
 import { HoursEditor } from "@/components/hours-editor";
 import { SubcategoryMultiSelect } from "@/components/subcategory-multi-select";
 import { qrFeatureLabel } from "@/lib/qr-feature-label";
+import { hasDigitalCatalog, storedSectionsToInput } from "@/lib/digital-menu";
 import { hasMultiSubcategory } from "@/lib/multi-subcategory";
 import { ActivityTagsPicker } from "@/components/activity-tags-picker";
 import { UpdateSuccessBanner } from "@/components/update-success-banner";
@@ -163,6 +166,37 @@ export default async function ProDashboardPage({
   const subcategoryMap = buildSubcategoryMap(myEstablishmentSubcategories);
   const activityOptions = flattenSubcategories(categories, subcategoriesByCategory);
   const tEvents = await getTranslations("events");
+
+  // Shared by the main catalog editor and each extra QR section's.
+  const menuEditorLabels = {
+    namePlaceholder: t("menuItemNamePlaceholder"),
+    descriptionPlaceholder: t("menuItemDescriptionPlaceholder"),
+    categoryNamePlaceholder: t("menuItemCategoryPlaceholder"),
+    pricePlaceholder: t("menuItemPricePlaceholder"),
+    variantLabelPlaceholder: t("menuVariantLabelPlaceholder"),
+    addItemLabel: t("menuAddItem"),
+    addVariantLabel: t("menuAddVariant"),
+    addCategoryLabel: t("menuAddCategory"),
+    newCategoryDefaultName: t("menuNewCategoryDefault"),
+    uncategorizedLabel: t("menuUncategorized"),
+    orderLabel: t("menuCategoryOrderLabel"),
+    collapseAllLabel: t("menuCollapseAll"),
+    expandAllLabel: t("menuExpandAll"),
+    singlePriceLabel: t("menuSinglePriceLabel"),
+    variantPriceLabel: t("menuVariantPriceLabel"),
+    scanLabel: t("menuScanDocument"),
+    scanningLabel: t("menuScanning"),
+    scanHint: t("menuScanHint"),
+    scanErrorText: t("menuScanError"),
+    scanUnsupportedFormatText: t("imagesUnsupportedFormat"),
+    scanSuccessTemplate: t.raw("menuScanSuccess"),
+    scanTakePhotoLabel: t("scanTakePhoto"),
+    scanAnotherPageLabel: t("scanAnotherPage"),
+    scanAnalyzeTemplate: t.raw("scanAnalyze"),
+    scanGalleryLabel: t("chooseFromGallery"),
+    clearMenuLabel: t("clearMenu"),
+    clearMenuConfirm: t("clearMenuConfirm"),
+  };
 
   return (
     <div className="space-y-10">
@@ -508,38 +542,20 @@ export default async function ProDashboardPage({
                         variants: (it.variants ?? []).map((v) => ({ label: v.label.fr, price: v.price })),
                         photo: it.photo ?? null,
                       }))}
-                      namePlaceholder={t("menuItemNamePlaceholder")}
-                      descriptionPlaceholder={t("menuItemDescriptionPlaceholder")}
-                      categoryNamePlaceholder={t("menuItemCategoryPlaceholder")}
-                      pricePlaceholder={t("menuItemPricePlaceholder")}
-                      variantLabelPlaceholder={t("menuVariantLabelPlaceholder")}
-                      addItemLabel={t("menuAddItem")}
-                      addVariantLabel={t("menuAddVariant")}
-                      addCategoryLabel={t("menuAddCategory")}
-                      newCategoryDefaultName={t("menuNewCategoryDefault")}
-                      uncategorizedLabel={t("menuUncategorized")}
-                      orderLabel={t("menuCategoryOrderLabel")}
-                      collapseAllLabel={t("menuCollapseAll")}
-                      expandAllLabel={t("menuExpandAll")}
-                      singlePriceLabel={t("menuSinglePriceLabel")}
-                      variantPriceLabel={t("menuVariantPriceLabel")}
-                      scanLabel={t("menuScanDocument")}
-                      scanningLabel={t("menuScanning")}
-                      scanHint={t("menuScanHint")}
-                      scanErrorText={t("menuScanError")}
-                      scanUnsupportedFormatText={t("imagesUnsupportedFormat")}
-                      scanSuccessTemplate={t.raw("menuScanSuccess")}
-                      scanTakePhotoLabel={t("scanTakePhoto")}
-                      scanAnotherPageLabel={t("scanAnotherPage")}
-                      scanAnalyzeTemplate={t.raw("scanAnalyze")}
-                      scanGalleryLabel={t("chooseFromGallery")}
-                      clearMenuLabel={t("clearMenu")}
-                      clearMenuConfirm={t("clearMenuConfirm")}
+                      {...menuEditorLabels}
                     />
+                    {offersMenuSections(myEstablishmentCategoryType) && (
+                      <ExtraMenuSections
+                        locale={locale}
+                        categoryType={myEstablishmentCategoryType}
+                        editorLabels={menuEditorLabels}
+                        defaultSections={storedSectionsToInput(myEstablishment.menuSections)}
+                      />
+                    )}
                   </div>
 
                   <div className="mt-6 flex flex-wrap items-center gap-3 border-t border-black/5 pt-5">
-                    {(myEstablishment.digitalMenu?.length ?? 0) > 0 ? (
+                    {hasDigitalCatalog(myEstablishment) ? (
                       <>
                         <a
                           href={`/api/menu/qr/${myEstablishment.slug}`}
@@ -573,7 +589,7 @@ export default async function ProDashboardPage({
                       </div>
                     )}
                   </div>
-                  {(myEstablishment.digitalMenu?.length ?? 0) > 0 && (
+                  {hasDigitalCatalog(myEstablishment) && (
                     <p className="mt-2 text-xs text-foreground/50">{t("menuQrHint")}</p>
                   )}
                 </>

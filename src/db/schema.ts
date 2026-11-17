@@ -107,6 +107,8 @@ export const establishments = pgTable("establishments", {
   // every site locale like other establishment text.
   menuTranslationEnabled: boolean("menu_translation_enabled").default(false),
   digitalMenu: jsonb("digital_menu").$type<import("@/lib/menu-types").DigitalMenuItem[]>().default([]),
+  // Extra sections on the same QR page (a hotel's restaurant, spa...) — see MenuSection.
+  menuSections: jsonb("menu_sections").$type<import("@/lib/menu-types").MenuSection[]>().default([]),
   // Deliberately separate from `images` (the fiche's photo gallery) — the pro
   // may want a different, more "menu-branding" photo (a logo, a plated dish)
   // on the QR poster/menu page than whatever leads their public listing photos.

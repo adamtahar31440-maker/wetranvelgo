@@ -3,7 +3,19 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowUpRight, ChevronDown, Globe, UtensilsCrossed, Wine, Tag } from "lucide-react";
 import { localeNames, rtlLocales } from "@/i18n/routing";
-import type { DigitalMenuItem, Localized } from "@/lib/menu-types";
+import type { DigitalMenuItem, Localized, MenuSectionKind } from "@/lib/menu-types";
+import { MenuSectionIcon } from "@/components/menu-section-icon";
+
+// One tab on the QR page: the establishment's own catalog, or one of its
+// extra sections (a hotel's restaurant, spa...). A single tab shows no tab bar.
+export type DigitalMenuSection = {
+  key: string;
+  label: Localized;
+  iconKind: MenuSectionKind | null;
+  // Drives the no-photo placeholder (dish/drink vs. generic tag).
+  categoryType?: string;
+  items: DigitalMenuItem[];
+};
 
 // No photo uploaded for this item — fall back to a generic dish/drink motif
 // rather than leaving a blank box. Variants (glass/bottle...) are the
@@ -20,24 +32,24 @@ export function DigitalMenuView({
   establishmentName,
   logoUrl,
   bannerUrl,
-  items,
+  sections,
+  initialSectionKey,
   initialLocale,
   availableLocales,
   chrome,
   establishmentSlug,
   categorySlug,
-  categoryType,
 }: {
   establishmentName: Localized;
   logoUrl?: string | null;
   bannerUrl?: string | null;
-  items: DigitalMenuItem[];
+  sections: DigitalMenuSection[];
+  initialSectionKey?: string;
   initialLocale: string;
   availableLocales: string[];
   chrome: { allCategories: string; noItems: string; poweredBy: string; viewEstablishment: string };
   establishmentSlug: string;
   categorySlug?: string;
-  categoryType?: string;
 }) {
   const [locale, setLocale] = useState(initialLocale);
   const isRtl = rtlLocales.includes(locale);
@@ -59,6 +71,13 @@ export function DigitalMenuView({
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const [sectionKey, setSectionKey] = useState(
+    sections.some((s) => s.key === initialSectionKey) ? initialSectionKey! : sections[0]?.key
+  );
+  const section = sections.find((s) => s.key === sectionKey) ?? sections[0];
+  const items = useMemo(() => section?.items ?? [], [section]);
+  const categoryType = section?.categoryType;
 
   const categories = useMemo(() => {
     const seen = new Set<string>();
@@ -142,6 +161,30 @@ export function DigitalMenuView({
                 ))}
               </div>
             )}
+          </div>
+        )}
+
+        {sections.length > 1 && (
+          <div className="mt-3 grid gap-1.5" style={{ gridTemplateColumns: `repeat(${Math.min(sections.length, 3)}, minmax(0, 1fr))` }}>
+            {sections.map((s) => (
+              <button
+                key={s.key}
+                type="button"
+                onClick={() => {
+                  setSectionKey(s.key);
+                  setActiveCategory(null);
+                  window.scrollTo({ top: 0 });
+                }}
+                className={`flex flex-col items-center gap-1 rounded-xl border px-2 py-2 text-xs font-semibold ${
+                  s.key === section?.key
+                    ? "border-ocean-dark bg-ocean-dark text-white"
+                    : "border-black/10 text-foreground/70 hover:bg-sand/40"
+                }`}
+              >
+                {s.iconKind && <MenuSectionIcon kind={s.iconKind} size={18} />}
+                <span className="leading-tight">{s.label[locale] ?? s.label.fr}</span>
+              </button>
+            ))}
           </div>
         )}
 

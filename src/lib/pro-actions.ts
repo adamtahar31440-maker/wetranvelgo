@@ -18,7 +18,14 @@ import { translateFields } from "@/lib/translate";
 import { slugify } from "@/lib/slug";
 import { sendWelcomeEmail, sendBusinessAddedEmail } from "@/lib/email";
 import { truncate } from "@/lib/truncate";
-import { parseMenuItems, isMenuUnchanged, addMenuTranslationFields } from "@/lib/digital-menu";
+import {
+  parseMenuItems,
+  isMenuUnchanged,
+  addMenuTranslationFields,
+  parseMenuSections,
+  areSectionsUnchanged,
+  addMenuSectionsTranslationFields,
+} from "@/lib/digital-menu";
 
 const OPEN_APPLICATION_STATUSES = ["pending", "info_requested", "visit_scheduled", "on_hold"];
 
@@ -116,6 +123,10 @@ export async function applyAsProfessional(formData: FormData) {
   }
   const menuPhoto = String(formData.get("menuPhoto") ?? "") || null;
   const menuBanner = String(formData.get("menuBanner") ?? "") || null;
+  // Extra QR sections (a hotel's restaurant, spa...), each translated like the menu.
+  const sectionsInput = parseMenuSections(formData) ?? [];
+  const sectionTranslationFields: Record<string, string> = {};
+  const buildSections = addMenuSectionsTranslationFields(sectionsInput, sectionTranslationFields, sourceLocale);
 
   // Translating into all locales is an LLM call that can take several seconds; running it
   // before the insert made "Enregistrer" feel frozen. Save in the source locale immediately
@@ -219,6 +230,7 @@ export async function applyAsProfessional(formData: FormData) {
     // still disable/re-enable it any time from the establishment's admin page.
     menuTranslationEnabled: true,
     digitalMenu,
+    menuSections: buildSections(),
     menuPhoto,
     menuBanner,
   }).returning();
@@ -361,6 +373,31 @@ export async function applyAsProfessional(formData: FormData) {
     );
   }
 
+  if (Object.keys(sectionTranslationFields).length > 0) {
+    waitUntil(
+      (async () => {
+        // Same incremental persistence as the main menu just above.
+        const accumulated: Record<string, Record<string, string>> = {};
+        let writeQueue: Promise<unknown> = Promise.resolve();
+        try {
+          await translateFields(sectionTranslationFields, targetLocales, sourceLocale, (chunk) => {
+            if (Object.keys(chunk).length === 0) return;
+            Object.assign(accumulated, chunk);
+            writeQueue = writeQueue.then(() =>
+              db
+                .update(establishments)
+                .set({ menuSections: buildSections(accumulated) })
+                .where(eq(establishments.id, establishment.id))
+            );
+          });
+          await writeQueue;
+        } catch (err) {
+          console.error("Background menu sections translation failed for establishment", establishment.id, err);
+        }
+      })()
+    );
+  }
+
   revalidatePath("/", "layout");
 
   if (addAnotherBusiness) {
@@ -467,6 +504,12 @@ export async function updateOwnEstablishment(formData: FormData) {
 
   const menuUnchanged = isMenuUnchanged(menuItemsInput, establishment.digitalMenu);
   const buildMenu = menuUnchanged ? null : addMenuTranslationFields(menuItemsInput, translationFields);
+  // null = the form doesn't show sections (not a hotel): keep what's stored.
+  const sectionsInput = parseMenuSections(formData);
+  const buildSections =
+    sectionsInput && !areSectionsUnchanged(sectionsInput, establishment.menuSections)
+      ? addMenuSectionsTranslationFields(sectionsInput, translationFields)
+      : null;
 
   const [subscription, plans] = await Promise.all([
     getSubscriptionByEstablishmentId(establishment.id),
@@ -524,6 +567,7 @@ export async function updateOwnEstablishment(formData: FormData) {
       airConditioning: formData.get("airConditioning") === "on",
       petsAllowed: formData.get("petsAllowed") === "on",
       digitalMenu: buildMenu ? buildMenu() : establishment.digitalMenu,
+      menuSections: buildSections ? buildSections() : establishment.menuSections,
       menuPhoto,
       menuBanner,
     })
@@ -557,6 +601,7 @@ export async function updateOwnEstablishment(formData: FormData) {
       }
 
       if (buildMenu) update.digitalMenu = buildMenu(translations);
+      if (buildSections) update.menuSections = buildSections(translations);
       return update;
     };
 

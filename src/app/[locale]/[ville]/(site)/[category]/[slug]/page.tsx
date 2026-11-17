@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { buildSubcategoryMap, subcategoryLabel, priceLevelLabel } from "@/lib/labels";
 import { qrFeatureLabel } from "@/lib/qr-feature-label";
+import { hasDigitalCatalog } from "@/lib/digital-menu";
 import {
   getEstablishmentBySlug,
   getSimilarEstablishments,
@@ -555,7 +556,7 @@ export default async function EstablishmentPage({
             </div>
           )}
           <div className="mt-5 flex flex-col gap-2">
-            {e.menuTranslationEnabled && (e.digitalMenu?.length ?? 0) > 0 && (
+            {e.menuTranslationEnabled && hasDigitalCatalog(e) && (
               <a
                 href={`/menu/${e.slug}`}
                 target="_blank"
