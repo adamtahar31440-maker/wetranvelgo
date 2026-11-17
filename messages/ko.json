@@ -12,7 +12,8 @@
     "search": "검색",
     "proSpace": "사업자 공간",
     "professionals": "사업자",
-    "signIn": "로그인"
+    "signIn": "로그인",
+    "signOut": "로그아웃"
   },
   "home": {
     "heroTitle": "WeTravelGo",

@@ -12,7 +12,8 @@
     "search": "Buscar",
     "proSpace": "Espacio Pro",
     "professionals": "Profesionales",
-    "signIn": "Iniciar sesión"
+    "signIn": "Iniciar sesión",
+    "signOut": "Cerrar sesión"
   },
   "home": {
     "heroTitle": "WeTravelGo",

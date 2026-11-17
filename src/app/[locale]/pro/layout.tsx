@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { UserButton } from "@clerk/nextjs";
+import { SignOutButton, UserButton } from "@clerk/nextjs";
+import { LogOut } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { safeCurrentUser } from "@/lib/auth";
 import { InstallAppButton } from "@/components/install-app-button";
 import { proAppMetadata } from "@/lib/pro-app-metadata";
@@ -15,6 +17,7 @@ export default async function ProLayout({
 }) {
   const { locale } = await params;
   const user = await safeCurrentUser();
+  const t = await getTranslations("nav");
 
   return (
     <div className="min-h-screen bg-sand/20">
@@ -29,7 +32,22 @@ export default async function ProLayout({
             className="relative flex flex-col items-end text-ocean-dark [&>p]:absolute [&>p]:top-full [&>p]:right-0 [&>p]:z-10 [&>p]:w-64 [&>p]:rounded-lg [&>p]:bg-white [&>p]:p-3 [&>p]:shadow-lg"
           />
           {user ? (
-            <UserButton />
+            <>
+              {/* The avatar menu's "Sign out" is easy to miss — pros managing
+                  several accounts need an obvious way to switch. */}
+              <SignOutButton redirectUrl={`/${locale}`}>
+                <button
+                  type="button"
+                  title={t("signOut")}
+                  aria-label={t("signOut")}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-black/10 px-3 py-1.5 text-xs font-semibold text-foreground/70 hover:border-red-200 hover:bg-red-50 hover:text-red-700"
+                >
+                  <LogOut size={14} />
+                  <span className="hidden sm:inline">{t("signOut")}</span>
+                </button>
+              </SignOutButton>
+              <UserButton />
+            </>
           ) : (
             <Link href={`/${locale}/sign-in`} className="text-sm font-medium text-ocean-dark hover:underline">
               Se connecter

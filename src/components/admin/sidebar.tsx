@@ -4,8 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { UserButton } from "@clerk/nextjs";
-import { Menu, X } from "lucide-react";
+import { SignOutButton, UserButton } from "@clerk/nextjs";
+import { Menu, X, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { can, type Role, type Permission } from "@/lib/roles";
 
@@ -78,6 +78,17 @@ export function AdminSidebar({ locale, role }: { locale: string; role: Role }) {
     );
   };
 
+  const signOut = (
+    <SignOutButton redirectUrl={`/${locale}`}>
+      <button
+        type="button"
+        className="mt-2 flex w-full items-center justify-center gap-1.5 rounded-lg border border-white/20 px-3 py-2 text-sm font-semibold text-white hover:bg-red-600 hover:border-red-600"
+      >
+        <LogOut size={15} /> Se déconnecter
+      </button>
+    </SignOutButton>
+  );
+
   return (
     <>
       {/* Mobile top bar */}
@@ -105,6 +116,7 @@ export function AdminSidebar({ locale, role }: { locale: string; role: Role }) {
             {nav(() => setOpen(false))}
             <div className="border-t border-white/10 p-3 text-xs text-white/50">
               Connecté en tant que {role}
+              {signOut}
             </div>
           </aside>
         </div>
@@ -121,6 +133,7 @@ export function AdminSidebar({ locale, role }: { locale: string; role: Role }) {
         {nav()}
         <div className="border-t border-white/10 p-3 text-xs text-white/50">
           Connecté en tant que {role}
+          {signOut}
         </div>
       </aside>
     </>
