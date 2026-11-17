@@ -1,6 +1,14 @@
 import Anthropic from "@anthropic-ai/sdk";
 
-const MODEL = "claude-haiku-4-5";
+// Dense, often handwritten or low-contrast price lists photographed on a
+// phone: the small model misread prices and renamed dishes, so this uses the
+// most capable vision model. Thinking is always on for it; effort "high" gives
+// it room to cross-check every name/price pair before answering.
+const MODEL = "claude-opus-5-5";
+const EFFORT = "high";
+// A long multi-page menu easily exceeds 8K output tokens; once cut off, the
+// structured JSON is invalid and the whole scan returned nothing.
+const MAX_TOKENS = 32000;
 
 let _client: Anthropic | null = null;
 function getClient() {
@@ -22,9 +30,14 @@ export async function extractMenuFromImages(
 ): Promise<ExtractedMenuItem[]> {
   if (images.length === 0) return [];
 
-  const response = await getClient().messages.create({
+  // Streamed (finalMessage) so the large max_tokens never hits an HTTP timeout.
+  const stream = getClient().beta.messages.stream({
     model: MODEL,
-    max_tokens: 8192,
+    max_tokens: MAX_TOKENS,
+    // A rare false-positive decline on a photo re-runs the same request on
+    // another model inside the same call instead of returning nothing.
+    betas: ["server-side-fallback-2026-06-01"],
+    fallbacks: [{ model: "claude-opus-4-8" }],
     system:
       "You extract a full priced item list from photos of a physical document (possibly several pages/photos " +
       "of the same document) for a Morocco tourism business directory. The document could be a restaurant " +
@@ -71,6 +84,21 @@ export async function extractMenuFromImages(
       "is present (do not re-translate it, just copy it as written), and translate from the other language " +
       "only for items that have no French version anywhere on the document. Do not output the same item " +
       "twice just because it's printed in two languages. " +
+      "ACCURACY (most important): only output items that are actually printed on the photos — never invent, " +
+      "guess or complete an item, and never merge two items into one or split one into two. Keep each item's " +
+      "own name: do not rename, summarize, embellish or 'improve' it. Names of Moroccan and other local dishes " +
+      "(tajine, pastilla, harira, couscous, tanjia, rfissa, msemen...) and proper names (brands, cocktails, " +
+      "house specialties) are kept as printed, not translated word by word. Go through each photo in reading " +
+      "order, column by column, so no item is skipped. " +
+      "PRICES: each item's price is the number printed on the same line or row as its name — often at the end " +
+      "of a dotted leader line, or in a price column to the right; match by row, never shift a price onto the " +
+      "neighboring item. Output the number only: drop currency marks (DH, Dhs, MAD, dirhams, €, $), read a " +
+      "decimal comma as a decimal point (\"12,50\" -> 12.5) and a space or dot used as a thousands separator " +
+      "as part of the number (\"1 200\" -> 1200). Two or more numbers for one item (sizes, verre/bouteille, " +
+      "petit/grand, 1 pers./2 pers.) are VARIANTS as described below — use the column headers or labels " +
+      "printed above them as the variant labels. A price shared by a whole section (e.g. \"toutes les pizzas " +
+      "60 DH\") applies to every item of that section. Leave price null only when no number at all is printed " +
+      "for that item. " +
       "Ignore the business's own name/logo, addresses, phone numbers, opening hours, decorative text, and " +
       "anything that isn't an actual priced item entry. " +
       "Before you answer, double-check every single name/description/category/variant value you're about to " +
@@ -92,6 +120,7 @@ export async function extractMenuFromImages(
       },
     ],
     output_config: {
+      effort: EFFORT,
       format: {
         type: "json_schema",
         schema: {
@@ -130,6 +159,15 @@ export async function extractMenuFromImages(
       },
     },
   });
+  const response = await stream.finalMessage();
+
+  if (response.stop_reason === "refusal") {
+    console.error("Menu extraction refused", response.stop_details);
+    return [];
+  }
+  if (response.stop_reason === "max_tokens") {
+    console.error("Menu extraction hit max_tokens — output truncated");
+  }
 
   const block = response.content.find((c) => c.type === "text");
   if (!block || block.type !== "text") return [];
