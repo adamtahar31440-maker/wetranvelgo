@@ -7,7 +7,7 @@ import { loadGoogleMaps } from "@/lib/google-maps-loader";
 // Morocco-wide default — this picker is used from the global /pro signup
 // form (no city context yet), not just Essaouira's. Once an address is picked,
 // the map recenters on it regardless of this default.
-const MOROCCO_CENTER = { lat: 31.7917, lng: -7.0926 };
+export const MOROCCO_CENTER = { lat: 31.7917, lng: -7.0926 };
 const MOROCCO_BOUNDS = { north: 35.95, south: 27.6, east: -0.9, west: -13.2 };
 const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 

@@ -5,7 +5,7 @@ import { Sparkles, Loader2 } from "lucide-react";
 import { ALL_LOCALES, LOCALE_LABELS } from "@/lib/localized-form";
 import { PRO_FORM_STRINGS } from "@/lib/pro-form-i18n";
 import { PRICE_LEVELS, priceLevelLabel } from "@/lib/labels";
-import { AddressLocationPicker } from "@/components/address-location-picker";
+import { AddressLocationPicker, MOROCCO_CENTER } from "@/components/address-location-picker";
 import { CategorySubcategoryPicker } from "@/components/category-subcategory-picker";
 import { SubcategoryMultiSelect } from "@/components/subcategory-multi-select";
 import { qrFeatureLabel } from "@/lib/qr-feature-label";
@@ -16,6 +16,12 @@ import { SingleImageField } from "@/components/single-image-field";
 import { ImageUploader } from "@/components/image-uploader";
 import { PhoneField } from "@/components/phone-field";
 import { SubmitButton } from "@/components/submit-button";
+import { clearFormDraft, useFormDraftAutosave, useInitialFormDraft, type FormDraft } from "@/lib/form-draft";
+
+// One draft per flow, so an "add another business" draft never pre-fills a
+// first signup (or the other way round). The dashboard clears them on success.
+export const PRO_SIGNUP_DRAFT_KEY = "wtg-pro-signup-draft";
+export const PRO_ADD_BUSINESS_DRAFT_KEY = "wtg-pro-add-business-draft";
 
 const RTL_LOCALES = ["ar", "he"];
 
@@ -42,14 +48,7 @@ function nearestCity<T extends { id: number; lat: number | null; lng: number | n
   return best;
 }
 
-export function ProApplicationForm({
-  action,
-  categories,
-  subcategoriesByCategory,
-  cities,
-  defaultLocale,
-  extraHiddenFields = [],
-}: {
+type ProApplicationFormProps = {
   action: (formData: FormData) => void;
   categories: { id: number; type: string; name: Record<string, string> }[];
   subcategoriesByCategory: Record<number, { slug: string; name: Record<string, string> }[]>;
@@ -59,11 +58,59 @@ export function ProApplicationForm({
   // this submission for applyAsProfessional without the component needing to
   // know anything about that use case.
   extraHiddenFields?: { name: string; value: string }[];
-}) {
-  const [lang, setLang] = useState(ALL_LOCALES.includes(defaultLocale) ? defaultLocale : "fr");
+};
+
+export function ProApplicationForm(props: ProApplicationFormProps) {
+  const draftKey = props.extraHiddenFields?.some((f) => f.name === "addAnotherBusiness")
+    ? PRO_ADD_BUSINESS_DRAFT_KEY
+    : PRO_SIGNUP_DRAFT_KEY;
+  const draft = useInitialFormDraft(draftKey);
+  // The draft is only readable in the browser, after the server-rendered
+  // (empty) form — remounting on its arrival lets every field, including the
+  // stateful editors, start from the saved values.
+  return <ProApplicationFormInner key={draft ? "draft" : "empty"} {...props} draft={draft} draftKey={draftKey} />;
+}
+
+function ProApplicationFormInner({
+  action,
+  categories,
+  subcategoriesByCategory,
+  cities,
+  defaultLocale,
+  extraHiddenFields = [],
+  draft,
+  draftKey,
+}: ProApplicationFormProps & { draft: FormDraft | null; draftKey: string }) {
+  const d = (name: string) => draft?.[name]?.[0];
+  const dNumber = (name: string) => (d(name) ? Number(d(name)) : undefined);
+  const dJson = <T,>(name: string, fallback: T): T => {
+    try {
+      return d(name) ? (JSON.parse(d(name)!) as T) : fallback;
+    } catch {
+      return fallback;
+    }
+  };
+  const formRef = useRef<HTMLFormElement>(null);
+  useFormDraftAutosave(draftKey, formRef, {
+    extraSkipped: extraHiddenFields.map((f) => f.name),
+    hasDraft: !!draft,
+  });
+
+  // The picker always submits coordinates — its untouched default is the
+  // country center, which must not be restored as if the pro had chosen it.
+  const draftHasLocation = !!d("lat") && dNumber("lat") !== MOROCCO_CENTER.lat;
+
+  const draftLocale = d("sourceLocale");
+  const [lang, setLang] = useState(
+    draftLocale && ALL_LOCALES.includes(draftLocale)
+      ? draftLocale
+      : ALL_LOCALES.includes(defaultLocale)
+        ? defaultLocale
+        : "fr"
+  );
   const t = PRO_FORM_STRINGS[lang] ?? PRO_FORM_STRINGS.fr;
   const dir = RTL_LOCALES.includes(lang) ? "rtl" : "ltr";
-  const [categoryId, setCategoryId] = useState<number | null>(null);
+  const [categoryId, setCategoryId] = useState<number | null>(dNumber("categoryId") ?? null);
   const categoryType = categories.find((c) => c.id === categoryId)?.type;
   const isCarRental = categoryType === "location-vehicules";
   const isRealEstate = categoryType === "agences-immobilieres";
@@ -83,7 +130,7 @@ export function ProApplicationForm({
             ? t.fieldProductTypes
             : t.fieldOnsiteServices;
 
-  const [cityId, setCityId] = useState<number | null>(cities[0]?.id ?? null);
+  const [cityId, setCityId] = useState<number | null>(dNumber("cityId") ?? cities[0]?.id ?? null);
   const handleLocationChange = (lat: number, lng: number) => {
     const match = nearestCity(cities, lat, lng);
     if (match) setCityId(match.id);
@@ -129,7 +176,23 @@ export function ProApplicationForm({
     <div>
       <h1 className="mb-2 text-2xl font-semibold text-ocean-dark">{t.heading}</h1>
       <p className="mb-6 text-sm text-foreground/60">{t.intro}</p>
+      {draft && (
+        <div className="mb-4 flex max-w-2xl flex-wrap items-center justify-between gap-3 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+          <span>{t.draftRestored}</span>
+          <button
+            type="button"
+            onClick={() => {
+              clearFormDraft(draftKey);
+              window.location.reload();
+            }}
+            className="text-xs font-semibold underline hover:no-underline"
+          >
+            {t.draftDiscard}
+          </button>
+        </div>
+      )}
       <form
+        ref={formRef}
         action={action}
         dir={dir}
         className="max-w-2xl space-y-6 rounded-2xl border border-black/5 bg-white p-6"
@@ -157,7 +220,7 @@ export function ProApplicationForm({
 
         <div>
           <label className={labelClass}>{t.contactName}</label>
-          <input name="contactName" className={inputClass} required />
+          <input name="contactName" defaultValue={d("contactName")} className={inputClass} required />
         </div>
 
         <CategorySubcategoryPicker
@@ -165,6 +228,8 @@ export function ProApplicationForm({
           subcategoriesByCategory={subcategoriesByCategory}
           locale={lang}
           categoryRef={categorySelectRef}
+          defaultCategoryId={dNumber("categoryId")}
+          defaultSubcategory={d("subcategory")}
           categoryLabel={t.category}
           subcategoryLabel={t.subcategory}
           otherLabel={t.otherOptionLabel}
@@ -178,6 +243,7 @@ export function ProApplicationForm({
             <SubcategoryMultiSelect
               options={subcategoriesByCategory[categoryId ?? -1] ?? []}
               locale={lang}
+              defaultValues={draft?.subcategories ?? []}
               label={multiSubcategoryLabel}
               otherLabel={t.otherOptionLabel}
               otherPlaceholder={t.otherActivitySpecifyPlaceholder}
@@ -185,7 +251,14 @@ export function ProApplicationForm({
             {isCarRental && (
               <div>
                 <label className={labelClass}>{t.fieldAvgDailyPrice}</label>
-                <input type="number" name="avgDailyPriceMad" min={0} step={1} className={inputClass} />
+                <input
+                  type="number"
+                  name="avgDailyPriceMad"
+                  min={0}
+                  step={1}
+                  defaultValue={d("avgDailyPriceMad")}
+                  className={inputClass}
+                />
                 <p className="mt-1 text-xs text-foreground/50">{t.avgDailyPriceHint}</p>
               </div>
             )}
@@ -194,7 +267,7 @@ export function ProApplicationForm({
 
         <div>
           <label className={labelClass}>{t.name}</label>
-          <input name="name" ref={nameRef} className={inputClass} required dir={dir} />
+          <input name="name" ref={nameRef} defaultValue={d("name")} className={inputClass} required dir={dir} />
         </div>
         <div>
           <div className="mb-1 flex items-center justify-between gap-2">
@@ -216,6 +289,7 @@ export function ProApplicationForm({
           <textarea
             name="description"
             ref={descriptionRef}
+            defaultValue={d("description")}
             rows={4}
             placeholder={t.generateDescriptionPlaceholder}
             className={inputClass}
@@ -228,6 +302,7 @@ export function ProApplicationForm({
           <label className={labelClass}>{t.fieldHours}</label>
           <HoursEditor
             name="hours"
+            defaultValue={d("hours")}
             dayLabels={[t.dayMon, t.dayTue, t.dayWed, t.dayThu, t.dayFri, t.daySat, t.daySun]}
             closedLabel={t.hoursClosed}
             openLabel={t.hoursOpenDay}
@@ -242,11 +317,11 @@ export function ProApplicationForm({
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <label className={labelClass}>{t.vacationStart}</label>
-              <input type="date" name="vacationStart" className={inputClass} />
+              <input type="date" name="vacationStart" defaultValue={d("vacationStart")} className={inputClass} />
             </div>
             <div>
               <label className={labelClass}>{t.vacationEnd}</label>
-              <input type="date" name="vacationEnd" className={inputClass} />
+              <input type="date" name="vacationEnd" defaultValue={d("vacationEnd")} className={inputClass} />
             </div>
           </div>
         </div>
@@ -270,22 +345,29 @@ export function ProApplicationForm({
 
         <div>
           <label className={labelClass}>{t.address}</label>
-          <AddressLocationPicker className={inputClass} dir={dir} onLocationChange={handleLocationChange} />
+          <AddressLocationPicker
+            className={inputClass}
+            dir={dir}
+            defaultAddress={d("address")}
+            defaultLat={draftHasLocation ? dNumber("lat") : undefined}
+            defaultLng={draftHasLocation ? dNumber("lng") : undefined}
+            onLocationChange={handleLocationChange}
+          />
           <p className="mt-1 text-xs text-foreground/50">{t.addressHint}</p>
         </div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <div>
             <label className={labelClass}>{t.phone}</label>
-            <PhoneField name="phone" dir={dir} />
+            <PhoneField name="phone" defaultValue={d("phone")} dir={dir} />
           </div>
           <div>
             <label className={labelClass}>{t.whatsapp}</label>
-            <PhoneField name="whatsapp" dir={dir} />
+            <PhoneField name="whatsapp" defaultValue={d("whatsapp")} dir={dir} />
           </div>
           <div>
             <label className={labelClass}>{t.website}</label>
-            <input name="website" className={inputClass} />
+            <input name="website" defaultValue={d("website")} className={inputClass} />
           </div>
         </div>
 
@@ -295,26 +377,26 @@ export function ProApplicationForm({
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <label className={labelClass}>Instagram</label>
-              <input name="instagram" placeholder="https://instagram.com/..." className={inputClass} />
+              <input name="instagram" defaultValue={d("instagram")} placeholder="https://instagram.com/..." className={inputClass} />
             </div>
             <div>
               <label className={labelClass}>Facebook</label>
-              <input name="facebook" placeholder="https://facebook.com/..." className={inputClass} />
+              <input name="facebook" defaultValue={d("facebook")} placeholder="https://facebook.com/..." className={inputClass} />
             </div>
             <div>
               <label className={labelClass}>{t.googleReviewsLabel}</label>
-              <input name="googleReviewsUrl" placeholder="https://g.page/r/..." className={inputClass} />
+              <input name="googleReviewsUrl" defaultValue={d("googleReviewsUrl")} placeholder="https://g.page/r/..." className={inputClass} />
             </div>
             <div>
               <label className={labelClass}>{t.tripadvisorLabel}</label>
-              <input name="tripadvisorUrl" placeholder="https://tripadvisor.com/..." className={inputClass} />
+              <input name="tripadvisorUrl" defaultValue={d("tripadvisorUrl")} placeholder="https://tripadvisor.com/..." className={inputClass} />
             </div>
           </div>
         </div>
 
         <div>
           <label className={labelClass}>{t.priceLevel}</label>
-          <select name="priceLevel" defaultValue="€€" className={inputClass}>
+          <select name="priceLevel" defaultValue={d("priceLevel") ?? "€€"} className={inputClass}>
             {PRICE_LEVELS.map((level) => (
               <option key={level} value={level}>
                 {priceLevelLabel(level)}
@@ -333,12 +415,14 @@ export function ProApplicationForm({
           <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-[auto_1fr]">
             <SingleImageField
               name="menuPhoto"
+              defaultValue={d("menuPhoto")}
               label={t.menuPhotoLabel}
               shape="square"
               unsupportedFormatText={t.imagesUnsupportedFormat}
             />
             <SingleImageField
               name="menuBanner"
+              defaultValue={d("menuBanner")}
               label={t.menuBannerLabel}
               shape="banner"
               unsupportedFormatText={t.imagesUnsupportedFormat}
@@ -348,6 +432,7 @@ export function ProApplicationForm({
           <p className="mb-2 rounded-lg bg-white px-3 py-2 text-xs text-foreground/60">{t.menuHint}</p>
           <MenuEditor
             name="menuItems"
+            defaultItems={dJson("menuItems", [])}
             namePlaceholder={t.menuItemNamePlaceholder}
             descriptionPlaceholder={t.menuItemDescriptionPlaceholder}
             categoryNamePlaceholder={t.menuItemCategoryPlaceholder}
@@ -376,27 +461,32 @@ export function ProApplicationForm({
           <label className={labelClass}>{t.fieldAmenities}</label>
           <div className="flex flex-wrap gap-x-6 gap-y-2">
             <label className="flex items-center gap-2 text-sm text-foreground/80">
-              <input type="checkbox" name="wifi" /> {t.amenityWifi}
+              <input type="checkbox" name="wifi" defaultChecked={!!d("wifi")} /> {t.amenityWifi}
             </label>
             <label className="flex items-center gap-2 text-sm text-foreground/80">
-              <input type="checkbox" name="parking" /> {t.amenityParking}
+              <input type="checkbox" name="parking" defaultChecked={!!d("parking")} /> {t.amenityParking}
             </label>
             <label className="flex items-center gap-2 text-sm text-foreground/80">
-              <input type="checkbox" name="pool" /> {t.amenityPool}
+              <input type="checkbox" name="pool" defaultChecked={!!d("pool")} /> {t.amenityPool}
             </label>
             <label className="flex items-center gap-2 text-sm text-foreground/80">
-              <input type="checkbox" name="airConditioning" /> {t.amenityAirConditioning}
+              <input type="checkbox" name="airConditioning" defaultChecked={!!d("airConditioning")} /> {t.amenityAirConditioning}
             </label>
             <label className="flex items-center gap-2 text-sm text-foreground/80">
-              <input type="checkbox" name="accessibility" /> {t.amenityAccessibility}
+              <input type="checkbox" name="accessibility" defaultChecked={!!d("accessibility")} /> {t.amenityAccessibility}
             </label>
             <label className="flex items-center gap-2 text-sm text-foreground/80">
-              <input type="checkbox" name="petsAllowed" /> {t.amenityPetsAllowed}
+              <input type="checkbox" name="petsAllowed" defaultChecked={!!d("petsAllowed")} /> {t.amenityPetsAllowed}
             </label>
           </div>
         </div>
 
-        <ImageUploader label={t.images} hint={t.imagesHint} unsupportedFormatText={t.imagesUnsupportedFormat} />
+        <ImageUploader
+          label={t.images}
+          hint={t.imagesHint}
+          defaultImages={(d("images") ?? "").split("\n").filter(Boolean)}
+          unsupportedFormatText={t.imagesUnsupportedFormat}
+        />
 
         <label className="flex items-start gap-2 text-sm text-foreground/80">
           <input type="checkbox" name="acceptTerms" required className="mt-0.5 shrink-0" />

@@ -15,7 +15,8 @@ import { getActiveCities } from "@/lib/data";
 import { MenuEditor } from "@/components/menu-editor";
 import { SingleImageField } from "@/components/single-image-field";
 import { SubmitButton } from "@/components/submit-button";
-import { ProApplicationForm } from "@/components/pro-application-form";
+import { ProApplicationForm, PRO_SIGNUP_DRAFT_KEY, PRO_ADD_BUSINESS_DRAFT_KEY } from "@/components/pro-application-form";
+import { ClearFormDraft } from "@/components/clear-form-draft";
 import { DashboardLangSwitcher } from "@/components/dashboard-lang-switcher";
 import { ImageUploader } from "@/components/image-uploader";
 import { HoursEditor } from "@/components/hours-editor";
@@ -162,6 +163,9 @@ export default async function ProDashboardPage({
 
   return (
     <div className="space-y-10">
+      {/* Reaching the dashboard proper means the signup went through. */}
+      <ClearFormDraft draftKey={PRO_SIGNUP_DRAFT_KEY} />
+      {added === "1" && <ClearFormDraft draftKey={PRO_ADD_BUSINESS_DRAFT_KEY} />}
       {updated === "1" && <UpdateSuccessBanner message={t("updateSuccess")} />}
       {added === "1" && <UpdateSuccessBanner message={t("businessAddedSuccess")} />}
 
