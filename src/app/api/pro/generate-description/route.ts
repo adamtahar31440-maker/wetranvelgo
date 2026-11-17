@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { safeCurrentUser as currentUser } from "@/lib/auth";
-import { generateBusinessDescription } from "@/lib/generate-description";
+import { generateBusinessDescription, improveEventDescription } from "@/lib/generate-description";
 
 export async function POST(req: Request) {
   const user = await currentUser();
@@ -16,8 +16,18 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Missing keywords" }, { status: 400 });
   }
 
+  const optional = (value: unknown) => (typeof value === "string" && value.trim() ? value.trim() : undefined);
+
   try {
-    const description = await generateBusinessDescription(keywords, locale, { name, category });
+    const description =
+      body.kind === "event"
+        ? await improveEventDescription(keywords, {
+            title: optional(body.title),
+            date: optional(body.date),
+            place: optional(body.place),
+            businessName: name,
+          })
+        : await generateBusinessDescription(keywords, locale, { name, category });
     return NextResponse.json({ description });
   } catch (err) {
     console.error("generate-description error:", err);

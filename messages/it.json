@@ -387,6 +387,10 @@
     "saved": "Evento salvato: sarà visibile sul sito dopo la convalida del team WeTravelGo.",
     "backToDashboard": "Torna alla dashboard",
     "viewOnline": "Vedi online",
-    "edit": "Modifica"
+    "edit": "Modifica",
+    "aiImprove": "Migliora con l'IA",
+    "aiImprovePending": "Miglioramento in corso...",
+    "aiEmptyError": "Scrivi prima qualche parola sul tuo evento.",
+    "descriptionPlaceholder": "Descrivi il tuo evento in poche parole (es.: serata gnawa dal vivo, cena inclusa, posti limitati), poi clicca su «Migliora con l'IA»."
   }
 }

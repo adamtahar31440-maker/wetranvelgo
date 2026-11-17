@@ -387,6 +387,10 @@
     "saved": "Veranstaltung gespeichert: Sie erscheint nach Freigabe durch das WeTravelGo-Team auf der Website.",
     "backToDashboard": "Zurück zum Dashboard",
     "viewOnline": "Online ansehen",
-    "edit": "Bearbeiten"
+    "edit": "Bearbeiten",
+    "aiImprove": "Mit KI verbessern",
+    "aiImprovePending": "Wird verbessert...",
+    "aiEmptyError": "Schreiben Sie zuerst ein paar Worte zu Ihrer Veranstaltung.",
+    "descriptionPlaceholder": "Beschreiben Sie Ihre Veranstaltung in wenigen Worten (z. B. Gnawa-Abend live, Abendessen inklusive, begrenzte Plätze) und klicken Sie dann auf „Mit KI verbessern“."
   }
 }

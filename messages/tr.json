@@ -387,6 +387,10 @@
     "saved": "Etkinlik kaydedildi: WeTravelGo ekibi onayladıktan sonra sitede görünecek.",
     "backToDashboard": "Panele dön",
     "viewOnline": "Çevrimiçi görüntüle",
-    "edit": "Düzenle"
+    "edit": "Düzenle",
+    "aiImprove": "Yapay zekâ ile iyileştir",
+    "aiImprovePending": "İyileştiriliyor...",
+    "aiEmptyError": "Önce etkinliğiniz hakkında birkaç kelime yazın.",
+    "descriptionPlaceholder": "Etkinliğinizi birkaç kelimeyle anlatın (ör. canlı Gnawa gecesi, akşam yemeği dahil, sınırlı yer), ardından “Yapay zekâ ile iyileştir”e tıklayın."
   }
 }

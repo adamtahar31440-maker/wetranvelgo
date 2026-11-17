@@ -387,6 +387,10 @@
     "saved": "活动已保存：经 WeTravelGo 团队审核后将显示在网站上。",
     "backToDashboard": "返回控制台",
     "viewOnline": "在线查看",
-    "edit": "编辑"
+    "edit": "编辑",
+    "aiImprove": "用 AI 优化",
+    "aiImprovePending": "正在优化...",
+    "aiEmptyError": "请先写几句关于活动的话。",
+    "descriptionPlaceholder": "用几句话描述您的活动（例如：格纳瓦现场之夜、含晚餐、名额有限），然后点击“用 AI 优化”。"
   }
 }

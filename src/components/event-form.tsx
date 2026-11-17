@@ -3,6 +3,7 @@ import { saveOwnEvent } from "@/lib/event-actions";
 import { toDateTimeLocal, type EventRow } from "@/lib/events";
 import { SingleImageField } from "@/components/single-image-field";
 import { SubmitButton } from "@/components/submit-button";
+import { AiDescriptionField } from "@/components/ai-description-field";
 
 const inputClass = "w-full rounded-lg border border-black/10 px-3 py-2 text-sm outline-none focus:border-ocean-dark";
 const labelClass = "mb-1 block text-xs font-semibold text-foreground/60";
@@ -37,16 +38,20 @@ export async function EventForm({
         <input id="ev-title" name="title" required maxLength={160} defaultValue={event?.title.fr ?? ""} className={inputClass} />
       </div>
 
-      <div>
-        <label className={labelClass} htmlFor="ev-description">{t("fieldDescription")}</label>
-        <textarea
-          id="ev-description"
-          name="description"
-          rows={6}
-          defaultValue={event?.description.fr ?? ""}
-          className={inputClass}
-        />
-      </div>
+      <AiDescriptionField
+        kind="event"
+        rows={6}
+        label={t("fieldDescription")}
+        defaultValue={event?.description.fr ?? ""}
+        locale="fr"
+        generateLabel={t("aiImprove")}
+        generatePendingLabel={t("aiImprovePending")}
+        emptyErrorText={t("aiEmptyError")}
+        errorText={tDash("generateDescriptionError")}
+        placeholder={t("descriptionPlaceholder")}
+        labelClassName={labelClass}
+        inputClassName={inputClass}
+      />
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div>

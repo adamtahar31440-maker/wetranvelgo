@@ -387,6 +387,10 @@
     "saved": "이벤트가 저장되었습니다. WeTravelGo 팀의 승인 후 사이트에 표시됩니다.",
     "backToDashboard": "대시보드로 돌아가기",
     "viewOnline": "온라인에서 보기",
-    "edit": "수정"
+    "edit": "수정",
+    "aiImprove": "AI로 개선하기",
+    "aiImprovePending": "개선 중...",
+    "aiEmptyError": "먼저 이벤트에 대해 몇 마디 적어 주세요.",
+    "descriptionPlaceholder": "이벤트를 몇 마디로 설명한 다음(예: 그나와 라이브 공연, 저녁 식사 포함, 좌석 한정) 'AI로 개선하기'를 누르세요."
   }
 }

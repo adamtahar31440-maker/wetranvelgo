@@ -57,3 +57,46 @@ export async function generateBusinessDescription(
   const block = response.content.find((c) => c.type === "text");
   return block && block.type === "text" ? block.text.trim() : "";
 }
+
+// Event announcements written by pros in the dashboard. Unlike the business
+// description (built from a few keywords), the pro usually already wrote a
+// draft: polish it — spelling, clarity, appeal — without changing any fact.
+// Always French: events are written in French and auto-translated on save.
+const EVENT_MODEL = "claude-opus-5-5";
+
+export async function improveEventDescription(
+  text: string,
+  context?: { title?: string; date?: string; place?: string; businessName?: string }
+): Promise<string> {
+  const contextLines = [
+    context?.title ? `Event title: ${context.title}` : null,
+    context?.businessName ? `Organized by: ${context.businessName}` : null,
+    context?.date ? `Date: ${context.date}` : null,
+    context?.place ? `Place: ${context.place}` : null,
+  ].filter(Boolean);
+
+  const response = await getClient().messages.create({
+    model: EVENT_MODEL,
+    max_tokens: 2048,
+    output_config: { effort: "low" },
+    system:
+      "You help local businesses in Morocco write the announcement of an event (concert, soirée, workshop, " +
+      "festival, tasting, special offer...) for the WeTravelGo travel directory. The organizer gives you their " +
+      "draft or a few notes. Rewrite it as 3-5 warm, clear, inviting sentences in French that make visitors " +
+      "want to come: say what it is, what makes it special, and practical details only if they were given. " +
+      "Fix spelling and grammar. Keep every fact from the draft (times, prices, menu, artists, booking " +
+      "conditions) exactly as given, and never invent facts that weren't provided — no made-up prices, " +
+      "times, guests or promises. The date and place are shown separately on the page, so don't repeat them " +
+      "unless the draft insists on them. No title, no emojis, no hashtags, no quotes, no commentary — output " +
+      "only the description text.",
+    messages: [
+      {
+        role: "user",
+        content: (contextLines.length > 0 ? contextLines.join("\n") + "\n\n" : "") + `Organizer's draft/notes: ${text}`,
+      },
+    ],
+  });
+
+  const block = response.content.find((c) => c.type === "text");
+  return block && block.type === "text" ? block.text.trim() : "";
+}

@@ -387,6 +387,10 @@
     "saved": "Evento guardado: aparecerá en el sitio cuando el equipo de WeTravelGo lo valide.",
     "backToDashboard": "Volver al panel",
     "viewOnline": "Ver en línea",
-    "edit": "Editar"
+    "edit": "Editar",
+    "aiImprove": "Mejorar con IA",
+    "aiImprovePending": "Mejorando...",
+    "aiEmptyError": "Escriba primero unas palabras sobre su evento.",
+    "descriptionPlaceholder": "Describa su evento en pocas palabras (ej.: noche gnawa en directo, cena incluida, plazas limitadas) y haga clic en «Mejorar con IA»."
   }
 }

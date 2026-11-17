@@ -387,6 +387,10 @@
     "saved": "Event saved: it will appear on the site once validated by the WeTravelGo team.",
     "backToDashboard": "Back to dashboard",
     "viewOnline": "View online",
-    "edit": "Edit"
+    "edit": "Edit",
+    "aiImprove": "Improve with AI",
+    "aiImprovePending": "Improving...",
+    "aiEmptyError": "First write a few words about your event.",
+    "descriptionPlaceholder": "Describe your event in a few words (e.g. live Gnawa night, dinner included, limited seats), then click “Improve with AI”."
   }
 }

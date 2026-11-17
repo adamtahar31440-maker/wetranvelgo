@@ -16,6 +16,8 @@ export function AiDescriptionField({
   placeholder,
   labelClassName,
   inputClassName,
+  kind = "business",
+  rows = 4,
 }: {
   label: string;
   defaultValue: string;
@@ -29,10 +31,33 @@ export function AiDescriptionField({
   placeholder?: string;
   labelClassName: string;
   inputClassName: string;
+  // "event": polishes the pro's event announcement, using the title/date/
+  // place/business fields of the same form as context.
+  kind?: "business" | "event";
+  rows?: number;
 }) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [generating, setGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  function eventContext() {
+    const form = textareaRef.current?.form;
+    if (kind !== "event" || !form) return {};
+    const value = (field: string) => {
+      const el = form.elements.namedItem(field);
+      return el instanceof HTMLInputElement ? el.value : undefined;
+    };
+    const establishment = form.elements.namedItem("establishmentId");
+    return {
+      title: value("title"),
+      date: value("startsAt"),
+      place: value("location"),
+      name:
+        establishment instanceof HTMLSelectElement && establishment.value
+          ? establishment.selectedOptions[0]?.text
+          : businessName,
+    };
+  }
 
   async function handleGenerate() {
     const keywords = textareaRef.current?.value.trim() ?? "";
@@ -46,7 +71,7 @@ export function AiDescriptionField({
       const res = await fetch("/api/pro/generate-description", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ keywords, locale, name: businessName, category }),
+        body: JSON.stringify({ keywords, locale, name: businessName, category, kind, ...eventContext() }),
       });
       const data = await res.json();
       if (!res.ok || !data.description) throw new Error(data.error ?? "Generation failed");
@@ -77,7 +102,7 @@ export function AiDescriptionField({
         name="description"
         ref={textareaRef}
         defaultValue={defaultValue}
-        rows={4}
+        rows={rows}
         placeholder={placeholder}
         className={inputClassName}
       />

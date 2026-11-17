@@ -387,6 +387,10 @@
     "saved": "Événement enregistré : il sera visible sur le site après validation par l'équipe WeTravelGo.",
     "backToDashboard": "Retour au tableau de bord",
     "viewOnline": "Voir en ligne",
-    "edit": "Modifier"
+    "edit": "Modifier",
+    "aiImprove": "Améliorer avec l'IA",
+    "aiImprovePending": "Amélioration en cours...",
+    "aiEmptyError": "Écrivez d'abord quelques mots sur votre événement.",
+    "descriptionPlaceholder": "Décrivez votre événement en quelques mots (ex : soirée gnaoua en live, dîner inclus, places limitées), puis cliquez sur « Améliorer avec l'IA »."
   }
 }
