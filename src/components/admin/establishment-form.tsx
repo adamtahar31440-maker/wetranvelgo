@@ -17,6 +17,7 @@ import { ImageUploader } from "@/components/image-uploader";
 import { SingleImageField } from "@/components/single-image-field";
 import { MenuEditor } from "@/components/menu-editor";
 import { ExtraMenuSections } from "@/components/extra-menu-sections";
+import { MenuSectionHint } from "@/components/menu-section-hint";
 import { offersMenuSections } from "@/lib/menu-sections";
 import { storedMenuToInput, storedSectionsToInput } from "@/lib/digital-menu";
 import { qrFeatureLabel } from "@/lib/qr-feature-label";
@@ -355,6 +356,7 @@ export function EstablishmentForm({
             unsupportedFormatText={t.imagesUnsupportedFormat}
           />
         </div>
+        {offersMenuSections(categoryType) && <MenuSectionHint kind="hotel" locale="fr" />}
         <MenuEditor
           name="menuItems"
           defaultItems={storedMenuToInput(establishment?.digitalMenu)}

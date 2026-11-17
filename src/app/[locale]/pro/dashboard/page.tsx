@@ -14,6 +14,7 @@ import { applyAsProfessional, updateOwnEstablishment } from "@/lib/pro-actions";
 import { getActiveCities } from "@/lib/data";
 import { MenuEditor } from "@/components/menu-editor";
 import { ExtraMenuSections } from "@/components/extra-menu-sections";
+import { MenuSectionHint } from "@/components/menu-section-hint";
 import { offersMenuSections } from "@/lib/menu-sections";
 import { SingleImageField } from "@/components/single-image-field";
 import { SubmitButton } from "@/components/submit-button";
@@ -532,6 +533,7 @@ export default async function ProDashboardPage({
                       />
                     </div>
 
+                    {offersMenuSections(myEstablishmentCategoryType) && <MenuSectionHint kind="hotel" locale={locale} />}
                     <MenuEditor
                       name="menuItems"
                       defaultItems={(myEstablishment.digitalMenu ?? []).map((it) => ({

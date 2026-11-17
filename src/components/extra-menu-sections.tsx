@@ -4,6 +4,7 @@ import { useState, type ComponentProps } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import { MenuEditor } from "@/components/menu-editor";
 import { MenuSectionIcon } from "@/components/menu-section-icon";
+import { MenuSectionHint } from "@/components/menu-section-hint";
 import { MENU_SECTION_KINDS, type MenuSectionKind } from "@/lib/menu-types";
 import type { MenuSectionInput } from "@/lib/digital-menu";
 import { availableSectionKinds, menuSectionLabel, menuSectionsEditorStrings } from "@/lib/menu-sections";
@@ -55,6 +56,7 @@ export function ExtraMenuSections({
                 <Trash2 size={13} /> {t.remove}
               </button>
             </div>
+            <MenuSectionHint kind={kind} locale={locale} />
             <MenuEditor
               name={`menuSection_${kind}`}
               defaultItems={defaultSections.find((s) => s.kind === kind)?.items ?? []}

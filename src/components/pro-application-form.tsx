@@ -14,6 +14,7 @@ import { MENU_SECTION_KINDS } from "@/lib/menu-types";
 import { HoursEditor } from "@/components/hours-editor";
 import { MenuEditor } from "@/components/menu-editor";
 import { ExtraMenuSections } from "@/components/extra-menu-sections";
+import { MenuSectionHint } from "@/components/menu-section-hint";
 import { offersMenuSections } from "@/lib/menu-sections";
 import { SingleImageField } from "@/components/single-image-field";
 import { ImageUploader } from "@/components/image-uploader";
@@ -470,6 +471,7 @@ function ProApplicationFormInner({
           <p className="mb-2 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-medium text-amber-900">
             {t.menuQrAfterSignup}
           </p>
+          {offersMenuSections(categoryType) && <MenuSectionHint kind="hotel" locale={lang} />}
           <MenuEditor
             name="menuItems"
             defaultItems={dJson("menuItems", [])}
