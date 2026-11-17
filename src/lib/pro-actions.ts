@@ -18,6 +18,7 @@ import { translateFields } from "@/lib/translate";
 import { slugify } from "@/lib/slug";
 import { sendWelcomeEmail, sendBusinessAddedEmail } from "@/lib/email";
 import { truncate } from "@/lib/truncate";
+import { parseMenuItems, isMenuUnchanged, addMenuTranslationFields } from "@/lib/digital-menu";
 
 const OPEN_APPLICATION_STATUSES = ["pending", "info_requested", "visit_scheduled", "on_hold"];
 
@@ -424,19 +425,7 @@ export async function updateOwnEstablishment(formData: FormData) {
   const avgDailyPriceMadRaw = String(formData.get("avgDailyPriceMad") ?? "");
   const avgDailyPriceMad = avgDailyPriceMadRaw ? Number(avgDailyPriceMadRaw) : null;
 
-  let menuItemsInput: {
-    name: string;
-    description: string | null;
-    price: number | null;
-    category: string | null;
-    variants: { label: string; price: number }[] | null;
-    photo: string | null;
-  }[] = [];
-  try {
-    menuItemsInput = JSON.parse(String(formData.get("menuItems") ?? "[]"));
-  } catch {
-    menuItemsInput = [];
-  }
+  const menuItemsInput = parseMenuItems(formData.get("menuItems"));
   const menuPhoto = String(formData.get("menuPhoto") ?? "") || null;
   const menuBanner = String(formData.get("menuBanner") ?? "") || null;
 
@@ -476,56 +465,8 @@ export async function updateOwnEstablishment(formData: FormData) {
     });
   }
 
-  // Category names and variant labels ("Plats principaux", "Verre"...) repeat
-  // identically across many items — translating each occurrence as its own
-  // field bloated the request enough (more fields/chars per chunk than
-  // translateFields' size limits comfortably allow) that a large category's
-  // whole chunk could silently fail and leave it and its dishes untranslated.
-  // Deduping by text means one translation call per unique string instead of
-  // one per item, which also fixes that same category consistently across
-  // every item that uses it.
-  const menuCategoryKeys = new Map<string, string>();
-  function menuCategoryFieldKey(category: string): string {
-    let key = menuCategoryKeys.get(category);
-    if (!key) {
-      key = `menuCategory_${menuCategoryKeys.size}`;
-      menuCategoryKeys.set(category, key);
-    }
-    return key;
-  }
-  const menuVariantKeys = new Map<string, string>();
-  function menuVariantFieldKey(label: string): string {
-    let key = menuVariantKeys.get(label);
-    if (!key) {
-      key = `menuVariant_${menuVariantKeys.size}`;
-      menuVariantKeys.set(label, key);
-    }
-    return key;
-  }
-
-  // Key order and null-vs-[] here must match MenuEditor's own serialization
-  // (name, description, category, price, variants, photo) exactly — the
-  // unchanged-check below compares via JSON.stringify, which is sensitive to
-  // both.
-  const originalMenu = (establishment.digitalMenu ?? []).map((it) => ({
-    name: it.name.fr,
-    description: it.description?.fr ?? null,
-    category: it.category?.fr ?? null,
-    price: it.price,
-    variants: it.variants && it.variants.length > 0 ? it.variants.map((v) => ({ label: v.label.fr, price: v.price })) : null,
-    photo: it.photo ?? null,
-  }));
-  const menuUnchanged = JSON.stringify(menuItemsInput) === JSON.stringify(originalMenu);
-  if (!menuUnchanged) {
-    menuItemsInput.forEach((it, i) => {
-      translationFields[`menuName_${i}`] = it.name;
-      if (it.description) translationFields[`menuDescription_${i}`] = it.description;
-      if (it.category) translationFields[menuCategoryFieldKey(it.category)] = it.category;
-      (it.variants ?? []).forEach((v) => {
-        translationFields[menuVariantFieldKey(v.label)] = v.label;
-      });
-    });
-  }
+  const menuUnchanged = isMenuUnchanged(menuItemsInput, establishment.digitalMenu);
+  const buildMenu = menuUnchanged ? null : addMenuTranslationFields(menuItemsInput, translationFields);
 
   const [subscription, plans] = await Promise.all([
     getSubscriptionByEstablishmentId(establishment.id),
@@ -582,19 +523,7 @@ export async function updateOwnEstablishment(formData: FormData) {
       pool: formData.get("pool") === "on",
       airConditioning: formData.get("airConditioning") === "on",
       petsAllowed: formData.get("petsAllowed") === "on",
-      digitalMenu: menuUnchanged
-        ? establishment.digitalMenu
-        : menuItemsInput.map((it) => ({
-            name: { fr: it.name },
-            description: it.description ? { fr: it.description } : null,
-            price: it.price,
-            category: it.category ? { fr: it.category } : null,
-            variants:
-              it.variants && it.variants.length > 0
-                ? it.variants.map((v) => ({ label: { fr: v.label }, price: v.price }))
-                : null,
-            photo: it.photo ?? null,
-          })),
+      digitalMenu: buildMenu ? buildMenu() : establishment.digitalMenu,
       menuPhoto,
       menuBanner,
     })
@@ -627,26 +556,7 @@ export async function updateOwnEstablishment(formData: FormData) {
         };
       }
 
-      if (!menuUnchanged) {
-        update.digitalMenu = menuItemsInput.map((it, i) => ({
-          name: { fr: it.name, ...translations[`menuName_${i}`] },
-          description: it.description
-            ? { fr: it.description, ...translations[`menuDescription_${i}`] }
-            : null,
-          price: it.price,
-          category: it.category
-            ? { fr: it.category, ...translations[menuCategoryKeys.get(it.category)!] }
-            : null,
-          variants:
-            it.variants && it.variants.length > 0
-              ? it.variants.map((v) => ({
-                  label: { fr: v.label, ...translations[menuVariantKeys.get(v.label)!] },
-                  price: v.price,
-                }))
-              : null,
-          photo: it.photo ?? null,
-        }));
-      }
+      if (buildMenu) update.digitalMenu = buildMenu(translations);
       return update;
     };
 

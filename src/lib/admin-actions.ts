@@ -41,6 +41,7 @@ import { RESERVED_TOP_LEVEL_SLUGS } from "@/lib/categories";
 import { adminCountEstablishmentsByCategory, adminCountEstablishmentsBySubcategory } from "@/lib/admin-data";
 import { getNavItems } from "@/lib/nav";
 import { sendActivationEmail } from "@/lib/email";
+import { parseMenuItems, isMenuUnchanged, addMenuTranslationFields } from "@/lib/digital-menu";
 
 async function requireRole(section: Parameters<typeof can>[1]) {
   const user = await currentUser();
@@ -128,6 +129,16 @@ export async function upsertEstablishment(formData: FormData) {
   }));
   const services = activitiesInput.length > 0 ? { fr: activitiesInput } : null;
 
+  // The digital menu (same editor as the pro's signup/dashboard). Left alone
+  // when unchanged so re-saving the fiche never re-translates a large menu.
+  const [existing] = id ? await db.select().from(establishments).where(eq(establishments.id, id)) : [];
+  const menuItemsInput = parseMenuItems(formData.get("menuItems"));
+  const menuTranslationFields: Record<string, string> = {};
+  const buildMenu =
+    formData.has("menuItems") && !isMenuUnchanged(menuItemsInput, existing?.digitalMenu)
+      ? addMenuTranslationFields(menuItemsInput, menuTranslationFields)
+      : null;
+
   const subcategoriesList = formData.getAll("subcategories").map(String).filter(Boolean);
   const data = {
     cityId: Number(formData.get("cityId")),
@@ -171,6 +182,9 @@ export async function upsertEstablishment(formData: FormData) {
       .split(/\r?\n/)
       .map((s) => s.trim())
       .filter(Boolean),
+    menuPhoto: String(formData.get("menuPhoto") ?? "") || null,
+    menuBanner: String(formData.get("menuBanner") ?? "") || null,
+    ...(buildMenu ? { digitalMenu: buildMenu() } : {}),
   };
 
   let establishmentId = id;
@@ -197,6 +211,7 @@ export async function upsertEstablishment(formData: FormData) {
   activitiesInput.forEach((a, i) => {
     translationFields[`activity_${i}`] = a;
   });
+  Object.assign(translationFields, menuTranslationFields);
 
   waitUntil(
     translateFields(translationFields, targetLocales, "fr")
@@ -227,6 +242,8 @@ export async function upsertEstablishment(formData: FormData) {
           }
           update.services = servicesByLocale;
         }
+
+        if (buildMenu) update.digitalMenu = buildMenu(translations);
 
         await db.update(establishments).set(update).where(eq(establishments.id, establishmentId));
       })

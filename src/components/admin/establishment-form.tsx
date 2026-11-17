@@ -11,6 +11,15 @@ import { ProductsEditor } from "@/components/products-editor";
 import { ActivityTagsPicker } from "@/components/activity-tags-picker";
 import { flattenSubcategories } from "@/lib/labels";
 import { hasMultiSubcategory } from "@/lib/multi-subcategory";
+import { AddressLocationPicker } from "@/components/address-location-picker";
+import { PhoneField } from "@/components/phone-field";
+import { ImageUploader } from "@/components/image-uploader";
+import { SingleImageField } from "@/components/single-image-field";
+import { MenuEditor } from "@/components/menu-editor";
+import { storedMenuToInput } from "@/lib/digital-menu";
+import { qrFeatureLabel } from "@/lib/qr-feature-label";
+import { PRO_FORM_STRINGS } from "@/lib/pro-form-i18n";
+import type { DigitalMenuItem } from "@/lib/menu-types";
 
 type Category = { id: number; type: string; name: Record<string, string> };
 type Subcategory = { slug: string; name: Record<string, string> };
@@ -53,7 +62,23 @@ type Establishment = {
   status: string;
   images: string[] | null;
   professionalId: number | null;
+  menuPhoto: string | null;
+  menuBanner: string | null;
+  digitalMenu: DigitalMenuItem[] | null;
 };
+
+// Same French labels as the pro's own signup form, so the admin sees the
+// fiche exactly the way the pro filled it in.
+const t = PRO_FORM_STRINGS.fr;
+
+// A pro may write their fiche in any language: it's saved in that language
+// first and only gets its French version once the background translation
+// finishes. Show the original meanwhile instead of an empty field (saving an
+// empty field would erase the pro's text).
+function frOrOriginal(value: Record<string, string> | null | undefined) {
+  if (!value) return "";
+  return value.fr ?? Object.values(value).find(Boolean) ?? "";
+}
 
 const inputClass =
   "w-full rounded-lg border border-black/10 px-3 py-2 text-sm outline-none focus:border-ocean-dark";
@@ -83,6 +108,8 @@ export function EstablishmentForm({
   const isRestaurant = categoryType === "restaurant";
   const isShopping = categoryType === "shopping";
   const showMultiSubcategory = hasMultiSubcategory(categoryType);
+  const missingFrench =
+    !!establishment && (!establishment.name.fr || (!!frOrOriginal(establishment.description) && !establishment.description.fr));
   const multiSubcategoryLabel = isCarRental
     ? "Types de véhicules proposés"
     : isRealEstate
@@ -163,20 +190,27 @@ export function EstablishmentForm({
         Rédigez en français : les autres langues du site seront automatiquement retraduites lors de l&apos;enregistrement.
       </p>
 
+      {missingFrench && (
+        <p className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
+          La traduction française de cette fiche n&apos;est pas encore prête : les textes ci-dessous sont affichés dans
+          la langue utilisée par le professionnel.
+        </p>
+      )}
+
       <div>
         <label className={labelClass}>Nom</label>
-        <input name="name" defaultValue={establishment?.name.fr} className={inputClass} required />
+        <input name="name" defaultValue={frOrOriginal(establishment?.name)} className={inputClass} required />
       </div>
       <div>
         <label className={labelClass}>Description</label>
-        <textarea name="description" defaultValue={establishment?.description.fr} rows={4} className={inputClass} />
+        <textarea name="description" defaultValue={frOrOriginal(establishment?.description)} rows={4} className={inputClass} />
       </div>
 
       <div>
         <label className={labelClass}>Horaires</label>
         <HoursEditor
           name="hours"
-          defaultValue={establishment?.hours?.fr ?? ""}
+          defaultValue={frOrOriginal(establishment?.hours)}
           dayLabels={["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]}
           closedLabel="Fermé"
           openLabel="Ouvert"
@@ -196,29 +230,24 @@ export function EstablishmentForm({
         </div>
       </section>
 
-      <section className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <div>
-          <label className={labelClass}>Adresse</label>
-          <input name="address" defaultValue={establishment?.address ?? ""} className={inputClass} />
-        </div>
-        <div>
-          <label className={labelClass}>Latitude</label>
-          <input name="lat" type="number" step="any" defaultValue={establishment?.lat ?? ""} className={inputClass} />
-        </div>
-        <div>
-          <label className={labelClass}>Longitude</label>
-          <input name="lng" type="number" step="any" defaultValue={establishment?.lng ?? ""} className={inputClass} />
-        </div>
-      </section>
+      <div>
+        <label className={labelClass}>Adresse</label>
+        <AddressLocationPicker
+          className={inputClass}
+          defaultAddress={establishment?.address ?? ""}
+          defaultLat={establishment?.lat}
+          defaultLng={establishment?.lng}
+        />
+      </div>
 
       <section className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div>
           <label className={labelClass}>Téléphone</label>
-          <input name="phone" defaultValue={establishment?.phone ?? ""} className={inputClass} />
+          <PhoneField name="phone" defaultValue={establishment?.phone ?? ""} />
         </div>
         <div>
           <label className={labelClass}>WhatsApp</label>
-          <input name="whatsapp" defaultValue={establishment?.whatsapp ?? ""} className={inputClass} />
+          <PhoneField name="whatsapp" defaultValue={establishment?.whatsapp ?? ""} />
         </div>
         <div>
           <label className={labelClass}>Site internet</label>
@@ -268,6 +297,52 @@ export function EstablishmentForm({
             <option value="disabled">Désactivé</option>
           </select>
         </div>
+      </section>
+
+      <section className="rounded-xl border border-ocean-dark/20 bg-ocean-dark/5 p-4">
+        <label className={labelClass}>{qrFeatureLabel(categoryType, "fr")}</label>
+        <p className="mb-3 text-xs text-foreground/50">{t.menuIntro}</p>
+        <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-[auto_1fr]">
+          <SingleImageField
+            name="menuPhoto"
+            label={t.menuPhotoLabel}
+            defaultValue={establishment?.menuPhoto}
+            shape="square"
+            unsupportedFormatText={t.imagesUnsupportedFormat}
+          />
+          <SingleImageField
+            name="menuBanner"
+            label={t.menuBannerLabel}
+            defaultValue={establishment?.menuBanner}
+            shape="banner"
+            unsupportedFormatText={t.imagesUnsupportedFormat}
+          />
+        </div>
+        <MenuEditor
+          name="menuItems"
+          defaultItems={storedMenuToInput(establishment?.digitalMenu)}
+          namePlaceholder={t.menuItemNamePlaceholder}
+          descriptionPlaceholder={t.menuItemDescriptionPlaceholder}
+          categoryNamePlaceholder={t.menuItemCategoryPlaceholder}
+          pricePlaceholder={t.menuItemPricePlaceholder}
+          variantLabelPlaceholder={t.menuVariantLabelPlaceholder}
+          addItemLabel={t.menuAddItem}
+          addVariantLabel={t.menuAddVariant}
+          addCategoryLabel={t.menuAddCategory}
+          newCategoryDefaultName={t.menuNewCategoryDefault}
+          uncategorizedLabel={t.menuUncategorized}
+          orderLabel={t.menuCategoryOrderLabel}
+          collapseAllLabel={t.menuCollapseAll}
+          expandAllLabel={t.menuExpandAll}
+          singlePriceLabel={t.menuSinglePriceLabel}
+          variantPriceLabel={t.menuVariantPriceLabel}
+          scanLabel={t.menuScanDocument}
+          scanningLabel={t.menuScanning}
+          scanHint={t.menuScanHint}
+          scanErrorText={t.menuScanError}
+          scanUnsupportedFormatText={t.imagesUnsupportedFormat}
+          scanSuccessTemplate={t.menuScanSuccess}
+        />
       </section>
 
       <div>
@@ -329,33 +404,12 @@ export function EstablishmentForm({
         </label>
       </section>
 
-      <section>
-        <label className={labelClass}>Photos (une URL par ligne)</label>
-        {establishment?.images && establishment.images.length > 0 && (
-          <div className="mb-3 grid grid-cols-3 gap-2 sm:grid-cols-4">
-            {establishment.images.map((url, i) => (
-              <a
-                key={i}
-                href={url}
-                target="_blank"
-                rel="noreferrer"
-                className="block aspect-square overflow-hidden rounded-lg border border-black/10 bg-sand"
-                title="Ouvrir en taille réelle"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={url} alt="" className="h-full w-full object-cover" />
-              </a>
-            ))}
-          </div>
-        )}
-        <textarea
-          name="images"
-          defaultValue={establishment?.images?.join("\n") ?? ""}
-          rows={4}
-          className={inputClass}
-          placeholder="https://..."
-        />
-      </section>
+      <ImageUploader
+        label={t.images}
+        hint={t.imagesHint}
+        defaultImages={establishment?.images ?? []}
+        unsupportedFormatText={t.imagesUnsupportedFormat}
+      />
 
       <SubmitButton label="Enregistrer" pendingLabel="Traduction et enregistrement en cours..." />
     </form>

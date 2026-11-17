@@ -7,13 +7,32 @@ import {
   getLabelBadges,
   adminGetProfessionals,
   adminGetSubcategories,
+  adminGetProfessionalById,
 } from "@/lib/admin-data";
 import { getActiveCities } from "@/lib/data";
-import { setLabelStatus, setMenuTranslationEnabled } from "@/lib/admin-actions";
+import { setLabelStatus, setMenuTranslationEnabled, setProfessionalStatus } from "@/lib/admin-actions";
 import { EstablishmentForm } from "@/components/admin/establishment-form";
 import { LabelEvaluationForm } from "@/components/admin/label-evaluation-form";
 import { LabelBadgeHistory } from "@/components/label-badge-history";
 import { qrFeatureLabel } from "@/lib/qr-feature-label";
+import { cn } from "@/lib/utils";
+
+const PRO_STATUS_LABELS: Record<string, string> = {
+  pending: "En attente",
+  validated: "Validé",
+  refused: "Refusé",
+  suspended: "Suspendu",
+};
+const PRO_STATUS_COLORS: Record<string, string> = {
+  pending: "bg-amber-100 text-amber-700",
+  validated: "bg-green-100 text-green-700",
+  refused: "bg-red-100 text-red-700",
+  suspended: "bg-gray-200 text-gray-600",
+};
+
+function formatDate(value: Date | null | undefined) {
+  return value ? new Date(value).toLocaleString("fr-FR", { dateStyle: "long", timeStyle: "short" }) : "—";
+}
 
 const LABEL_STATUS_LABELS: Record<string, string> = {
   none: "Aucun label",
@@ -49,13 +68,101 @@ export default async function EditEstablishmentPage({
   );
   const establishmentCategory = categories.find((c) => c.id === establishment.categoryId);
   const catalogLabel = qrFeatureLabel(establishmentCategory?.type, "fr");
+  const professional = establishment.professionalId ? await adminGetProfessionalById(establishment.professionalId) : null;
+  const city = cities.find((c) => c.id === establishment.cityId);
+  const publicHref =
+    city && establishmentCategory ? `/${locale}/${city.slug}/${establishmentCategory.slug}/${establishment.slug}` : null;
 
   return (
     <div className="space-y-10">
       <div>
-        <h1 className="mb-6 text-2xl font-semibold text-ocean-dark">
-          Modifier : {establishment.name.fr}
-        </h1>
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+          <h1 className="text-2xl font-semibold text-ocean-dark">
+            Modifier : {establishment.name.fr ?? Object.values(establishment.name)[0]}
+          </h1>
+          {publicHref && establishment.status === "active" && (
+            <Link href={publicHref} target="_blank" className="text-sm font-medium text-azur hover:underline">
+              Voir la fiche publique →
+            </Link>
+          )}
+        </div>
+
+        {professional && (
+          <section className="mb-8 rounded-2xl border border-black/5 bg-white p-5">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <h2 className="text-sm font-semibold text-ocean-dark">Professionnel</h2>
+              <span className={cn("rounded-full px-3 py-1 text-xs font-semibold", PRO_STATUS_COLORS[professional.status])}>
+                {PRO_STATUS_LABELS[professional.status] ?? professional.status}
+              </span>
+            </div>
+            <dl className="mt-3 grid gap-x-6 gap-y-2 text-sm sm:grid-cols-2">
+              <div>
+                <dt className="text-xs text-foreground/50">Entreprise</dt>
+                <dd className="text-ocean-dark">{professional.companyName}</dd>
+              </div>
+              <div>
+                <dt className="text-xs text-foreground/50">Contact</dt>
+                <dd className="text-ocean-dark">{professional.contactName || "—"}</dd>
+              </div>
+              <div className="min-w-0">
+                <dt className="text-xs text-foreground/50">Email</dt>
+                <dd className="break-all">
+                  {professional.email ? (
+                    <a href={`mailto:${professional.email}`} className="text-azur hover:underline">
+                      {professional.email}
+                    </a>
+                  ) : (
+                    "—"
+                  )}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-xs text-foreground/50">Téléphone</dt>
+                <dd>
+                  {professional.phone ? (
+                    <a href={`tel:${professional.phone.replace(/\s+/g, "")}`} className="text-azur hover:underline">
+                      {professional.phone}
+                    </a>
+                  ) : (
+                    "—"
+                  )}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-xs text-foreground/50">Inscrit le</dt>
+                <dd className="text-ocean-dark">{formatDate(professional.createdAt)}</dd>
+              </div>
+              <div>
+                <dt className="text-xs text-foreground/50">CGU acceptées le</dt>
+                <dd className="text-ocean-dark">{formatDate(professional.termsAcceptedAt)}</dd>
+              </div>
+            </dl>
+            <div className="mt-4 flex flex-wrap gap-3 text-sm">
+              {professional.status !== "validated" && (
+                <form action={setProfessionalStatus.bind(null, professional.id, "validated")}>
+                  <button type="submit" className="rounded-full bg-green-600 px-4 py-1.5 font-semibold text-white hover:bg-green-700">
+                    Valider le compte
+                  </button>
+                </form>
+              )}
+              {professional.status !== "refused" && (
+                <form action={setProfessionalStatus.bind(null, professional.id, "refused")}>
+                  <button type="submit" className="rounded-full border border-black/10 px-4 py-1.5 font-semibold text-amber-700 hover:bg-black/5">
+                    Refuser
+                  </button>
+                </form>
+              )}
+              {professional.status !== "suspended" && (
+                <form action={setProfessionalStatus.bind(null, professional.id, "suspended")}>
+                  <button type="submit" className="rounded-full border border-black/10 px-4 py-1.5 font-semibold text-gray-600 hover:bg-black/5">
+                    Suspendre
+                  </button>
+                </form>
+              )}
+            </div>
+          </section>
+        )}
+
         <EstablishmentForm
           locale={locale}
           categories={categories}
