@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { Menu, X, Search, Globe, ChevronDown } from "lucide-react";
+import { Menu, X, Search, Globe, ChevronDown, LogIn } from "lucide-react";
 import { localeNames, routing } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 
@@ -36,6 +36,11 @@ export function Header({
     });
 
   const pathWithoutLocale = pathname.replace(`/${locale}`, "") || "/";
+  // Sign-in only — creating a pro account stays on /pro, so the public site
+  // never advertises signup. /pro/app sends a signed-out visitor to sign-in,
+  // then staff to /admin and pros to their dashboard.
+  const signInHref = `/${locale}/pro/app`;
+
   const localePrefixed = (href: string) => `/${locale}/${ville}${href === "/" ? "" : href}`;
   const [siteNameFirst, ...siteNameRest] = siteName.split(" ");
 
@@ -110,6 +115,12 @@ export function Header({
             <Search size={18} />
           </Link>
           <LocaleSwitcher pathWithoutLocale={pathWithoutLocale} />
+          <Link
+            href={signInHref}
+            className="inline-flex items-center gap-1.5 rounded-full bg-ocean-dark px-4 py-2 text-sm font-semibold text-white transition hover:bg-ocean"
+          >
+            <LogIn size={16} /> {t("signIn")}
+          </Link>
         </div>
 
         <button
@@ -198,6 +209,13 @@ export function Header({
               className="rounded-md px-2 py-2 text-sm font-medium text-foreground/80 hover:bg-sand/50"
             >
               {t("search")}
+            </Link>
+            <Link
+              href={signInHref}
+              onClick={() => setOpen(false)}
+              className="mt-2 inline-flex items-center justify-center gap-1.5 rounded-full bg-ocean-dark px-4 py-2.5 text-sm font-semibold text-white"
+            >
+              <LogIn size={16} /> {t("signIn")}
             </Link>
           </nav>
           <div className="mt-3 grid grid-cols-3 gap-2">
