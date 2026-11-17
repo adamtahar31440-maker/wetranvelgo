@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { X, Loader2 } from "lucide-react";
+import { X, Loader2, Camera, Images } from "lucide-react";
 import { isUnsupportedImageFile, uploadImageFile } from "@/lib/image-upload";
 
 type UploadItem = { id: string; url: string; uploading: boolean; error?: string };
@@ -14,6 +14,8 @@ export function ImageUploader({
   limitReachedText,
   unsupportedFormatText,
   fieldName = "images",
+  cameraLabel = "Prendre une photo",
+  galleryLabel = "Choisir dans la galerie",
 }: {
   label: string;
   hint?: string;
@@ -22,6 +24,8 @@ export function ImageUploader({
   limitReachedText?: string;
   unsupportedFormatText?: string;
   fieldName?: string;
+  cameraLabel?: string;
+  galleryLabel?: string;
 }) {
   const [items, setItems] = useState<UploadItem[]>(
     defaultImages.map((url, i) => ({ id: `existing-${i}-${url}`, url, uploading: false }))
@@ -93,14 +97,49 @@ export function ImageUploader({
           </span>
         )}
       </div>
-      <input
-        type="file"
-        accept="image/*"
-        multiple
-        disabled={limitReached}
-        onChange={(e) => handleFiles(e.target.files)}
-        className="block w-full text-sm text-foreground/70 file:mr-3 file:rounded-full file:border-0 file:bg-ocean-dark file:px-4 file:py-2 file:text-xs file:font-semibold file:text-white hover:file:bg-ocean disabled:cursor-not-allowed disabled:opacity-50 disabled:file:bg-foreground/30"
-      />
+      <div className="flex flex-wrap gap-2">
+        {/* Android browsers drop the camera option from the picker whenever
+            "multiple" is set, so the camera gets its own button. Only shown on
+            touch devices — on a computer it would just open the file picker. */}
+        <label
+          className={`hidden items-center gap-1.5 rounded-full bg-ocean-dark px-4 py-2 text-xs font-semibold text-white pointer-coarse:inline-flex ${
+            limitReached ? "cursor-not-allowed opacity-50" : "cursor-pointer hover:bg-ocean"
+          }`}
+        >
+          <Camera size={14} />
+          {cameraLabel}
+          <input
+            type="file"
+            accept="image/*"
+            capture="environment"
+            disabled={limitReached}
+            onChange={(e) => {
+              handleFiles(e.target.files);
+              e.target.value = "";
+            }}
+            className="hidden"
+          />
+        </label>
+        <label
+          className={`inline-flex items-center gap-1.5 rounded-full border border-ocean-dark/30 px-4 py-2 text-xs font-semibold text-ocean-dark ${
+            limitReached ? "cursor-not-allowed opacity-50" : "cursor-pointer hover:bg-ocean-dark/5"
+          }`}
+        >
+          <Images size={14} />
+          {galleryLabel}
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            disabled={limitReached}
+            onChange={(e) => {
+              handleFiles(e.target.files);
+              e.target.value = "";
+            }}
+            className="hidden"
+          />
+        </label>
+      </div>
       {limitReached && limitReachedText ? (
         <p className="mt-1 text-xs font-medium text-terracotta">{limitReachedText}</p>
       ) : (

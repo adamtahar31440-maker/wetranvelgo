@@ -462,6 +462,8 @@ export default async function ProDashboardPage({
               max={maxPhotos}
               limitReachedText={typeof maxPhotos === "number" ? t("imagesLimitReached", { max: maxPhotos }) : undefined}
               unsupportedFormatText={t("imagesUnsupportedFormat")}
+              cameraLabel={t("takePhoto")}
+              galleryLabel={t("chooseFromGallery")}
             />
           </section>
 
@@ -524,6 +526,10 @@ export default async function ProDashboardPage({
                       scanErrorText={t("menuScanError")}
                       scanUnsupportedFormatText={t("imagesUnsupportedFormat")}
                       scanSuccessTemplate={t.raw("menuScanSuccess")}
+                      scanTakePhotoLabel={t("scanTakePhoto")}
+                      scanAnotherPageLabel={t("scanAnotherPage")}
+                      scanAnalyzeTemplate={t.raw("scanAnalyze")}
+                      scanGalleryLabel={t("chooseFromGallery")}
                     />
                   </div>
 

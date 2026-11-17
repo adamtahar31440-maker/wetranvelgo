@@ -293,7 +293,12 @@
     "fieldCuisineTypes": "Sunulan mutfak türleri ve hizmetler",
     "fieldProductTypes": "Sunulan ürün türleri",
     "fieldAvgDailyPrice": "Ortalama günlük fiyat (MAD)",
-    "avgDailyPriceHint": "Müşterilere bütçeniz hakkında bir fikir verir ve profilinizde görüntülenir"
+    "avgDailyPriceHint": "Müşterilere bütçeniz hakkında bir fikir verir ve profilinizde görüntülenir",
+    "takePhoto": "Fotoğraf çek",
+    "chooseFromGallery": "Galeriden seç",
+    "scanTakePhoto": "Menüyü fotoğrafla",
+    "scanAnotherPage": "Başka bir sayfa fotoğrafla",
+    "scanAnalyze": "Menüyü analiz et ({count} sayfa)"
   },
   "weather": {
     "close": "Kapat",

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import { Plus, X, Camera, Loader2, ChevronDown, ChevronUp, ImagePlus } from "lucide-react";
+import { Plus, X, Camera, Loader2, ChevronDown, ChevronUp, ImagePlus, Images, ScanText } from "lucide-react";
 import { compressImage, isUnsupportedImageFile, uploadImageFile } from "@/lib/image-upload";
 
 type VariantInput = { label: string; price: string };
@@ -68,6 +68,10 @@ export function MenuEditor({
   scanErrorText,
   scanUnsupportedFormatText,
   scanSuccessTemplate,
+  scanTakePhotoLabel = "Photographier la carte",
+  scanAnotherPageLabel = "Photographier une autre page",
+  scanAnalyzeTemplate = "Analyser la carte ({count} page(s))",
+  scanGalleryLabel = "Choisir dans la galerie",
 }: {
   name: string;
   defaultItems?: {
@@ -99,6 +103,10 @@ export function MenuEditor({
   scanErrorText: string;
   scanUnsupportedFormatText: string;
   scanSuccessTemplate: string;
+  scanTakePhotoLabel?: string;
+  scanAnotherPageLabel?: string;
+  scanAnalyzeTemplate?: string;
+  scanGalleryLabel?: string;
 }) {
   const nextId = useRef(0);
   function makeId() {
@@ -131,6 +139,35 @@ export function MenuEditor({
   const [scanSuccessCount, setScanSuccessCount] = useState<number | null>(null);
   const [scanProgress, setScanProgress] = useState(0);
   const [scanRemainingSeconds, setScanRemainingSeconds] = useState<number | null>(null);
+  // Pages photographed one by one with the camera, waiting to be analyzed
+  // together — so a multi-page menu never has to go through the photo gallery.
+  const [cameraPages, setCameraPages] = useState<{ id: string; file: File; url: string }[]>([]);
+
+  function addCameraPage(fileList: FileList | null) {
+    const file = fileList?.[0];
+    if (!file) return;
+    if (isUnsupportedImageFile(file)) {
+      setScanUnsupported(true);
+      return;
+    }
+    setScanUnsupported(false);
+    setCameraPages((prev) => (prev.length >= 8 ? prev : [...prev, { id: makeId(), file, url: URL.createObjectURL(file) }]));
+  }
+
+  function removeCameraPage(id: string) {
+    setCameraPages((prev) => {
+      const page = prev.find((p) => p.id === id);
+      if (page) URL.revokeObjectURL(page.url);
+      return prev.filter((p) => p.id !== id);
+    });
+  }
+
+  async function analyzeCameraPages() {
+    const files = cameraPages.map((p) => p.file);
+    cameraPages.forEach((p) => URL.revokeObjectURL(p.url));
+    setCameraPages([]);
+    await handleScan(files);
+  }
   const [photoUploadingIds, setPhotoUploadingIds] = useState<Set<string>>(new Set());
   // The order-position input is controlled through a per-group draft buffer
   // (keyed by the group's first item id, which stays stable across renames and
@@ -252,7 +289,7 @@ export function MenuEditor({
     setItems((prev) => [...prev, newItem]);
   }
 
-  async function handleScan(fileList: FileList | null) {
+  async function handleScan(fileList: FileList | File[] | null) {
     if (!fileList || fileList.length === 0) return;
     const allFiles = Array.from(fileList).slice(0, 8);
     // Phone camera shots routinely land here as HEIC (iPhone's default format,
@@ -583,6 +620,30 @@ export function MenuEditor({
           </button>
         )}
 
+        {/* Android browsers drop the camera from the picker whenever "multiple"
+            is set — the camera gets its own button (touch devices only), one
+            page per shot, collected below until the pro asks for the analysis. */}
+        <label
+          className={`hidden items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-medium pointer-coarse:flex ${
+            scanning || cameraPages.length >= 8
+              ? "cursor-not-allowed bg-black/10 text-foreground/40"
+              : "cursor-pointer bg-ocean-dark text-white hover:bg-ocean"
+          }`}
+        >
+          <Camera size={14} />
+          {cameraPages.length > 0 ? scanAnotherPageLabel : scanTakePhotoLabel}
+          <input
+            type="file"
+            accept="image/*"
+            capture="environment"
+            disabled={scanning || cameraPages.length >= 8}
+            onChange={(e) => {
+              addCameraPage(e.target.files);
+              e.target.value = "";
+            }}
+            className="hidden"
+          />
+        </label>
         <label
           className={`flex cursor-pointer items-center gap-1.5 rounded-full border px-4 py-1.5 text-xs font-medium ${
             scanning
@@ -590,18 +651,56 @@ export function MenuEditor({
               : "border-ocean-dark/30 text-ocean-dark hover:bg-ocean-dark/5"
           }`}
         >
-          {scanning ? <Loader2 size={14} className="animate-spin" /> : <Camera size={14} />}
-          {scanning ? scanningLabel : scanLabel}
+          {scanning ? <Loader2 size={14} className="animate-spin" /> : <Images size={14} />}
+          {scanning ? scanningLabel : (
+            <>
+              <span className="pointer-coarse:hidden">{scanLabel}</span>
+              <span className="hidden pointer-coarse:inline">{scanGalleryLabel}</span>
+            </>
+          )}
           <input
             type="file"
             accept="image/*"
             multiple
             disabled={scanning}
-            onChange={(e) => handleScan(e.target.files)}
+            onChange={(e) => {
+              handleScan(e.target.files);
+              e.target.value = "";
+            }}
             className="hidden"
           />
         </label>
       </div>
+      {cameraPages.length > 0 && !scanning && (
+        <div className="mt-3 rounded-xl border border-ocean-dark/20 bg-white p-3">
+          <div className="flex flex-wrap gap-2">
+            {cameraPages.map((p, i) => (
+              <div key={p.id} className="relative h-20 w-16 overflow-hidden rounded-lg border border-black/10 bg-sand">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={p.url} alt="" className="h-full w-full object-cover" />
+                <span className="absolute bottom-0.5 left-0.5 rounded bg-black/60 px-1 text-[10px] font-semibold text-white">
+                  {i + 1}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => removeCameraPage(p.id)}
+                  className="absolute right-0.5 top-0.5 rounded-full bg-black/60 p-0.5 text-white hover:bg-black/80"
+                >
+                  <X size={10} />
+                </button>
+              </div>
+            ))}
+          </div>
+          <button
+            type="button"
+            onClick={analyzeCameraPages}
+            className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-terracotta px-4 py-2 text-xs font-semibold text-white hover:bg-terracotta/90"
+          >
+            <ScanText size={14} />
+            {scanAnalyzeTemplate.replace("{count}", String(cameraPages.length))}
+          </button>
+        </div>
+      )}
       {scanning && (
         <div className="mt-2 w-full max-w-xs">
           <div className="h-1.5 w-full overflow-hidden rounded-full bg-black/10">

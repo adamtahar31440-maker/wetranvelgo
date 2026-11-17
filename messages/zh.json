@@ -293,7 +293,12 @@
     "fieldCuisineTypes": "提供的菜系和服务类型",
     "fieldProductTypes": "提供的产品类型",
     "fieldAvgDailyPrice": "平均日价格 (MAD)",
-    "avgDailyPriceHint": "让客户了解您的预算，显示在您的个人资料上"
+    "avgDailyPriceHint": "让客户了解您的预算，显示在您的个人资料上",
+    "takePhoto": "拍照",
+    "chooseFromGallery": "从相册选择",
+    "scanTakePhoto": "拍摄菜单",
+    "scanAnotherPage": "再拍一页",
+    "scanAnalyze": "识别菜单（{count} 页）"
   },
   "weather": {
     "close": "关闭",

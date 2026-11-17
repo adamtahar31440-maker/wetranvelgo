@@ -293,7 +293,12 @@
     "fieldCuisineTypes": "제공되는 요리 종류 및 서비스",
     "fieldProductTypes": "제공되는 제품 유형",
     "fieldAvgDailyPrice": "평균 일일 요금 (MAD)",
-    "avgDailyPriceHint": "고객에게 예산에 대한 개념을 제공하며 프로필에 표시됩니다"
+    "avgDailyPriceHint": "고객에게 예산에 대한 개념을 제공하며 프로필에 표시됩니다",
+    "takePhoto": "사진 촬영",
+    "chooseFromGallery": "갤러리에서 선택",
+    "scanTakePhoto": "메뉴판 촬영",
+    "scanAnotherPage": "다른 페이지 촬영",
+    "scanAnalyze": "메뉴판 분석 ({count}페이지)"
   },
   "weather": {
     "close": "닫기",

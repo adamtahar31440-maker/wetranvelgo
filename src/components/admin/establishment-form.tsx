@@ -342,6 +342,10 @@ export function EstablishmentForm({
           scanErrorText={t.menuScanError}
           scanUnsupportedFormatText={t.imagesUnsupportedFormat}
           scanSuccessTemplate={t.menuScanSuccess}
+          scanTakePhotoLabel={t.scanTakePhoto}
+          scanAnotherPageLabel={t.scanAnotherPage}
+          scanAnalyzeTemplate={t.scanAnalyze}
+          scanGalleryLabel={t.chooseFromGallery}
         />
       </section>
 

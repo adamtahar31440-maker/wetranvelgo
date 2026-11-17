@@ -293,7 +293,12 @@
     "fieldCuisineTypes": "Cuisine types & services offered",
     "fieldProductTypes": "Product types offered",
     "fieldAvgDailyPrice": "Average daily price (MAD)",
-    "avgDailyPriceHint": "Gives customers an idea of your budget, displayed on your profile"
+    "avgDailyPriceHint": "Gives customers an idea of your budget, displayed on your profile",
+    "takePhoto": "Take a photo",
+    "chooseFromGallery": "Choose from gallery",
+    "scanTakePhoto": "Photograph the menu",
+    "scanAnotherPage": "Photograph another page",
+    "scanAnalyze": "Analyze the menu ({count} page(s))"
   },
   "weather": {
     "close": "Close",

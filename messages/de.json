@@ -293,7 +293,12 @@
     "fieldCuisineTypes": "Angebotene Küchenarten & Leistungen",
     "fieldProductTypes": "Angebotene Produktarten",
     "fieldAvgDailyPrice": "Durchschnittlicher Tagespreis (MAD)",
-    "avgDailyPriceHint": "Gibt Kunden eine Vorstellung von deinem Budget, angezeigt in deinem Profil"
+    "avgDailyPriceHint": "Gibt Kunden eine Vorstellung von deinem Budget, angezeigt in deinem Profil",
+    "takePhoto": "Foto aufnehmen",
+    "chooseFromGallery": "Aus der Galerie wählen",
+    "scanTakePhoto": "Karte fotografieren",
+    "scanAnotherPage": "Weitere Seite fotografieren",
+    "scanAnalyze": "Karte analysieren ({count} Seite(n))"
   },
   "weather": {
     "close": "Schließen",

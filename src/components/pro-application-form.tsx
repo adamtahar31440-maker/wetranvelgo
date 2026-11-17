@@ -454,6 +454,10 @@ function ProApplicationFormInner({
             scanErrorText={t.menuScanError}
             scanUnsupportedFormatText={t.imagesUnsupportedFormat}
             scanSuccessTemplate={t.menuScanSuccess}
+            scanTakePhotoLabel={t.scanTakePhoto}
+            scanAnotherPageLabel={t.scanAnotherPage}
+            scanAnalyzeTemplate={t.scanAnalyze}
+            scanGalleryLabel={t.chooseFromGallery}
           />
         </div>
 
@@ -486,6 +490,8 @@ function ProApplicationFormInner({
           hint={t.imagesHint}
           defaultImages={(d("images") ?? "").split("\n").filter(Boolean)}
           unsupportedFormatText={t.imagesUnsupportedFormat}
+          cameraLabel={t.takePhoto}
+          galleryLabel={t.chooseFromGallery}
         />
 
         <label className="flex items-start gap-2 text-sm text-foreground/80">

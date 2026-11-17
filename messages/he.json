@@ -293,7 +293,12 @@
     "fieldCuisineTypes": "סוגי מטבח ושירותים מוצעים",
     "fieldProductTypes": "סוגי המוצרים המוצעים",
     "fieldAvgDailyPrice": "מחיר יומי ממוצע (MAD)",
-    "avgDailyPriceHint": "נותן ללקוחות מושג של התקציב שלך, המוצג בפרופיל שלך"
+    "avgDailyPriceHint": "נותן ללקוחות מושג של התקציב שלך, המוצג בפרופיל שלך",
+    "takePhoto": "צילום תמונה",
+    "chooseFromGallery": "בחירה מהגלריה",
+    "scanTakePhoto": "צילום התפריט",
+    "scanAnotherPage": "צילום עמוד נוסף",
+    "scanAnalyze": "ניתוח התפריט ({count} עמודים)"
   },
   "weather": {
     "close": "סגור",
