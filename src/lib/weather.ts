@@ -103,6 +103,31 @@ type Tide = { time: string; type: "high" | "low"; height: number };
 const TIDE_CACHE_TTL_MS = 12 * 60 * 60 * 1000;
 const TIDE_STALE_FALLBACK_MS = 4 * 24 * 60 * 60 * 1000;
 
+// Fallback when Stormglass is unavailable (no key, expired key, quota): free,
+// keyless Open-Meteo sea-level model, from which high/low waters are derived
+// as local extrema of the 15-minute series. Times are good to ~15 min; the
+// heights are less accurate near the coast than Stormglass's, which is fine
+// since the widget only shows times.
+async function fetchTidesFromOpenMeteo(lat: number, lng: number): Promise<Tide[]> {
+  const url = `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lng}&minutely_15=sea_level_height_msl&forecast_days=4&timezone=GMT`;
+  const res = await fetch(url, { next: { revalidate: 3600 } });
+  if (!res.ok) throw new Error("open-meteo tide fetch failed");
+  const data = await res.json();
+  const times: string[] = data.minutely_15?.time ?? [];
+  const levels: (number | null)[] = data.minutely_15?.sea_level_height_msl ?? [];
+  const tides: Tide[] = [];
+  for (let i = 1; i < levels.length - 1; i++) {
+    const [prev, cur, next] = [levels[i - 1], levels[i], levels[i + 1]];
+    if (prev == null || cur == null || next == null) continue;
+    // ">" on one side and ">=" on the other so a flat-topped extremum spanning
+    // two samples is counted once.
+    const type = cur > prev && cur >= next ? "high" : cur < prev && cur <= next ? "low" : null;
+    if (type) tides.push({ time: `${times[i]}:00+00:00`, type, height: cur });
+  }
+  if (tides.length === 0) throw new Error("open-meteo returned no tide extremes");
+  return tides;
+}
+
 async function fetchTides(locationId: LocationId, lat: number, lng: number): Promise<Tide[] | null> {
   const db = getDb();
   const rows = await db.select().from(tideCache).where(eq(tideCache.locationId, locationId)).limit(1);
@@ -113,8 +138,27 @@ async function fetchTides(locationId: LocationId, lat: number, lng: number): Pro
     return cached.tides as Tide[];
   }
 
+  const saveAndReturn = async (tides: Tide[]) => {
+    await db
+      .insert(tideCache)
+      .values({ locationId, tides, fetchedAt: new Date() })
+      .onConflictDoUpdate({ target: tideCache.locationId, set: { tides, fetchedAt: new Date() } });
+    return tides;
+  };
+
+  const fallback = async () => {
+    try {
+      return await saveAndReturn(await fetchTidesFromOpenMeteo(lat, lng));
+    } catch {
+      // Both providers down — whatever we last stored rather than blanking the
+      // tide section, as long as it's not too old.
+      if (cached && cacheAgeMs < TIDE_STALE_FALLBACK_MS) return cached.tides as Tide[];
+      return null;
+    }
+  };
+
   const key = process.env.STORMGLASS_API_KEY;
-  if (!key) return (cached?.tides as Tide[]) ?? null;
+  if (!key) return fallback();
 
   try {
     // Morocco is UTC+1 year-round (no DST since 2018) — compute "today" in that
@@ -139,17 +183,11 @@ async function fetchTides(locationId: LocationId, lat: number, lng: number): Pro
       height: t.height,
     }));
 
-    await db
-      .insert(tideCache)
-      .values({ locationId, tides, fetchedAt: new Date() })
-      .onConflictDoUpdate({ target: tideCache.locationId, set: { tides, fetchedAt: new Date() } });
-
-    return tides;
+    if (tides.length === 0) throw new Error("stormglass returned no tides");
+    return await saveAndReturn(tides);
   } catch {
-    // Quota exceeded, network error, etc. — fall back to whatever we last
-    // stored rather than blanking the tide section, as long as it's not too old.
-    if (cached && cacheAgeMs < TIDE_STALE_FALLBACK_MS) return cached.tides as Tide[];
-    return null;
+    // Quota exceeded, expired key, network error...
+    return fallback();
   }
 }
 
