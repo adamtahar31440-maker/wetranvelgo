@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import { Plus, X, Camera, Loader2, ChevronDown, ChevronUp, ImagePlus, Images, ScanText } from "lucide-react";
+import { Plus, X, Camera, Loader2, ChevronDown, ChevronUp, ImagePlus, Images, ScanText, Trash2 } from "lucide-react";
 import { compressImage, isUnsupportedImageFile, uploadImageFile } from "@/lib/image-upload";
 
 type VariantInput = { label: string; price: string };
@@ -72,6 +72,8 @@ export function MenuEditor({
   scanAnotherPageLabel = "Photographier une autre page",
   scanAnalyzeTemplate = "Analyser la carte ({count} page(s))",
   scanGalleryLabel = "Choisir dans la galerie",
+  clearMenuLabel = "Supprimer tout le menu",
+  clearMenuConfirm = "Supprimer tous les articles du menu ? Pensez ensuite à enregistrer.",
 }: {
   name: string;
   defaultItems?: {
@@ -107,6 +109,8 @@ export function MenuEditor({
   scanAnotherPageLabel?: string;
   scanAnalyzeTemplate?: string;
   scanGalleryLabel?: string;
+  clearMenuLabel?: string;
+  clearMenuConfirm?: string;
 }) {
   const nextId = useRef(0);
   function makeId() {
@@ -617,6 +621,21 @@ export function MenuEditor({
                 <ChevronUp size={14} /> {collapseAllLabel}
               </>
             )}
+          </button>
+        )}
+        {/* Starting over (e.g. to re-scan a new menu) shouldn't mean deleting
+            every item one by one. Takes effect when the form is saved. */}
+        {items.length > 0 && (
+          <button
+            type="button"
+            onClick={() => {
+              if (!window.confirm(clearMenuConfirm)) return;
+              setItems([]);
+              setScanSuccessCount(null);
+            }}
+            className="flex items-center gap-1.5 rounded-full bg-red-600 px-4 py-1.5 text-xs font-semibold text-white hover:bg-red-700"
+          >
+            <Trash2 size={14} /> {clearMenuLabel}
           </button>
         )}
 
