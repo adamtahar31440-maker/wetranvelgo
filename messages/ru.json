@@ -298,7 +298,10 @@
     "chooseFromGallery": "Выбрать из галереи",
     "scanTakePhoto": "Сфотографировать меню",
     "scanAnotherPage": "Сфотографировать ещё страницу",
-    "scanAnalyze": "Распознать меню (страниц: {count})"
+    "scanAnalyze": "Распознать меню (страниц: {count})",
+    "clearMenu": "Удалить всё меню",
+    "clearMenuConfirm": "Удалить все позиции меню? Не забудьте затем сохранить.",
+    "fieldWellnessTypes": "Предлагаемые процедуры и услуги"
   },
   "weather": {
     "close": "Закрыть",

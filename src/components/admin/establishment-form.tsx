@@ -107,6 +107,7 @@ export function EstablishmentForm({
   const isActivity = categoryType === "activite";
   const isRestaurant = categoryType === "restaurant";
   const isShopping = categoryType === "shopping";
+  const isWellness = categoryType === "bien-etre";
   const showMultiSubcategory = hasMultiSubcategory(categoryType);
   const missingFrench =
     !!establishment && (!establishment.name.fr || (!!frOrOriginal(establishment.description) && !establishment.description.fr));
@@ -120,7 +121,9 @@ export function EstablishmentForm({
           ? "Types de cuisine et services proposés"
           : isShopping
             ? "Types de produits proposés"
-            : "Services et activités sur place (restaurant, bar, boîte de nuit, boutique...)";
+            : isWellness
+              ? "Soins et prestations proposés"
+              : "Services et activités sur place (restaurant, bar, boîte de nuit, boutique...)";
   return (
     <form action={upsertEstablishment} className="space-y-8">
       <input type="hidden" name="locale" value={locale} />
@@ -346,6 +349,8 @@ export function EstablishmentForm({
           scanAnotherPageLabel={t.scanAnotherPage}
           scanAnalyzeTemplate={t.scanAnalyze}
           scanGalleryLabel={t.chooseFromGallery}
+          clearMenuLabel={t.clearMenu}
+          clearMenuConfirm={t.clearMenuConfirm}
         />
       </section>
 

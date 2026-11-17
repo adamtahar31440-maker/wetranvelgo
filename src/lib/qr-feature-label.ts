@@ -24,6 +24,11 @@ const QR_FEATURE_LABELS: Record<string, Record<string, string>> = {
     de: "Leistungen & Tarife", it: "Servizi e Tariffe", pt: "Serviços e Tarifas", ru: "Услуги и тарифы",
     zh: "服务和价格", ko: "서비스 및 요금", tr: "Hizmetler ve Fiyatlar", he: "שירותים וחיובים",
   },
+  "bien-etre": {
+    fr: "Soins & tarifs", en: "Treatments & Rates", ar: "العلاجات والأسعار", es: "Tratamientos y Tarifas",
+    de: "Behandlungen & Preise", it: "Trattamenti e Tariffe", pt: "Tratamentos e Tarifas", ru: "Процедуры и цены",
+    zh: "护理项目和价格", ko: "관리 및 요금", tr: "Bakımlar ve Fiyatlar", he: "טיפולים ומחירים",
+  },
   "location-vehicules": {
     fr: "Tarifs de location", en: "Rental Rates", ar: "أسعار الإيجار", es: "Tarifas de Alquiler",
     de: "Mietpreise", it: "Tariffe di Noleggio", pt: "Tarifas de Aluguel", ru: "Тарифы на аренду",

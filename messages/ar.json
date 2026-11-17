@@ -298,7 +298,10 @@
     "chooseFromGallery": "اختيار من المعرض",
     "scanTakePhoto": "تصوير القائمة",
     "scanAnotherPage": "تصوير صفحة أخرى",
-    "scanAnalyze": "تحليل القائمة ({count} صفحة)"
+    "scanAnalyze": "تحليل القائمة ({count} صفحة)",
+    "clearMenu": "حذف القائمة بالكامل",
+    "clearMenuConfirm": "حذف جميع عناصر القائمة؟ لا تنسَ الحفظ بعد ذلك.",
+    "fieldWellnessTypes": "العلاجات والخدمات المقدمة"
   },
   "weather": {
     "close": "إغلاق",

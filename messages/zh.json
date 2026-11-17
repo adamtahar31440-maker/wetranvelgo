@@ -298,7 +298,10 @@
     "chooseFromGallery": "从相册选择",
     "scanTakePhoto": "拍摄菜单",
     "scanAnotherPage": "再拍一页",
-    "scanAnalyze": "识别菜单（{count} 页）"
+    "scanAnalyze": "识别菜单（{count} 页）",
+    "clearMenu": "删除整个菜单",
+    "clearMenuConfirm": "删除菜单中的所有项目？之后请记得保存。",
+    "fieldWellnessTypes": "提供的护理和服务"
   },
   "weather": {
     "close": "关闭",

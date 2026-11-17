@@ -298,7 +298,10 @@
     "chooseFromGallery": "Escolher da galeria",
     "scanTakePhoto": "Fotografar o cardápio",
     "scanAnotherPage": "Fotografar outra página",
-    "scanAnalyze": "Analisar o cardápio ({count} página(s))"
+    "scanAnalyze": "Analisar o cardápio ({count} página(s))",
+    "clearMenu": "Excluir todo o cardápio",
+    "clearMenuConfirm": "Excluir todos os itens do cardápio? Lembre-se de salvar depois.",
+    "fieldWellnessTypes": "Tratamentos e serviços oferecidos"
   },
   "weather": {
     "close": "Fechar",

@@ -117,6 +117,7 @@ function ProApplicationFormInner({
   const isActivity = categoryType === "activite";
   const isRestaurant = categoryType === "restaurant";
   const isShopping = categoryType === "shopping";
+  const isWellness = categoryType === "bien-etre";
   const showMultiSubcategory = hasMultiSubcategory(categoryType);
   const multiSubcategoryLabel = isCarRental
     ? t.fieldVehicleTypes
@@ -128,7 +129,9 @@ function ProApplicationFormInner({
           ? t.fieldCuisineTypes
           : isShopping
             ? t.fieldProductTypes
-            : t.fieldOnsiteServices;
+            : isWellness
+              ? t.fieldWellnessTypes
+              : t.fieldOnsiteServices;
 
   const [cityId, setCityId] = useState<number | null>(dNumber("cityId") ?? cities[0]?.id ?? null);
   const handleLocationChange = (lat: number, lng: number) => {
@@ -458,6 +461,8 @@ function ProApplicationFormInner({
             scanAnotherPageLabel={t.scanAnotherPage}
             scanAnalyzeTemplate={t.scanAnalyze}
             scanGalleryLabel={t.chooseFromGallery}
+            clearMenuLabel={t.clearMenu}
+            clearMenuConfirm={t.clearMenuConfirm}
           />
         </div>
 

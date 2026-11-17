@@ -298,7 +298,10 @@
     "chooseFromGallery": "Aus der Galerie wählen",
     "scanTakePhoto": "Karte fotografieren",
     "scanAnotherPage": "Weitere Seite fotografieren",
-    "scanAnalyze": "Karte analysieren ({count} Seite(n))"
+    "scanAnalyze": "Karte analysieren ({count} Seite(n))",
+    "clearMenu": "Ganze Karte löschen",
+    "clearMenuConfirm": "Alle Einträge der Karte löschen? Danach bitte speichern.",
+    "fieldWellnessTypes": "Angebotene Behandlungen und Leistungen"
   },
   "weather": {
     "close": "Schließen",

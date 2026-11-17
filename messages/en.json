@@ -298,7 +298,10 @@
     "chooseFromGallery": "Choose from gallery",
     "scanTakePhoto": "Photograph the menu",
     "scanAnotherPage": "Photograph another page",
-    "scanAnalyze": "Analyze the menu ({count} page(s))"
+    "scanAnalyze": "Analyze the menu ({count} page(s))",
+    "clearMenu": "Delete the whole menu",
+    "clearMenuConfirm": "Delete every item of the menu? Remember to save afterwards.",
+    "fieldWellnessTypes": "Treatments and services offered"
   },
   "weather": {
     "close": "Close",

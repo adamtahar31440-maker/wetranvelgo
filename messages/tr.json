@@ -298,7 +298,10 @@
     "chooseFromGallery": "Galeriden seç",
     "scanTakePhoto": "Menüyü fotoğrafla",
     "scanAnotherPage": "Başka bir sayfa fotoğrafla",
-    "scanAnalyze": "Menüyü analiz et ({count} sayfa)"
+    "scanAnalyze": "Menüyü analiz et ({count} sayfa)",
+    "clearMenu": "Tüm menüyü sil",
+    "clearMenuConfirm": "Menüdeki tüm ürünler silinsin mi? Ardından kaydetmeyi unutmayın.",
+    "fieldWellnessTypes": "Sunulan bakım ve hizmetler"
   },
   "weather": {
     "close": "Kapat",

@@ -298,7 +298,10 @@
     "chooseFromGallery": "בחירה מהגלריה",
     "scanTakePhoto": "צילום התפריט",
     "scanAnotherPage": "צילום עמוד נוסף",
-    "scanAnalyze": "ניתוח התפריט ({count} עמודים)"
+    "scanAnalyze": "ניתוח התפריט ({count} עמודים)",
+    "clearMenu": "מחיקת התפריט כולו",
+    "clearMenuConfirm": "למחוק את כל הפריטים בתפריט? אל תשכחו לשמור אחר כך.",
+    "fieldWellnessTypes": "טיפולים ושירותים מוצעים"
   },
   "weather": {
     "close": "סגור",

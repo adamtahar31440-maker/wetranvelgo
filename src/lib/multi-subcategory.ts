@@ -11,6 +11,7 @@ export const MULTI_SUBCATEGORY_TYPES = [
   "hebergement",
   "restaurant",
   "shopping",
+  "bien-etre",
 ] as const;
 
 export function hasMultiSubcategory(categoryType: string | undefined | null): boolean {

@@ -139,6 +139,7 @@ export default async function ProDashboardPage({
   const isActivity = myEstablishmentCategoryType === "activite";
   const isRestaurant = myEstablishmentCategoryType === "restaurant";
   const isShopping = myEstablishmentCategoryType === "shopping";
+  const isWellness = myEstablishmentCategoryType === "bien-etre";
   const showMultiSubcategory = hasMultiSubcategory(myEstablishmentCategoryType);
   const multiSubcategoryLabel = isCarRental
     ? t("fieldVehicleTypes")
@@ -150,7 +151,9 @@ export default async function ProDashboardPage({
           ? t("fieldCuisineTypes")
           : isShopping
             ? t("fieldProductTypes")
-            : t("fieldOnsiteServices");
+            : isWellness
+              ? t("fieldWellnessTypes")
+              : t("fieldOnsiteServices");
   const currentPlanKey = subscription?.status === "active" ? subscription.planKey : "starter";
   const maxPhotos = plans.find((p) => p.key === currentPlanKey)?.maxPhotos ?? null;
   const subcategoriesByCategory = Object.fromEntries(
@@ -530,6 +533,8 @@ export default async function ProDashboardPage({
                       scanAnotherPageLabel={t("scanAnotherPage")}
                       scanAnalyzeTemplate={t.raw("scanAnalyze")}
                       scanGalleryLabel={t("chooseFromGallery")}
+                      clearMenuLabel={t("clearMenu")}
+                      clearMenuConfirm={t("clearMenuConfirm")}
                     />
                   </div>
 
