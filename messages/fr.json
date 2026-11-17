@@ -301,7 +301,8 @@
     "scanAnalyze": "Analyser la carte ({count} page(s))",
     "clearMenu": "Supprimer tout le menu",
     "clearMenuConfirm": "Supprimer tous les articles du menu ? Pensez ensuite à enregistrer.",
-    "fieldWellnessTypes": "Soins et prestations proposés"
+    "fieldWellnessTypes": "Soins et prestations proposés",
+    "menuSaveForQr": "Pour obtenir vos QR codes : ajoutez au moins un article ci-dessus, puis cliquez sur « Enregistrer » en bas de la page. Les boutons de téléchargement du QR code et de l'affiche apparaîtront ici."
   },
   "weather": {
     "close": "Fermer",

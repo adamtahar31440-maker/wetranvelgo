@@ -301,7 +301,8 @@
     "scanAnalyze": "Analyze the menu ({count} page(s))",
     "clearMenu": "Delete the whole menu",
     "clearMenuConfirm": "Delete every item of the menu? Remember to save afterwards.",
-    "fieldWellnessTypes": "Treatments and services offered"
+    "fieldWellnessTypes": "Treatments and services offered",
+    "menuSaveForQr": "To get your QR codes: add at least one item above, then click “Save” at the bottom of the page. The QR code and poster download buttons will appear here."
   },
   "weather": {
     "close": "Close",

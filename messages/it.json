@@ -301,7 +301,8 @@
     "scanAnalyze": "Analizza il menu ({count} pagina/e)",
     "clearMenu": "Elimina tutto il menu",
     "clearMenuConfirm": "Eliminare tutte le voci del menu? Ricorda poi di salvare.",
-    "fieldWellnessTypes": "Trattamenti e servizi offerti"
+    "fieldWellnessTypes": "Trattamenti e servizi offerti",
+    "menuSaveForQr": "Per ottenere i tuoi codici QR: aggiungi almeno una voce qui sopra, poi clicca su «Salva» in fondo alla pagina. Qui appariranno i pulsanti per scaricare il codice QR e il poster."
   },
   "weather": {
     "close": "Chiudi",

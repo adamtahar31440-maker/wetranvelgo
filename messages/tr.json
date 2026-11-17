@@ -301,7 +301,8 @@
     "scanAnalyze": "Menüyü analiz et ({count} sayfa)",
     "clearMenu": "Tüm menüyü sil",
     "clearMenuConfirm": "Menüdeki tüm ürünler silinsin mi? Ardından kaydetmeyi unutmayın.",
-    "fieldWellnessTypes": "Sunulan bakım ve hizmetler"
+    "fieldWellnessTypes": "Sunulan bakım ve hizmetler",
+    "menuSaveForQr": "QR kodlarınızı almak için: yukarıya en az bir ürün ekleyin, ardından sayfanın altındaki “Kaydet” düğmesine tıklayın. QR kodu ve afiş indirme düğmeleri burada görünecektir."
   },
   "weather": {
     "close": "Kapat",

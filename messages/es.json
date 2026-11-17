@@ -301,7 +301,8 @@
     "scanAnalyze": "Analizar la carta ({count} página(s))",
     "clearMenu": "Eliminar todo el menú",
     "clearMenuConfirm": "¿Eliminar todos los artículos del menú? Recuerda guardar después.",
-    "fieldWellnessTypes": "Tratamientos y servicios ofrecidos"
+    "fieldWellnessTypes": "Tratamientos y servicios ofrecidos",
+    "menuSaveForQr": "Para obtener sus códigos QR: añada al menos un artículo arriba y haga clic en «Guardar» al final de la página. Aquí aparecerán los botones para descargar el código QR y el cartel."
   },
   "weather": {
     "close": "Cerrar",

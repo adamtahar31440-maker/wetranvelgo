@@ -301,7 +301,8 @@
     "scanAnalyze": "Analisar o cardápio ({count} página(s))",
     "clearMenu": "Excluir todo o cardápio",
     "clearMenuConfirm": "Excluir todos os itens do cardápio? Lembre-se de salvar depois.",
-    "fieldWellnessTypes": "Tratamentos e serviços oferecidos"
+    "fieldWellnessTypes": "Tratamentos e serviços oferecidos",
+    "menuSaveForQr": "Para obter seus QR codes: adicione pelo menos um item acima e clique em «Salvar» no final da página. Os botões para baixar o QR code e o cartaz aparecerão aqui."
   },
   "weather": {
     "close": "Fechar",

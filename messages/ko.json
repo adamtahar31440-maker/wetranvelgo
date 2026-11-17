@@ -301,7 +301,8 @@
     "scanAnalyze": "메뉴판 분석 ({count}페이지)",
     "clearMenu": "메뉴 전체 삭제",
     "clearMenuConfirm": "메뉴의 모든 항목을 삭제할까요? 이후 저장하는 것을 잊지 마세요.",
-    "fieldWellnessTypes": "제공하는 관리 및 서비스"
+    "fieldWellnessTypes": "제공하는 관리 및 서비스",
+    "menuSaveForQr": "QR 코드를 받으려면: 위에 항목을 하나 이상 추가한 다음 페이지 하단의 '저장'을 누르세요. QR 코드와 포스터 다운로드 버튼이 여기에 표시됩니다."
   },
   "weather": {
     "close": "닫기",

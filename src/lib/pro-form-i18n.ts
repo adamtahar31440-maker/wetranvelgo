@@ -83,6 +83,7 @@ export type ProFormStrings = {
   menuTitle: string;
   menuIntro: string;
   menuHint: string;
+  menuQrAfterSignup: string;
   menuItemNamePlaceholder: string;
   menuItemDescriptionPlaceholder: string;
   menuItemCategoryPlaceholder: string;
@@ -227,6 +228,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     menuTitle: "Menu digital & QR code",
     menuIntro: "Offrez à vos clients étrangers un accès traduit automatiquement dans leur langue, en scannant un QR code.",
     menuHint: "Rédigez en français : les autres langues seront automatiquement traduites lors de l'enregistrement.",
+    menuQrAfterSignup: "Vos QR codes (à imprimer et afficher dans votre établissement) seront disponibles dans votre tableau de bord dès que vous aurez envoyé ce formulaire, avec au moins un article.",
     menuItemNamePlaceholder: "Nom",
     menuItemDescriptionPlaceholder: "Description (facultatif)",
     menuItemCategoryPlaceholder: "Catégorie (regroupement facultatif)",
@@ -355,6 +357,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     menuTitle: "Digital Menu & QR Code",
     menuIntro: "Give your foreign customers automatic access to content translated into their language by scanning a QR code.",
     menuHint: "Write in French: other languages will be automatically translated when you save.",
+    menuQrAfterSignup: "Your QR codes (to print and display in your establishment) will be available in your dashboard as soon as you submit this form with at least one item.",
     menuItemNamePlaceholder: "Name",
     menuItemDescriptionPlaceholder: "Description (optional)",
     menuItemCategoryPlaceholder: "Category (optional grouping)",
@@ -482,6 +485,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     menuTitle: "القائمة الرقمية وكود QR",
     menuIntro: "امنح عملاءك الأجانب إمكانية الوصول التلقائي إلى المحتوى مترجم إلى لغتهم عند مسح رمز الاستجابة السريعة.",
     menuHint: "اكتب بالفرنسية: سيتم ترجمة اللغات الأخرى تلقائياً عند الحفظ.",
+    menuQrAfterSignup: "ستتوفر رموز QR الخاصة بك (للطباعة والعرض في مؤسستك) في لوحة التحكم فور إرسال هذا النموذج مع عنصر واحد على الأقل.",
     menuItemNamePlaceholder: "الاسم",
     menuItemDescriptionPlaceholder: "الوصف (اختياري)",
     menuItemCategoryPlaceholder: "الفئة (تجميع اختياري)",
@@ -610,6 +614,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     menuTitle: "Menú Digital y Código QR",
     menuIntro: "Ofrece a tus clientes extranjeros acceso automático a contenido traducido a su idioma escaneando un código QR.",
     menuHint: "Escribe en francés: otros idiomas se traducirán automáticamente al guardar.",
+    menuQrAfterSignup: "Sus códigos QR (para imprimir y exhibir en su establecimiento) estarán disponibles en su panel en cuanto envíe este formulario con al menos un artículo.",
     menuItemNamePlaceholder: "Nombre",
     menuItemDescriptionPlaceholder: "Descripción (opcional)",
     menuItemCategoryPlaceholder: "Categoría (agrupación opcional)",
@@ -738,6 +743,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     menuTitle: "Digitales Menü & QR-Code",
     menuIntro: "Geben Sie Ihren ausländischen Kunden automatischen Zugriff auf Inhalte in ihrer Sprache, indem Sie einen QR-Code scannen.",
     menuHint: "Schreiben Sie auf Französisch: Andere Sprachen werden beim Speichern automatisch übersetzt.",
+    menuQrAfterSignup: "Ihre QR-Codes (zum Ausdrucken und Aushängen in Ihrem Betrieb) stehen in Ihrem Dashboard bereit, sobald Sie dieses Formular mit mindestens einem Eintrag abgeschickt haben.",
     menuItemNamePlaceholder: "Name",
     menuItemDescriptionPlaceholder: "Beschreibung (optional)",
     menuItemCategoryPlaceholder: "Kategorie (optionale Gruppierung)",
@@ -866,6 +872,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     menuTitle: "Menu Digitale e Codice QR",
     menuIntro: "Offri ai tuoi clienti stranieri accesso automatico a contenuti tradotti nella loro lingua scansionando un codice QR.",
     menuHint: "Scrivi in francese: gli altri linguaggi verranno tradotti automaticamente al salvataggio.",
+    menuQrAfterSignup: "I tuoi codici QR (da stampare ed esporre nella tua attività) saranno disponibili nella tua dashboard non appena invierai questo modulo con almeno una voce.",
     menuItemNamePlaceholder: "Nome",
     menuItemDescriptionPlaceholder: "Descrizione (facoltativo)",
     menuItemCategoryPlaceholder: "Categoria (raggruppamento facoltativo)",
@@ -994,6 +1001,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     menuTitle: "Menu Digital e Código QR",
     menuIntro: "Ofereça aos seus clientes estrangeiros acesso automático a conteúdo traduzido para o seu idioma digitalizando um código QR.",
     menuHint: "Escreva em francês: outros idiomas serão traduzidos automaticamente ao salvar.",
+    menuQrAfterSignup: "Seus QR codes (para imprimir e expor no seu estabelecimento) estarão disponíveis no seu painel assim que você enviar este formulário com pelo menos um item.",
     menuItemNamePlaceholder: "Nome",
     menuItemDescriptionPlaceholder: "Descrição (opcional)",
     menuItemCategoryPlaceholder: "Categoria (agrupamento opcional)",
@@ -1122,6 +1130,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     menuTitle: "Цифровое меню и QR-код",
     menuIntro: "Предоставьте иностранным клиентам автоматический доступ к контенту, переведённому на их язык, сканируя QR-код.",
     menuHint: "Пишите на французском: другие языки будут автоматически переведены при сохранении.",
+    menuQrAfterSignup: "Ваши QR-коды (для печати и размещения в заведении) появятся в личном кабинете сразу после отправки этой формы хотя бы с одной позицией.",
     menuItemNamePlaceholder: "Название",
     menuItemDescriptionPlaceholder: "Описание (необязательно)",
     menuItemCategoryPlaceholder: "Категория (дополнительная группировка)",
@@ -1249,6 +1258,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     menuTitle: "数字菜单和二维码",
     menuIntro: "通过扫描二维码，为您的外国客户提供自动翻译成其语言的内容访问权限。",
     menuHint: "用法语写：其他语言将在保存时自动翻译。",
+    menuQrAfterSignup: "提交本表格（至少包含一个项目）后，您的二维码（可打印并张贴在店内）将出现在您的控制台中。",
     menuItemNamePlaceholder: "名称",
     menuItemDescriptionPlaceholder: "描述（可选）",
     menuItemCategoryPlaceholder: "分类（可选分组）",
@@ -1377,6 +1387,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     menuTitle: "디지털 메뉴 및 QR 코드",
     menuIntro: "QR 코드를 스캔하여 외국인 고객에게 자동으로 자신의 언어로 번역된 콘텐츠에 대한 접근 권한을 제공하세요.",
     menuHint: "프랑스어로 작성하세요. 다른 언어는 저장할 때 자동으로 번역됩니다.",
+    menuQrAfterSignup: "항목을 하나 이상 넣어 이 양식을 제출하면 QR 코드(인쇄하여 매장에 게시용)를 대시보드에서 받을 수 있습니다.",
     menuItemNamePlaceholder: "이름",
     menuItemDescriptionPlaceholder: "설명 (선택 사항)",
     menuItemCategoryPlaceholder: "카테고리 (선택적 그룹화)",
@@ -1505,6 +1516,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     menuTitle: "Dijital Menü ve QR Kodu",
     menuIntro: "Yabancı müşterilerinize QR kod tarayarak otomatik olarak kendi dillerine çevrilen içeriğe erişim sağlayın.",
     menuHint: "Fransızca yazın: diğer diller kaydedilirken otomatik olarak çevrilecektir.",
+    menuQrAfterSignup: "QR kodlarınız (işletmenizde basıp sergilemek için), bu formu en az bir ürünle gönderdiğiniz anda panelinizde hazır olacaktır.",
     menuItemNamePlaceholder: "Ad",
     menuItemDescriptionPlaceholder: "Açıklama (isteğe bağlı)",
     menuItemCategoryPlaceholder: "Kategori (isteğe bağlı gruplama)",
@@ -1632,6 +1644,7 @@ export const PRO_FORM_STRINGS: Record<string, ProFormStrings> = {
     menuTitle: "תפריט דיגיטלי וקוד QR",
     menuIntro: "הנח ללקוחותיך הזרים גישה אוטומטית לתוכן המתורגם לשפתם על ידי סריקת קוד QR.",
     menuHint: "כתוב בצרפתית: שפות אחרות יתורגמו באופן אוטומטי בעת השמירה.",
+    menuQrAfterSignup: "קודי ה-QR שלכם (להדפסה ולתלייה בעסק) יהיו זמינים בלוח הבקרה מיד לאחר שליחת הטופס הזה עם פריט אחד לפחות.",
     menuItemNamePlaceholder: "שם",
     menuItemDescriptionPlaceholder: "תיאור (אופציונלי)",
     menuItemCategoryPlaceholder: "קטגוריה (קיבוץ אופציונלי)",

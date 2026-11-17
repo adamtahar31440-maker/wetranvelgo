@@ -301,7 +301,8 @@
     "scanAnalyze": "Karte analysieren ({count} Seite(n))",
     "clearMenu": "Ganze Karte löschen",
     "clearMenuConfirm": "Alle Einträge der Karte löschen? Danach bitte speichern.",
-    "fieldWellnessTypes": "Angebotene Behandlungen und Leistungen"
+    "fieldWellnessTypes": "Angebotene Behandlungen und Leistungen",
+    "menuSaveForQr": "So erhalten Sie Ihre QR-Codes: Fügen Sie oben mindestens einen Eintrag hinzu und klicken Sie unten auf der Seite auf „Speichern“. Hier erscheinen dann die Buttons zum Herunterladen von QR-Code und Plakat."
   },
   "weather": {
     "close": "Schließen",

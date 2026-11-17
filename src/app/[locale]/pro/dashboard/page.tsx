@@ -29,7 +29,7 @@ import { PRICE_LEVELS, priceLevelLabel, buildSubcategoryMap, subcategoryLabel, f
 import { AiDescriptionField } from "@/components/ai-description-field";
 import { AddressLocationPicker } from "@/components/address-location-picker";
 import { cn } from "@/lib/utils";
-import { CalendarDays } from "lucide-react";
+import { CalendarDays, QrCode } from "lucide-react";
 
 const inputClass = "w-full rounded-lg border border-black/10 px-3 py-2 text-sm outline-none focus:border-ocean-dark";
 const labelClass = "mb-1 block text-xs font-semibold text-foreground/60";
@@ -564,7 +564,13 @@ export default async function ProDashboardPage({
                         </Link>
                       </>
                     ) : (
-                      <p className="text-xs text-foreground/50">{t("menuEmptyState")}</p>
+                      // The QR code only exists once a non-empty catalog has
+                      // been saved — pros kept filling items in and looking for
+                      // it without ever hitting "Enregistrer".
+                      <div className="flex w-full items-start gap-2 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm font-medium text-amber-900">
+                        <QrCode className="mt-0.5 h-5 w-5 shrink-0" aria-hidden />
+                        <p>{t("menuSaveForQr")}</p>
+                      </div>
                     )}
                   </div>
                   {(myEstablishment.digitalMenu?.length ?? 0) > 0 && (
